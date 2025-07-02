@@ -653,7 +653,7 @@ function App() {
                 color: "text-gray-400",
               },
               {
-                href: "https://linkedin.com/in/nagateja",
+                href: "https://www.linkedin.com/in/nagatejakachapuram/",
                 icon: <Linkedin className="w-6 h-6" />,
                 label: "LinkedIn",
                 color: "text-blue-400",
