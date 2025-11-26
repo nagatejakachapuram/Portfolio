@@ -24,6 +24,12 @@ import {
   CircuitBoard,
   // Cpu, // REMOVED: No longer needed for blinking pink stuff
   Terminal,
+  Trophy,
+  Award,
+  Mail,
+  MessageCircle,
+  Twitter,
+  CheckCircle,
 } from "lucide-react";
 
 // Import the Three.js particle background component
@@ -38,7 +44,7 @@ function App() {
     setIsVisible(true);
 
     const handleScroll = () => {
-      const sections = ["about", "tech", "projects", "contact"];
+      const sections = ["about", "status", "audits", "deployment", "tech", "projects", "contact"];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -67,63 +73,114 @@ function App() {
       icon: <Code className="w-5 h-5" />,
     },
     {
-      category: "Frontend",
-      tools: "Next.js, Web3.js, wagmi, three.js",
-      icon: <Sparkles className="w-5 h-5" />,
-    },
-    {
-      category: "ZK Stack",
-      tools: "Noir, Circom, SnarkJS",
+      category: "Security",
+      tools: "Foundry Fuzz, Echidna, Slither, Mythril",
       icon: <Shield className="w-5 h-5" />,
     },
     {
-      category: "Agent Layer",
-      tools: "ElizaOS Plugins, TypeScript, REST APIs",
+      category: "ZK/Privacy",
+      tools: "Noir, Circom, SnarkJS",
+      icon: <CircuitBoard className="w-5 h-5" />,
+    },
+    {
+      category: "AI Agents",
+      tools: "ElizaOS Plugins, TypeScript, Python",
       icon: <Brain className="w-5 h-5" />,
     },
     {
-      category: "Onchain Logic",
-      tools: "Chainlink Automation, Upgrades, Proxies",
+      category: "Infrastructure",
+      tools: "Chainlink Automation, OZ Upgrades",
       icon: <LinkIcon className="w-5 h-5" />,
     },
+  ];
+
+  const auditFindings = [
     {
-      category: "Testing & Audits",
-      tools: "Echidna, Slither, Foundry Fuzz, Mythril",
-      icon: <TestTube className="w-5 h-5" />,
+      protocol: "Octant V2-Core",
+      type: "DeFi",
+      platform: "Cantina",
+      findings: "1 High, 2 Info",
+      rank: "#6",
+      link: "https://cantina.xyz/code/917d796b-48d0-41d0-bb40-be137b7d3db5/overview/leaderboard",
     },
     {
-      category: "Backend / Dev Ops",
-      tools: "Go, Rust, Docker, Kubernetes, AWS",
-      icon: <Terminal className="w-5 h-5" />,
+      protocol: "Pike Finance",
+      type: "Lending",
+      platform: "Cantina",
+      findings: "1 Med (Solo), 1 Low",
+      rank: "#7",
+      link: "https://cantina.xyz/code/917d796b-48d0-41d0-bb40-be137b7d3db5/overview/leaderboard",
+    },
+    {
+      protocol: "Mellow Flexible Vaults",
+      type: "Vaults",
+      platform: "Sherlock",
+      findings: "1 Med",
+      rank: "#43",
+      link: "https://audits.sherlock.xyz/contests/964/leaderboard",
+    },
+    {
+      protocol: "Malda",
+      type: "Lending",
+      platform: "Sherlock",
+      findings: "1 Med",
+      rank: "#46",
+      link: "https://audits.sherlock.xyz/contests/1029/leaderboard",
+    },
+    {
+      protocol: "Kuru",
+      type: "CLOB",
+      platform: "Cantina",
+      findings: "1 Low, 2 Info",
+      rank: "Results",
+      link: "https://cantina.xyz/code/cdce21ba-b787-4df4-9c56-b31d085388e7/overview",
+    },
+    {
+      protocol: "Megapot",
+      type: "DeFi",
+      platform: "Code4rena",
+      findings: "1 Low",
+      rank: "Pending",
+      link: "#",
     },
   ];
 
   const projects = [
     {
-      title: "Yield Optimizer",
+      title: "AI-Powered Yield Optimizer",
       description:
-        "Advanced DeFi yield optimization platform with smart contract automation and risk management. Features automated rebalancing, yield farming strategies, and comprehensive analytics dashboard for maximizing returns.",
+        "Yearn-style vaults where strategy rotation is dictated by off-chain ElizaOS AI agents via Chainlink Automation. Advanced DeFi yield optimization platform with AI-driven decision making.",
       github: "https://github.com/nagatejakachapuram/yield-optimizer-prod",
       demo: "https://cipher-ai.vercel.app/",
       tags: [
         "DeFi",
-        "Smart Contracts",
+        "AI Agents",
         "Yield Farming",
-        "Automation",
-        "Risk Management",
+        "Chainlink Automation",
+        "ElizaOS",
       ],
-      icon: <Zap className="w-8 h-8" />,
+      icon: <Brain className="w-8 h-8" />,
       color: "text-amber-400",
     },
     {
-      title: "Flare DEX Prediction",
+      title: "Flare-AMM DEX",
       description:
-        "Decentralized exchange with integrated prediction markets built on Flare Network. Combines traditional DEX functionality with prediction market capabilities, allowing users to trade assets and make predictions on future events in a unified platform.",
+        "A custom-built modular DEX supporting unique pricing curves and prediction markets. Combines traditional DEX functionality with prediction market capabilities on Flare Network.",
       github: "https://github.com/nagatejakachapuram/Flare-Dex-Prediction",
       demo: "https://dex-predication.vercel.app",
-      tags: ["DEX", "Prediction Markets", "Flare Network", "DeFi", "Trading"],
+      tags: ["DEX", "Prediction Markets", "Flare Network", "AMM", "Trading"],
       icon: <TrendingUp className="w-8 h-8" />,
       color: "text-indigo-400",
+    },
+    {
+      title: "Noir + ZK Privacy",
+      description:
+        "Exploring privacy-preserving applications and proof systems using Noir & Nargo. Building zero-knowledge proof systems for enhanced on-chain privacy.",
+      github: "#",
+      demo: "#",
+      tags: ["ZK Proofs", "Noir", "Privacy", "Cryptography", "SnarkJS"],
+      icon: <CircuitBoard className="w-8 h-8" />,
+      color: "text-purple-400",
     },
   ];
 
@@ -259,7 +316,7 @@ function App() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-8">
-            {["about", "tech", "projects", "contact"].map((section) => (
+            {["about", "status", "audits", "deployment", "tech", "projects", "contact"].map((section) => (
               <motion.button
                 key={section}
                 onClick={() => scrollToSection(section)}
@@ -271,7 +328,7 @@ function App() {
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {section}
+                {section === "status" ? "Status" : section === "audits" ? "Audits" : section === "deployment" ? "Deployment" : section}
                 {activeSection === section && (
                   <motion.div
                     className="absolute -bottom-1 left-0 right-0 h-0.5 bg-sky-400"
@@ -308,7 +365,7 @@ function App() {
               transition={{ duration: 0.3 }}
             >
               <div className="px-6 py-4 space-y-4">
-                {["about", "tech", "projects", "contact"].map((section) => (
+                {["about", "status", "audits", "deployment", "tech", "projects", "contact"].map((section) => (
                   <motion.button
                     key={section}
                     onClick={() => scrollToSection(section)}
@@ -316,7 +373,7 @@ function App() {
                     whileHover={{ x: 10 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
-                    {section}
+                    {section === "status" ? "Status" : section === "audits" ? "Audits" : section === "deployment" ? "Deployment" : section}
                   </motion.button>
                 ))}
               </div>
@@ -358,17 +415,17 @@ function App() {
               >
                 {[
                   {
-                    text: "Blockchain Developer",
-                    icon: <Code className="w-6 h-6" />,
+                    text: "Security Researcher",
+                    icon: <Shield className="w-6 h-6" />,
                     delay: 0.8,
                   },
                   {
-                    text: "Smart Contract Security Engineer",
-                    icon: <Shield className="w-6 h-6" />,
+                    text: "Core Engineer",
+                    icon: <Code className="w-6 h-6" />,
                     delay: 1.0,
                   },
                   {
-                    text: "ZK Enthusiast",
+                    text: "Full-Stack Web3 Developer",
                     icon: <Zap className="w-6 h-6" />,
                     delay: 1.2,
                   },
@@ -395,11 +452,7 @@ function App() {
               variants={itemVariants}
               className="text-xl text-neutral-300 max-w-4xl mx-auto mb-12 leading-relaxed font-light"
             >
-              Passionate about building the future of decentralized finance
-              through innovative smart contracts, zero-knowledge proofs, and
-              cutting-edge blockchain technologies. Specializing in DeFi
-              protocols, yield optimization, and prediction markets with a focus
-              on security and scalability.
+              I am a smart contract security engineer and full-stack Web3 developer. My focus is adversarial testing, securing DeFi primitives, and architecting the infrastructure for the next generation of AI-driven decentralized applications.
             </motion.p>
 
             <motion.div
@@ -439,6 +492,265 @@ function App() {
         >
           <ChevronDown className="w-7 h-7 text-neutral-400" />
         </motion.div>
+      </section>
+
+      {/* System Status Section */}
+      <section id="status" className="py-20 px-6 bg-neutral-900 relative">
+        <div className="max-w-6xl mx-auto relative z-10">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-5xl font-bold mb-6 text-white">
+              System <span className="text-sky-400">Status</span>
+            </h2>
+            <p className="text-xl text-neutral-400 max-w-3xl mx-auto font-light">
+              Current operations and clearance level
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <motion.div
+              className="bg-neutral-800 rounded-2xl p-8 border border-neutral-700 shadow-xl"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 bg-sky-600/20 rounded-xl">
+                  <Code className="w-8 h-8 text-sky-400" />
+                </div>
+                <h3 className="text-2xl font-bold text-white">Primary Operations</h3>
+              </div>
+              <p className="text-neutral-300 mb-4 text-lg font-semibold">
+                Core Smart Contract Developer @ <span className="text-sky-400">BIFY</span> (Full-Time)
+              </p>
+              <p className="text-neutral-400 mb-4">
+                Specialization: High-severity bug hunting, invariant analysis, and ZK-privacy implementation.
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="bg-neutral-800 rounded-2xl p-8 border border-neutral-700 shadow-xl"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 bg-amber-600/20 rounded-xl">
+                  <Trophy className="w-8 h-8 text-amber-400" />
+                </div>
+                <h3 className="text-2xl font-bold text-white">Clearance Level</h3>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <Trophy className="w-5 h-5 text-amber-400" />
+                  <span className="text-neutral-300">
+                    <span className="font-semibold text-white">Top 7 Global Auditor</span> (Multiple high-rank finishes on Cantina)
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Award className="w-5 h-5 text-purple-400" />
+                  <span className="text-neutral-300">
+                    <span className="font-semibold text-white">Top 300 All-Time</span> Ranked (Cantina)
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Active Deployment Section */}
+      <section id="deployment" className="py-20 px-6 bg-neutral-950 relative">
+        <div className="max-w-6xl mx-auto relative z-10">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-5xl font-bold mb-6 text-white">
+              Active <span className="text-sky-400">Deployment</span>
+            </h2>
+            <p className="text-xl text-neutral-400 max-w-3xl mx-auto font-light">
+              Current full-time engagement
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="bg-gradient-to-br from-neutral-800 to-neutral-900 rounded-2xl p-8 md:p-12 border border-neutral-700 shadow-xl relative overflow-hidden"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="absolute top-0 right-0 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl"></div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 bg-green-600/20 rounded-xl">
+                  <CheckCircle className="w-8 h-8 text-green-400" />
+                </div>
+                <div>
+                  <h3 className="text-3xl font-bold text-white mb-2">
+                    BIFY <span className="text-sky-400">(Base Network)</span>
+                  </h3>
+                  <div className="flex items-center gap-2">
+                    <span className="px-3 py-1 bg-green-600/20 text-green-400 rounded-full text-sm font-semibold border border-green-600/30">
+                      LIVE
+                    </span>
+                    <a
+                      href="https://x.com/BIFYOfficial"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sky-400 hover:text-sky-300 transition-colors"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <p className="text-neutral-300 text-lg mb-6 leading-relaxed">
+                I am currently deployed full-time as a core developer for BIFY, architecting an AI-powered marketplace on Base where creators, collectors, and brands converge.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                <div>
+                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                    <Code className="w-5 h-5 text-sky-400" />
+                    Engineering
+                  </h4>
+                  <p className="text-neutral-400">
+                    Developing secure smart contracts for NFT minting, marketplace logic, and Real-World Asset (RWA) tokenization.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-purple-400" />
+                    Innovation
+                  </h4>
+                  <p className="text-neutral-400">
+                    Implementing standards for interactive, AI-agent driven NFTs and gated content mechanisms.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Audit Log Section */}
+      <section id="audits" className="py-20 px-6 bg-neutral-900 relative">
+        <div className="max-w-6xl mx-auto relative z-10">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-5xl font-bold mb-6 text-white">
+              Audit <span className="text-sky-400">Log</span>
+            </h2>
+            <p className="text-xl text-neutral-400 max-w-3xl mx-auto font-light mb-4">
+              High-impact security findings and achievements
+            </p>
+            <p className="text-neutral-500 max-w-3xl mx-auto font-light text-sm">
+              My independent security work focuses on shattering assumptions in live protocols through adversarial review and advanced fuzzing.
+            </p>
+          </motion.div>
+
+          {/* Hall of Fame */}
+          <motion.div
+            className="mb-12 grid grid-cols-1 md:grid-cols-3 gap-6"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            {[
+              { rank: "#6", protocol: "Octant V2-Core", platform: "Cantina", severity: "High" },
+              { rank: "#7", protocol: "Pike Finance", platform: "Cantina", severity: "Medium" },
+              { rank: "#43", protocol: "Mellow Vaults", platform: "Sherlock", severity: "Medium" },
+            ].map((achievement, index) => (
+              <motion.div
+                key={index}
+                className="bg-neutral-800 rounded-xl p-6 border border-neutral-700 hover:border-sky-500 transition-all duration-300"
+                whileHover={{ scale: 1.05, y: -5 }}
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <Trophy className="w-6 h-6 text-amber-400" />
+                  <span className="text-2xl font-bold text-sky-400">{achievement.rank}</span>
+                </div>
+                <h4 className="text-white font-semibold mb-1">{achievement.protocol}</h4>
+                <p className="text-neutral-400 text-sm">{achievement.platform}</p>
+                <span className="inline-block mt-2 px-2 py-1 bg-red-600/20 text-red-400 rounded text-xs font-semibold border border-red-600/30">
+                  {achievement.severity}
+                </span>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Audit Table */}
+          <motion.div
+            className="bg-neutral-800 rounded-2xl border border-neutral-700 shadow-xl overflow-hidden"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-neutral-700">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-white font-semibold">Protocol</th>
+                    <th className="px-6 py-4 text-left text-white font-semibold">Type</th>
+                    <th className="px-6 py-4 text-left text-white font-semibold">Platform</th>
+                    <th className="px-6 py-4 text-left text-white font-semibold">Findings</th>
+                    <th className="px-6 py-4 text-left text-white font-semibold">Rank</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {auditFindings.map((audit, index) => (
+                    <motion.tr
+                      key={index}
+                      className="border-b border-neutral-700 hover:bg-neutral-700/50 transition-colors"
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                    >
+                      <td className="px-6 py-4 text-white font-medium">{audit.protocol}</td>
+                      <td className="px-6 py-4 text-neutral-400">{audit.type}</td>
+                      <td className="px-6 py-4 text-neutral-400">{audit.platform}</td>
+                      <td className="px-6 py-4 text-neutral-300">{audit.findings}</td>
+                      <td className="px-6 py-4">
+                        {audit.link !== "#" ? (
+                          <a
+                            href={audit.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sky-400 hover:text-sky-300 font-semibold flex items-center gap-1"
+                          >
+                            {audit.rank}
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        ) : (
+                          <span className="text-neutral-400">{audit.rank}</span>
+                        )}
+                      </td>
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </motion.div>
+        </div>
       </section>
 
       {/* Tech Stack Section */}
@@ -524,11 +836,10 @@ function App() {
             viewport={{ once: true }}
           >
             <h2 className="text-5xl font-bold mb-6 text-white">
-              Featured <span className="text-sky-400">Projects</span>
+              R&D <span className="text-sky-400">Labs</span>
             </h2>
             <p className="text-xl text-neutral-400 max-w-3xl mx-auto font-light">
-              Showcasing innovative blockchain solutions and cutting-edge DeFi
-              applications
+              Independent builds focused on merging AI agents with on-chain DeFi and exploring zero-knowledge cryptography
             </p>
           </motion.div>
 
@@ -632,9 +943,10 @@ function App() {
               Let's <span className="text-sky-400">Connect</span>
             </h2>
             <p className="text-xl text-neutral-400 mb-12 max-w-3xl mx-auto font-light">
-              Open to collaborating on innovative blockchain projects, DeFi
-              protocols, and prediction markets. Let's build the future of
-              decentralized finance together.
+              Open to collaborating on innovative blockchain projects, security audits, and DeFi protocols. Let's build the future of decentralized finance together.
+            </p>
+            <p className="text-sm text-neutral-500 mb-8 max-w-3xl mx-auto font-light">
+              ⚠️ <span className="font-semibold">Secure Comms:</span> These are my only official channels. Verify all contacts.
             </p>
           </motion.div>
 
@@ -647,6 +959,12 @@ function App() {
           >
             {[
               {
+                href: "https://x.com/developerx_sec",
+                icon: <Twitter className="w-6 h-6" />,
+                label: "X / Twitter",
+                color: "text-gray-400",
+              },
+              {
                 href: "https://github.com/nagatejakachapuram",
                 icon: <Github className="w-6 h-6" />,
                 label: "GitHub",
@@ -658,28 +976,58 @@ function App() {
                 label: "LinkedIn",
                 color: "text-blue-400",
               },
-            ].map((social, index) => (
-              <motion.a
-                key={index}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`group flex items-center gap-3 bg-neutral-800 hover:bg-neutral-700 px-8 py-4 rounded-xl transition-all duration-300 font-medium border border-neutral-700 text-white shadow-lg`}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span
-                  className={`${social.color} group-hover:text-white transition-colors`}
+              {
+                href: "mailto:nagateja.devx@gmail.com",
+                icon: <Mail className="w-6 h-6" />,
+                label: "Email",
+                color: "text-red-400",
+              },
+              {
+                href: null,
+                icon: <MessageCircle className="w-6 h-6" />,
+                label: "Discord: developerx_sec",
+                color: "text-indigo-400",
+              },
+            ].map((social, index) =>
+              social.href ? (
+                <motion.a
+                  key={index}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`group flex items-center gap-3 bg-neutral-800 hover:bg-neutral-700 px-8 py-4 rounded-xl transition-all duration-300 font-medium border border-neutral-700 text-white shadow-lg`}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  {social.icon}
-                </span>
-                <span className="text-white">{social.label}</span>
-              </motion.a>
-            ))}
+                  <span
+                    className={`${social.color} group-hover:text-white transition-colors`}
+                  >
+                    {social.icon}
+                  </span>
+                  <span className="text-white">{social.label}</span>
+                </motion.a>
+              ) : (
+                <motion.div
+                  key={index}
+                  className={`group flex items-center gap-3 bg-neutral-800 px-8 py-4 rounded-xl transition-all duration-300 font-medium border border-neutral-700 text-white shadow-lg cursor-default`}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <span
+                    className={`${social.color} transition-colors`}
+                  >
+                    {social.icon}
+                  </span>
+                  <span className="text-white">{social.label}</span>
+                </motion.div>
+              )
+            )}
           </motion.div>
         </div>
       </section>
@@ -698,38 +1046,6 @@ function App() {
           </motion.p>
         </div>
       </footer>
-    </div>
-  );
-  return (
-    <div className="min-h-screen bg-neutral-950 text-white overflow-x-hidden relative font-sans">
-      {/* Animated Background - Now using Three.js */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <ThreeParticlesBackground /> {/* Place the Three.js component here */}
-        {/* You can still keep some subtle static elements or slight overlays if you wish,
-            but the ThreeParticlesBackground will be the main dynamic element.
-            For instance, the grid pattern could remain. */}
-        {/* Minimal Grid Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="grid grid-cols-12 gap-4 h-full">
-            {Array.from({ length: 144 }).map((_, i) => (
-              <motion.div
-                key={i}
-                className="border border-neutral-800"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 0.1, 0] }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  delay: i * 0.05,
-                  ease: "easeInOut",
-                }}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* ... (rest of your App.js content: Navigation, Sections, Footer) ... */}
     </div>
   );
 }
