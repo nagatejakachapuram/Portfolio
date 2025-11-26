@@ -182,6 +182,16 @@ function App() {
       icon: <Shield className="w-8 h-8" />,
       color: "text-green-400",
     },
+    {
+      title: "web3AiX",
+      description:
+        "An AI-powered Web3 platform integrating advanced AI agents with blockchain infrastructure. Enables intelligent automation, smart contract interactions, and AI-driven decentralized applications.",
+      github: "https://github.com/nagatejakachapuram/web3AiX",
+      demo: "#",
+      tags: ["Web3", "AI", "Blockchain", "Automation", "Smart Contracts"],
+      icon: <Sparkles className="w-8 h-8" />,
+      color: "text-purple-400",
+    },
   ];
 
   const containerVariants = {
