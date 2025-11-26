@@ -177,7 +177,7 @@ function App() {
       description:
         "A decentralized finance protocol built with security-first principles. Features comprehensive smart contract architecture for lending, borrowing, and yield generation with advanced risk management mechanisms.",
       github: "https://github.com/nagatejakachapuram/Vale-Finance",
-      demo: "#",
+      demo: "https://valefinancex.netlify.app/",
       tags: ["DeFi", "Lending", "Smart Contracts", "Security", "Yield"],
       icon: <Shield className="w-8 h-8" />,
       color: "text-green-400",
@@ -187,7 +187,7 @@ function App() {
       description:
         "An AI-powered Web3 platform integrating advanced AI agents with blockchain infrastructure. Enables intelligent automation, smart contract interactions, and AI-driven decentralized applications.",
       github: "https://github.com/nagatejakachapuram/web3AiX",
-      demo: "#",
+      demo: "https://web-ai-x.vercel.app/",
       tags: ["Web3", "AI", "Blockchain", "Automation", "Smart Contracts"],
       icon: <Sparkles className="w-8 h-8" />,
       color: "text-purple-400",
