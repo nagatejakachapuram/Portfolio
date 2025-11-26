@@ -173,14 +173,14 @@ function App() {
       color: "text-indigo-400",
     },
     {
-      title: "Noir + ZK Privacy",
+      title: "Vale Finance",
       description:
-        "Exploring privacy-preserving applications and proof systems using Noir & Nargo. Building zero-knowledge proof systems for enhanced on-chain privacy.",
-      github: "#",
+        "A decentralized finance protocol built with security-first principles. Features comprehensive smart contract architecture for lending, borrowing, and yield generation with advanced risk management mechanisms.",
+      github: "https://github.com/nagatejakachapuram/Vale-Finance",
       demo: "#",
-      tags: ["ZK Proofs", "Noir", "Privacy", "Cryptography", "SnarkJS"],
-      icon: <CircuitBoard className="w-8 h-8" />,
-      color: "text-purple-400",
+      tags: ["DeFi", "Lending", "Smart Contracts", "Security", "Yield"],
+      icon: <Shield className="w-8 h-8" />,
+      color: "text-green-400",
     },
   ];
 
@@ -300,7 +300,7 @@ function App() {
 
       {/* Navigation */}
       <motion.nav
-        className="fixed top-0 w-full bg-neutral-950/80 backdrop-blur-md border-b border-neutral-800 z-40"
+        className="fixed top-0 w-full bg-black/90 backdrop-blur-md border-b border-neutral-900 z-40"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -358,7 +358,7 @@ function App() {
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
-              className="md:hidden bg-neutral-900/95 backdrop-blur-md border-t border-neutral-800"
+              className="md:hidden bg-black/95 backdrop-blur-md border-t border-neutral-900"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
@@ -432,13 +432,13 @@ function App() {
                 ].map((item, index) => (
                   <motion.div
                     key={index}
-                    className="flex items-center gap-2 px-5 py-2 bg-neutral-800 rounded-full border border-neutral-700 shadow-lg"
+                    className="flex items-center gap-2 px-5 py-2 bg-black rounded-full border border-neutral-800 shadow-lg"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6, delay: item.delay }}
                     whileHover={{
                       scale: 1.05,
-                      backgroundColor: "rgb(38 38 38)",
+                      borderColor: "rgb(56 189 248)",
                     }}
                   >
                     <span className="text-sky-400">{item.icon}</span>
@@ -474,7 +474,7 @@ function App() {
 
               <motion.button
                 onClick={() => scrollToSection("contact")}
-                className="px-9 py-4 border-2 border-neutral-600 rounded-xl font-semibold text-sky-400 hover:bg-neutral-800 transition-all duration-300 shadow-lg"
+                className="px-9 py-4 border-2 border-neutral-800 rounded-xl font-semibold text-sky-400 hover:bg-black hover:border-sky-400 transition-all duration-300 shadow-lg"
                 whileHover={{ scale: 1.05, borderColor: "rgb(56 189 248)" }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -495,7 +495,7 @@ function App() {
       </section>
 
       {/* System Status Section */}
-      <section id="status" className="py-20 px-6 bg-neutral-900 relative">
+      <section id="status" className="py-20 px-6 bg-black relative">
         <div className="max-w-6xl mx-auto relative z-10">
           <motion.div
             className="text-center mb-16"
@@ -514,7 +514,7 @@ function App() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <motion.div
-              className="bg-neutral-800 rounded-2xl p-8 border border-neutral-700 shadow-xl"
+              className="bg-black rounded-2xl p-8 border border-neutral-900 shadow-xl hover:border-sky-500/30 transition-all duration-300"
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -535,7 +535,7 @@ function App() {
             </motion.div>
 
             <motion.div
-              className="bg-neutral-800 rounded-2xl p-8 border border-neutral-700 shadow-xl"
+              className="bg-black rounded-2xl p-8 border border-neutral-900 shadow-xl hover:border-sky-500/30 transition-all duration-300"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -585,7 +585,7 @@ function App() {
           </motion.div>
 
           <motion.div
-            className="bg-gradient-to-br from-neutral-800 to-neutral-900 rounded-2xl p-8 md:p-12 border border-neutral-700 shadow-xl relative overflow-hidden"
+            className="bg-black rounded-2xl p-8 md:p-12 border border-neutral-900 shadow-xl relative overflow-hidden hover:border-sky-500/30 transition-all duration-300"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -645,7 +645,7 @@ function App() {
       </section>
 
       {/* Audit Log Section */}
-      <section id="audits" className="py-20 px-6 bg-neutral-900 relative">
+      <section id="audits" className="py-20 px-6 bg-black relative">
         <div className="max-w-6xl mx-auto relative z-10">
           <motion.div
             className="text-center mb-16"
@@ -680,7 +680,7 @@ function App() {
             ].map((achievement, index) => (
               <motion.div
                 key={index}
-                className="bg-neutral-800 rounded-xl p-6 border border-neutral-700 hover:border-sky-500 transition-all duration-300"
+                className="bg-black rounded-xl p-6 border border-neutral-900 hover:border-sky-500 transition-all duration-300"
                 whileHover={{ scale: 1.05, y: -5 }}
               >
                 <div className="flex items-center justify-between mb-3">
@@ -698,7 +698,7 @@ function App() {
 
           {/* Audit Table */}
           <motion.div
-            className="bg-neutral-800 rounded-2xl border border-neutral-700 shadow-xl overflow-hidden"
+            className="bg-black rounded-2xl border border-neutral-900 shadow-xl overflow-hidden"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -706,7 +706,7 @@ function App() {
           >
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-neutral-700">
+                <thead className="bg-neutral-950 border-b border-neutral-900">
                   <tr>
                     <th className="px-6 py-4 text-left text-white font-semibold">Protocol</th>
                     <th className="px-6 py-4 text-left text-white font-semibold">Type</th>
@@ -719,7 +719,7 @@ function App() {
                   {auditFindings.map((audit, index) => (
                     <motion.tr
                       key={index}
-                      className="border-b border-neutral-700 hover:bg-neutral-700/50 transition-colors"
+                      className="border-b border-neutral-900 hover:bg-neutral-950 transition-colors"
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -754,7 +754,7 @@ function App() {
       </section>
 
       {/* Tech Stack Section */}
-      <section id="tech" className="py-20 px-6 bg-neutral-900 relative">
+      <section id="tech" className="py-20 px-6 bg-black relative">
         <div className="max-w-6xl mx-auto relative z-10">
           <motion.div
             className="text-center mb-16"
@@ -773,21 +773,21 @@ function App() {
           </motion.div>
 
           <motion.div
-            className="bg-neutral-800 rounded-2xl border border-neutral-700 shadow-xl overflow-hidden"
+            className="bg-black rounded-2xl border border-neutral-900 shadow-xl overflow-hidden"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
             {/* Header */}
-            <div className="grid grid-cols-1 md:grid-cols-2 bg-neutral-700">
-              <div className="p-6 border-b md:border-b-0 md:border-r border-neutral-600">
+            <div className="grid grid-cols-1 md:grid-cols-2 bg-neutral-950 border-b border-neutral-900">
+              <div className="p-6 border-b md:border-b-0 md:border-r border-neutral-900">
                 <h3 className="text-xl font-bold text-white flex items-center gap-3">
                   <Code className="w-6 h-6 text-sky-400" />
                   Category
                 </h3>
               </div>
-              <div className="p-6 border-b md:border-b-0 border-neutral-600">
+              <div className="p-6 border-b md:border-b-0 border-neutral-900">
                 <h3 className="text-xl font-bold text-white flex items-center gap-3">
                   <Zap className="w-6 h-6 text-purple-400" />
                   Tools/Tech
@@ -799,14 +799,14 @@ function App() {
             {techStack.map((item, index) => (
               <motion.div
                 key={index}
-                className="grid grid-cols-1 md:grid-cols-2 hover:bg-neutral-700 transition-all duration-300 group"
+                className="grid grid-cols-1 md:grid-cols-2 hover:bg-neutral-950 transition-all duration-300 group border-b border-neutral-900 last:border-b-0"
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ scale: 1.02 }}
               >
-                <div className="p-6 border-b md:border-b-0 md:border-r border-neutral-700 flex items-center gap-3">
+                <div className="p-6 border-b md:border-b-0 md:border-r border-neutral-900 flex items-center gap-3">
                   <span className="text-sky-400 group-hover:text-purple-400 transition-colors">
                     {item.icon}
                   </span>
@@ -814,7 +814,7 @@ function App() {
                     {item.category}
                   </span>
                 </div>
-                <div className="p-6 border-b md:border-b-0 border-neutral-700">
+                <div className="p-6 border-b md:border-b-0 border-neutral-900">
                   <span className="text-neutral-300 font-mono text-base">
                     {item.tools}
                   </span>
@@ -847,7 +847,7 @@ function App() {
             {projects.map((project, index) => (
               <motion.div
                 key={index}
-                className="group relative bg-neutral-800 rounded-2xl p-8 border border-neutral-700 shadow-xl hover:border-sky-500 transition-all duration-500 overflow-hidden"
+                className="group relative bg-black rounded-2xl p-8 border border-neutral-900 shadow-xl hover:border-sky-500 transition-all duration-500 overflow-hidden"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.2 }}
@@ -865,7 +865,7 @@ function App() {
                 <div className="relative z-10">
                   <div className="flex items-center gap-4 mb-6">
                     <motion.div
-                      className={`p-3 bg-neutral-700 rounded-xl ${project.color} shadow-md`}
+                      className={`p-3 bg-neutral-950 rounded-xl ${project.color} shadow-md border border-neutral-900`}
                       whileHover={{ rotate: 360 }}
                       transition={{ duration: 0.6 }}
                     >
@@ -884,7 +884,7 @@ function App() {
                     {project.tags.map((tag, tagIndex) => (
                       <motion.span
                         key={tagIndex}
-                        className="px-3.5 py-1.5 bg-neutral-700 text-neutral-300 rounded-full text-sm font-medium border border-neutral-600"
+                        className="px-3.5 py-1.5 bg-neutral-950 text-neutral-300 rounded-full text-sm font-medium border border-neutral-900"
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.4, delay: tagIndex * 0.1 }}
@@ -904,24 +904,26 @@ function App() {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 bg-neutral-700 hover:bg-neutral-600 px-6 py-3 rounded-xl transition-all duration-300 font-medium border border-neutral-600 text-white shadow-md"
+                      className="flex items-center gap-2 bg-neutral-950 hover:bg-black px-6 py-3 rounded-xl transition-all duration-300 font-medium border border-neutral-900 hover:border-sky-500 text-white shadow-md"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
                       <Github className="w-4 h-4" />
                       Code
                     </motion.a>
-                    <motion.a
-                      href={project.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`flex items-center gap-2 bg-sky-600 hover:bg-sky-700 px-6 py-3 rounded-xl transition-all duration-300 font-medium text-white shadow-md`}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      Live Demo
-                    </motion.a>
+                    {project.demo !== "#" ? (
+                      <motion.a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex items-center gap-2 bg-sky-600 hover:bg-sky-700 px-6 py-3 rounded-xl transition-all duration-300 font-medium text-white shadow-md`}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        Live Demo
+                      </motion.a>
+                    ) : null}
                   </div>
                 </div>
               </motion.div>
@@ -931,7 +933,7 @@ function App() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-6 bg-neutral-900 relative">
+      <section id="contact" className="py-20 px-6 bg-black relative">
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -995,7 +997,7 @@ function App() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group flex items-center gap-3 bg-neutral-800 hover:bg-neutral-700 px-8 py-4 rounded-xl transition-all duration-300 font-medium border border-neutral-700 text-white shadow-lg`}
+                  className={`group flex items-center gap-3 bg-black hover:bg-neutral-950 px-8 py-4 rounded-xl transition-all duration-300 font-medium border border-neutral-900 hover:border-sky-500 text-white shadow-lg`}
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -1013,7 +1015,7 @@ function App() {
               ) : (
                 <motion.div
                   key={index}
-                  className={`group flex items-center gap-3 bg-neutral-800 px-8 py-4 rounded-xl transition-all duration-300 font-medium border border-neutral-700 text-white shadow-lg cursor-default`}
+                  className={`group flex items-center gap-3 bg-black px-8 py-4 rounded-xl transition-all duration-300 font-medium border border-neutral-900 text-white shadow-lg cursor-default`}
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -1033,7 +1035,7 @@ function App() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-6 border-t border-neutral-800 bg-neutral-950 relative z-10">
+      <footer className="py-8 px-6 border-t border-neutral-900 bg-black relative z-10">
         <div className="max-w-6xl mx-auto text-center">
           <motion.p
             className="text-neutral-400 font-light"
