@@ -532,7 +532,7 @@ function App() {
                 <div className="flex justify-center gap-3">
                   {/* X / Twitter */}
                   <motion.a
-                    href="https://x.com/developerx_sec"
+                    href="https://x.developerx-security.xyz/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-3 bg-neutral-800/50 hover:bg-neutral-700/50 rounded-xl transition-all duration-300 border border-neutral-700/50 hover:border-neutral-600 group"
