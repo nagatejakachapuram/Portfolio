@@ -227,7 +227,7 @@ const platformLogos: Record<string, string> = {
 // Protocol data with images - corrected findings
 const protocols = [
   {
-    name: "Octant V2-Core",
+    name: "Octant V2",
     image: "/images/octant-v2-core.webp",
     platform: "Cantina",
     type: "DeFi",
