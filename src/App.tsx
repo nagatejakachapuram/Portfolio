@@ -1,1061 +1,1059 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Github,
   ExternalLink,
-  Linkedin,
+  Shield,
   Code,
   Zap,
-  Shield,
-  TestTube,
-  Link as LinkIcon,
-  ChevronDown,
-  Menu,
-  X,
-  Sparkles,
-  Rocket,
   Brain,
   TrendingUp,
-  // Blocks,
-  // GitPullRequestDraft,
-  // Lock,
-  // Server,
-  // Activity,
-  CircuitBoard,
-  // Cpu, // REMOVED: No longer needed for blinking pink stuff
-  Terminal,
+  Sparkles,
+  Menu,
+  X,
   Trophy,
+  AlertTriangle,
+  AlertCircle,
+  Info,
+  Flame,
+  Target,
   Award,
-  Mail,
-  MessageCircle,
-  Twitter,
   CheckCircle,
 } from "lucide-react";
 
-// Import the Three.js particle background component
-import ThreeParticlesBackground from "./ThreeParticlesBackground";
+// Modern Gradient Mesh Background with Aurora Effect
+const AestheticBackground = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationRef = useRef<number>();
 
-function App() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [activeSection, setActiveSection] = useState("about");
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const initCanvas = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-  useEffect(() => {
-    setIsVisible(true);
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-    const handleScroll = () => {
-      const sections = ["about", "status", "audits", "deployment", "tech", "projects", "contact"];
-      const scrollPosition = window.scrollY + 100;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (
-            scrollPosition >= offsetTop &&
-            scrollPosition < offsetTop + offsetHeight
-          ) {
-            setActiveSection(section);
-            break;
+    let time = 0;
+
+    // Aurora wave configuration
+    const waves = [
+      { amplitude: 80, frequency: 0.003, speed: 0.008, color: 'rgba(16, 185, 129, 0.15)', yOffset: 0.3 },
+      { amplitude: 100, frequency: 0.002, speed: 0.006, color: 'rgba(6, 182, 212, 0.12)', yOffset: 0.4 },
+      { amplitude: 70, frequency: 0.004, speed: 0.01, color: 'rgba(139, 92, 246, 0.1)', yOffset: 0.5 },
+      { amplitude: 90, frequency: 0.0025, speed: 0.007, color: 'rgba(20, 184, 166, 0.08)', yOffset: 0.6 },
+    ];
+
+    // Floating gradient blobs
+    const blobs = [
+      { x: 0.2, y: 0.25, size: 0.4, speedX: 0.0002, speedY: 0.00015, color1: 'rgba(16, 185, 129, 0.12)', color2: 'transparent' },
+      { x: 0.75, y: 0.65, size: 0.35, speedX: -0.00015, speedY: 0.0002, color1: 'rgba(6, 182, 212, 0.1)', color2: 'transparent' },
+      { x: 0.5, y: 0.8, size: 0.45, speedX: 0.00018, speedY: -0.00012, color1: 'rgba(139, 92, 246, 0.08)', color2: 'transparent' },
+    ];
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      time += 1;
+
+      // Draw animated gradient blobs
+      blobs.forEach(blob => {
+        // Update position with smooth oscillation
+        const offsetX = Math.sin(time * blob.speedX * 100) * 50;
+        const offsetY = Math.cos(time * blob.speedY * 100) * 50;
+        
+        const x = blob.x * canvas.width + offsetX;
+        const y = blob.y * canvas.height + offsetY;
+        const size = blob.size * Math.min(canvas.width, canvas.height);
+
+        const gradient = ctx.createRadialGradient(x, y, 0, x, y, size);
+        gradient.addColorStop(0, blob.color1);
+        gradient.addColorStop(0.5, blob.color1.replace(/[\d.]+\)$/, '0.05)'));
+        gradient.addColorStop(1, blob.color2);
+        
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Draw aurora waves
+      waves.forEach(wave => {
+        ctx.beginPath();
+        const baseY = canvas.height * wave.yOffset;
+        
+        for (let x = 0; x <= canvas.width; x += 3) {
+          const y = baseY + 
+            Math.sin(x * wave.frequency + time * wave.speed) * wave.amplitude +
+            Math.sin(x * wave.frequency * 1.5 + time * wave.speed * 0.8) * (wave.amplitude * 0.5);
+          
+          if (x === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
           }
         }
+        
+        // Create gradient fill below the wave
+        ctx.lineTo(canvas.width, canvas.height);
+        ctx.lineTo(0, canvas.height);
+        ctx.closePath();
+        
+        const gradient = ctx.createLinearGradient(0, baseY - wave.amplitude, 0, canvas.height);
+        gradient.addColorStop(0, wave.color);
+        gradient.addColorStop(0.5, wave.color.replace(/[\d.]+\)$/, '0.03)'));
+        gradient.addColorStop(1, 'transparent');
+        
+        ctx.fillStyle = gradient;
+        ctx.fill();
+      });
+
+      // Add subtle noise/grain texture effect
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      for (let i = 0; i < data.length; i += 4) {
+        const noise = (Math.random() - 0.5) * 8;
+        data[i] = Math.max(0, Math.min(255, data[i] + noise));
+        data[i + 1] = Math.max(0, Math.min(255, data[i + 1] + noise));
+        data[i + 2] = Math.max(0, Math.min(255, data[i + 2] + noise));
       }
+      ctx.putImageData(imageData, 0, 0);
+
+      animationRef.current = requestAnimationFrame(animate);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    animate();
+
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
-  const techStack = [
-    {
-      category: "Smart Contracts",
-      tools: "Solidity, Foundry, Hardhat",
-      icon: <Code className="w-5 h-5" />,
-    },
-    {
-      category: "Security",
-      tools: "Foundry Fuzz, Echidna, Slither, Mythril",
-      icon: <Shield className="w-5 h-5" />,
-    },
-    {
-      category: "ZK/Privacy",
-      tools: "Noir, Circom, SnarkJS",
-      icon: <CircuitBoard className="w-5 h-5" />,
-    },
-    {
-      category: "AI Agents",
-      tools: "ElizaOS Plugins, TypeScript, Python",
-      icon: <Brain className="w-5 h-5" />,
-    },
-    {
-      category: "Infrastructure",
-      tools: "Chainlink Automation, OZ Upgrades",
-      icon: <LinkIcon className="w-5 h-5" />,
-    },
-  ];
-
-  const auditFindings = [
-    {
-      protocol: "Octant V2-Core",
-      type: "DeFi",
-      platform: "Cantina",
-      findings: "1 High, 2 Info",
-      rank: "#6",
-      link: "https://cantina.xyz/code/917d796b-48d0-41d0-bb40-be137b7d3db5/overview/leaderboard",
-    },
-    {
-      protocol: "Pike Finance",
-      type: "Lending",
-      platform: "Cantina",
-      findings: "1 Med (Solo), 1 Low",
-      rank: "#7",
-      link: "https://cantina.xyz/code/917d796b-48d0-41d0-bb40-be137b7d3db5/overview/leaderboard",
-    },
-    {
-      protocol: "Mellow Flexible Vaults",
-      type: "Vaults",
-      platform: "Sherlock",
-      findings: "1 Med",
-      rank: "#43",
-      link: "https://audits.sherlock.xyz/contests/964/leaderboard",
-    },
-    {
-      protocol: "Malda",
-      type: "Lending",
-      platform: "Sherlock",
-      findings: "1 Med",
-      rank: "#46",
-      link: "https://audits.sherlock.xyz/contests/1029/leaderboard",
-    },
-    {
-      protocol: "Kuru",
-      type: "CLOB",
-      platform: "Cantina",
-      findings: "1 Low, 2 Info",
-      rank: "Results",
-      link: "https://cantina.xyz/code/cdce21ba-b787-4df4-9c56-b31d085388e7/overview",
-    },
-    {
-      protocol: "Megapot",
-      type: "DeFi",
-      platform: "Code4rena",
-      findings: "1 Low",
-      rank: "Pending",
-      link: "#",
-    },
-  ];
-
-  const projects = [
-    {
-      title: "AI-Powered Yield Optimizer",
-      description:
-        "Yearn-style vaults where strategy rotation is dictated by off-chain ElizaOS AI agents via Chainlink Automation. Advanced DeFi yield optimization platform with AI-driven decision making.",
-      github: "https://github.com/nagatejakachapuram/yield-optimizer-prod",
-      demo: "https://cipher-ai.vercel.app/",
-      tags: [
-        "DeFi",
-        "AI Agents",
-        "Yield Farming",
-        "Chainlink Automation",
-        "ElizaOS",
-      ],
-      icon: <Brain className="w-8 h-8" />,
-      color: "text-amber-400",
-    },
-    {
-      title: "Flare-AMM DEX",
-      description:
-        "A custom-built modular DEX supporting unique pricing curves and prediction markets. Combines traditional DEX functionality with prediction market capabilities on Flare Network.",
-      github: "https://github.com/nagatejakachapuram/Flare-Dex-Prediction",
-      demo: "https://dex-predication.vercel.app",
-      tags: ["DEX", "Prediction Markets", "Flare Network", "AMM", "Trading"],
-      icon: <TrendingUp className="w-8 h-8" />,
-      color: "text-indigo-400",
-    },
-    {
-      title: "Vale Finance",
-      description:
-        "A decentralized finance protocol built with security-first principles. Features comprehensive smart contract architecture for lending, borrowing, and yield generation with advanced risk management mechanisms.",
-      github: "https://github.com/nagatejakachapuram/Vale-Finance",
-      demo: "https://valefinancex.netlify.app/",
-      tags: ["DeFi", "Lending", "Smart Contracts", "Security", "Yield"],
-      icon: <Shield className="w-8 h-8" />,
-      color: "text-green-400",
-    },
-    {
-      title: "web3AiX",
-      description:
-        "An AI-powered Web3 platform integrating advanced AI agents with blockchain infrastructure. Enables intelligent automation, smart contract interactions, and AI-driven decentralized applications.",
-      github: "https://github.com/nagatejakachapuram/web3AiX",
-      demo: "https://web-ai-x.vercel.app/",
-      tags: ["Web3", "AI", "Blockchain", "Automation", "Smart Contracts"],
-      icon: <Sparkles className="w-8 h-8" />,
-      color: "text-purple-400",
-    },
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-    setMobileMenuOpen(false);
-  };
+  useEffect(() => {
+    const cleanup = initCanvas();
+    return cleanup;
+  }, [initCanvas]);
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-white overflow-x-hidden relative font-sans">
-      {/* Animated Background - Now solely using Three.js for the main particles */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <ThreeParticlesBackground />{" "}
-        {/* This is your main particle visualization */}
-        {/* More prominent ZK Circuit Board Icons - for a structural element (subtle) */}
-        {[...Array(4)].map((_, i) => (
-          <motion.div
-            key={`circuit-board-${i}`}
-            className="absolute text-sky-700/10" // Darker sky color, very subtle
-            style={{
-              left: `${i * 25 + Math.random() * 15}%`,
-              top: `${Math.random() * 90}%`,
-              width: `${Math.random() * 180 + 250}px`, // Even larger
-              height: `${Math.random() * 180 + 250}px`,
-              transform: `rotate(${Math.random() * 360}deg)`,
-            }}
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{
-              opacity: [0, 0.05, 0], // Super subtle background structure
-              scale: [0.8, 1.1, 0.8],
-              rotate: [0, Math.random() > 0.5 ? 90 : -90, 0],
-            }}
-            transition={{
-              duration: Math.random() * 25 + 20, // Very long duration
-              repeat: Infinity,
-              repeatType: "loop",
-              ease: "linear",
-              delay: i * 5,
-            }}
-          >
-            <CircuitBoard className="w-full h-full" />
-          </motion.div>
-        ))}
-        {/* REMOVED: The section that generated the blinking pink CPU icons */}
-        {/*
-        {[...Array(25)].map((_, i) => (
-            <motion.div
-                key={`cpu-node-${i}`}
-                className="absolute w-2.5 h-2.5 bg-fuchsia-500 rounded-full blur-sm"
-                style={{
-                    left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 100}%`,
-                }}
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{
-                    opacity: [0, 1, 0],
-                    scale: [0.8, 2, 0.8],
-                }}
-                transition={{
-                    duration: Math.random() * 2 + 1.5,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    ease: "easeInOut",
-                    delay: Math.random() * 5,
-                }}
-            >
-                <Cpu className="w-full h-full text-white/90" />
-            </motion.div>
-        ))}
-        */}
-        {/* Grid Pattern (subtle, adds structure) */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="grid grid-cols-12 gap-4 h-full">
-            {Array.from({ length: 144 }).map((_, i) => (
-              <motion.div
-                key={i}
-                className="border border-neutral-800"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 0.1, 0] }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  delay: i * 0.05,
-                  ease: "easeInOut",
-                }}
-              />
-            ))}
-          </div>
-        </div>
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none"
+      style={{ zIndex: 0 }}
+    />
+  );
+};
+
+// Severity badge component
+const SeverityBadge = ({ type, count }: { type: string; count: number }) => {
+  const config: Record<string, { icon: JSX.Element; bg: string; text: string; border: string; glow: string }> = {
+    H: {
+      icon: <Flame className="w-3.5 h-3.5" />,
+      bg: "bg-red-500/10",
+      text: "text-red-400",
+      border: "border-red-500/30",
+      glow: "shadow-red-500/20",
+    },
+    M: {
+      icon: <AlertTriangle className="w-3.5 h-3.5" />,
+      bg: "bg-orange-500/10",
+      text: "text-orange-400",
+      border: "border-orange-500/30",
+      glow: "shadow-orange-500/20",
+    },
+    L: {
+      icon: <AlertCircle className="w-3.5 h-3.5" />,
+      bg: "bg-yellow-500/10",
+      text: "text-yellow-400",
+      border: "border-yellow-500/30",
+      glow: "shadow-yellow-500/20",
+    },
+    I: {
+      icon: <Info className="w-3.5 h-3.5" />,
+      bg: "bg-blue-500/10",
+      text: "text-blue-400",
+      border: "border-blue-500/30",
+      glow: "shadow-blue-500/20",
+    },
+  };
+
+  const c = config[type];
+  if (!c) return null;
+
+  return (
+    <motion.div
+      className={`flex items-center gap-1.5 px-2.5 py-1 ${c.bg} ${c.text} ${c.border} border rounded-lg shadow-lg ${c.glow}`}
+      whileHover={{ scale: 1.05 }}
+      transition={{ type: "spring", stiffness: 400 }}
+    >
+      {c.icon}
+      <span className="font-bold text-sm">{count}</span>
+    </motion.div>
+  );
+};
+
+// Parse findings string
+const parseFindings = (findings: string) => {
+  const result: { type: string; count: number }[] = [];
+  const parts = findings.split(",").map(s => s.trim());
+  
+  parts.forEach(part => {
+    const match = part.match(/(\d+)\s*([HMLI])/i);
+    if (match) {
+      result.push({ count: parseInt(match[1]), type: match[2].toUpperCase() });
+    }
+  });
+  
+  return result;
+};
+
+// Platform logos mapping
+const platformLogos: Record<string, string> = {
+  Cantina: "/cantina.png",
+  Code4rena: "/c4-logo-icon.svg",
+  Sherlock: "/sherlock.png",
+};
+
+// Protocol data with images - corrected findings
+const protocols = [
+  {
+    name: "Octant V2-Core",
+    image: "/octant-v2-core.webp",
+    platform: "Cantina",
+    type: "DeFi",
+    findings: "1H, 2I",
+    rank: "#6",
+    link: "https://cantina.xyz/code/917d796b-48d0-41d0-bb40-be137b7d3db5/overview/leaderboard",
+    twitter: "https://x.com/OctantApp",
+    featured: true,
+  },
+  {
+    name: "Pike Finance",
+    image: "/pike.webp",
+    platform: "Cantina",
+    type: "Lending",
+    findings: "1M, 1L",
+    rank: "#7",
+    link: "https://cantina.xyz/code/917d796b-48d0-41d0-bb40-be137b7d3db5/overview/leaderboard",
+    twitter: "https://x.com/PikeFinance",
+    featured: true,
+  },
+  {
+    name: "Megapot",
+    image: "/Megapot.webp",
+    platform: "Code4rena",
+    type: "DeFi",
+    findings: "1L",
+    rank: "#50",
+    link: "https://code4rena.com/audits/2025-11-megapot/dashboard",
+    twitter: "",
+    featured: false,
+  },
+  {
+    name: "Kuru",
+    image: "/Kuru.webp",
+    platform: "Cantina",
+    type: "CLOB",
+    findings: "1L, 2I",
+    rank: "#24",
+    link: "https://cantina.xyz/code/cdce21ba-b787-4df4-9c56-b31d085388e7/overview",
+    twitter: "https://x.com/kaboratory0",
+    featured: false,
+  },
+  {
+    name: "Panoptic",
+    image: "/Panoptic.webp",
+    platform: "Code4rena",
+    type: "Options",
+    findings: "1M",
+    rank: "#42",
+    link: "https://code4rena.com/audits/2024-04-panoptic",
+    twitter: "https://x.com/Panoptic_xyz",
+    featured: false,
+  },
+  {
+    name: "Mellow Vaults",
+    image: "/Mellow.webp",
+    platform: "Sherlock",
+    type: "Vaults",
+    findings: "1M",
+    rank: "#43",
+    link: "https://audits.sherlock.xyz/contests/964/leaderboard",
+    twitter: "https://x.com/maboratory0",
+    featured: false,
+  },
+  {
+    name: "Malda",
+    image: "/Malda.webp",
+    platform: "Sherlock",
+    type: "Lending",
+    findings: "1M",
+    rank: "#46",
+    link: "https://audits.sherlock.xyz/contests/1029/leaderboard",
+    twitter: "https://x.com/maboratory0",
+    featured: false,
+  },
+];
+
+const projects = [
+  {
+    title: "AI-Powered Yield Optimizer",
+    description:
+      "Yearn-style vaults with AI agents via Chainlink Automation for strategy rotation.",
+    github: "https://github.com/nagatejakachapuram/yield-optimizer-prod",
+    demo: "https://cipher-ai.vercel.app/",
+    tags: ["DeFi", "AI Agents", "Chainlink"],
+    icon: <Brain className="w-5 h-5" />,
+  },
+  {
+    title: "Flare-AMM DEX",
+    description:
+      "Custom modular DEX supporting unique pricing curves and prediction markets on Flare.",
+    github: "https://github.com/nagatejakachapuram/Flare-Dex-Prediction",
+    demo: "https://dex-predication.vercel.app",
+    tags: ["DEX", "Prediction Markets", "AMM"],
+    icon: <TrendingUp className="w-5 h-5" />,
+  },
+  {
+    title: "Vale Finance",
+    description:
+      "Security-first DeFi protocol for lending, borrowing with advanced risk management.",
+    github: "https://github.com/nagatejakachapuram/Vale-Finance",
+    demo: "https://valefinancex.netlify.app/",
+    tags: ["DeFi", "Lending", "Security"],
+    icon: <Shield className="w-5 h-5" />,
+  },
+  {
+    title: "web3AiX",
+    description:
+      "AI-powered Web3 platform integrating agents with blockchain infrastructure.",
+    github: "https://github.com/nagatejakachapuram/web3AiX",
+    demo: "https://web-ai-x.vercel.app/",
+    tags: ["Web3", "AI", "Automation"],
+    icon: <Sparkles className="w-5 h-5" />,
+  },
+];
+
+function App() {
+  const [activeTab, setActiveTab] = useState<"audits" | "projects">("audits");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hoveredProtocol, setHoveredProtocol] = useState<string | null>(null);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[#05050a] text-white font-sans selection:bg-emerald-500/30 overflow-x-hidden">
+      {/* Aesthetic Animated Background */}
+      <AestheticBackground />
+      
+      {/* Gradient Overlays */}
+      <div className="fixed inset-0 pointer-events-none z-[1]">
+        {/* Gradient orbs */}
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-emerald-500/8 rounded-full blur-[150px] animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-500/8 rounded-full blur-[130px] animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-purple-500/5 rounded-full blur-[180px]" />
+        <div className="absolute top-1/4 right-1/3 w-[300px] h-[300px] bg-amber-500/5 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
+        
+        {/* Scanline effect */}
+        <div 
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `repeating-linear-gradient(
+              0deg,
+              transparent,
+              transparent 2px,
+              rgba(255,255,255,0.03) 2px,
+              rgba(255,255,255,0.03) 4px
+            )`
+          }}
+        />
+
+        {/* Vignette effect */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'radial-gradient(ellipse at center, transparent 0%, rgba(5,5,10,0.4) 100%)'
+          }}
+        />
       </div>
 
-      {/* Navigation */}
-      <motion.nav
-        className="fixed top-0 w-full bg-black/90 backdrop-blur-md border-b border-neutral-900 z-40"
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+      {/* Mobile Menu Button */}
+      <motion.button
+        className="fixed top-6 right-6 z-50 p-3 bg-neutral-900/90 backdrop-blur-xl rounded-xl border border-neutral-800 md:hidden shadow-xl"
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        whileTap={{ scale: 0.95 }}
       >
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+      </motion.button>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
           <motion.div
-            className="text-3xl font-extrabold text-white"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          >
-            Naga<span className="text-sky-400">teja</span>
-          </motion.div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
-            {["about", "status", "audits", "deployment", "tech", "projects", "contact"].map((section) => (
-              <motion.button
-                key={section}
-                onClick={() => scrollToSection(section)}
-                className={`capitalize font-medium transition-all duration-300 relative text-lg ${
-                  activeSection === section
-                    ? "text-sky-400"
-                    : "text-neutral-400 hover:text-sky-300"
-                }`}
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {section === "status" ? "Status" : section === "audits" ? "Audits" : section === "deployment" ? "Deployment" : section}
-                {activeSection === section && (
-                  <motion.div
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-sky-400"
-                    layoutId="activeSection"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </motion.button>
-            ))}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <motion.button
-            className="md:hidden p-2 text-neutral-400 hover:text-sky-400 transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            whileTap={{ scale: 0.95 }}
-          >
-            {mobileMenuOpen ? (
-              <X className="w-7 h-7" />
-            ) : (
-              <Menu className="w-7 h-7" />
-            )}
-          </motion.button>
-        </div>
-
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              className="md:hidden bg-black/95 backdrop-blur-md border-t border-neutral-900"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="px-6 py-4 space-y-4">
-                {["about", "status", "audits", "deployment", "tech", "projects", "contact"].map((section) => (
-                  <motion.button
-                    key={section}
-                    onClick={() => scrollToSection(section)}
-                    className="block w-full text-left capitalize font-medium text-neutral-300 hover:text-sky-400 transition-colors py-2 text-lg"
-                    whileHover={{ x: 10 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  >
-                    {section === "status" ? "Status" : section === "audits" ? "Audits" : section === "deployment" ? "Deployment" : section}
-                  </motion.button>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.nav>
-
-      {/* Hero Section */}
-      <section
-        id="about"
-        className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden pt-24 pb-12"
-      >
-        <div className="max-w-6xl mx-auto text-center relative z-10">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate={isVisible ? "visible" : "hidden"}
-          >
-            <motion.div variants={itemVariants} className="mb-8">
-              <motion.h1
-                className="text-6xl md:text-8xl font-black mb-6 leading-tight text-white"
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-              >
-                <span className="text-sky-400">Nagateja</span>
-                <br />
-                <span className="font-light">Kachapuram</span>
-              </motion.h1>
-            </motion.div>
-
-            <motion.div variants={itemVariants} className="space-y-4 mb-12">
-              <motion.div
-                className="flex flex-wrap justify-center gap-4 text-xl md:text-2xl font-semibold"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-              >
-                {[
-                  {
-                    text: "Security Researcher",
-                    icon: <Shield className="w-6 h-6" />,
-                    delay: 0.8,
-                  },
-                  {
-                    text: "Core Engineer",
-                    icon: <Code className="w-6 h-6" />,
-                    delay: 1.0,
-                  },
-                  {
-                    text: "Full-Stack Web3 Developer",
-                    icon: <Zap className="w-6 h-6" />,
-                    delay: 1.2,
-                  },
-                ].map((item, index) => (
-                  <motion.div
-                    key={index}
-                    className="flex items-center gap-2 px-5 py-2 bg-black rounded-full border border-neutral-800 shadow-lg"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6, delay: item.delay }}
-                    whileHover={{
-                      scale: 1.05,
-                      borderColor: "rgb(56 189 248)",
-                    }}
-                  >
-                    <span className="text-sky-400">{item.icon}</span>
-                    <span className="text-neutral-300">{item.text}</span>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </motion.div>
-
-            <motion.p
-              variants={itemVariants}
-              className="text-xl text-neutral-300 max-w-4xl mx-auto mb-12 leading-relaxed font-light"
-            >
-              I am a smart contract security engineer and full-stack Web3 developer. My focus is adversarial testing, securing DeFi primitives, and architecting the infrastructure for the next generation of AI-driven decentralized applications.
-            </motion.p>
-
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row justify-center gap-6"
-            >
-              <motion.button
-                onClick={() => scrollToSection("projects")}
-                className="group relative px-9 py-4 bg-sky-600 rounded-xl font-semibold text-white overflow-hidden shadow-lg hover:bg-sky-700 transition-colors duration-300"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  <Rocket className="w-5 h-5" />
-                  View Projects
-                </span>
-              </motion.button>
-
-              <motion.button
-                onClick={() => scrollToSection("contact")}
-                className="px-9 py-4 border-2 border-neutral-800 rounded-xl font-semibold text-sky-400 hover:bg-black hover:border-sky-400 transition-all duration-300 shadow-lg"
-                whileHover={{ scale: 1.05, borderColor: "rgb(56 189 248)" }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Get In Touch
-              </motion.button>
-            </motion.div>
-          </motion.div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <ChevronDown className="w-7 h-7 text-neutral-400" />
-        </motion.div>
-      </section>
-
-      {/* System Status Section */}
-      <section id="status" className="py-20 px-6 bg-black relative">
-        <div className="max-w-6xl mx-auto relative z-10">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-5xl font-bold mb-6 text-white">
-              System <span className="text-sky-400">Status</span>
-            </h2>
-            <p className="text-xl text-neutral-400 max-w-3xl mx-auto font-light">
-              Current operations and clearance level
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <motion.div
-              className="bg-black rounded-2xl p-8 border border-neutral-900 shadow-xl hover:border-sky-500/30 transition-all duration-300"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="p-3 bg-sky-600/20 rounded-xl">
-                  <Code className="w-8 h-8 text-sky-400" />
-                </div>
-                <h3 className="text-2xl font-bold text-white">Primary Operations</h3>
-              </div>
-              <p className="text-neutral-300 mb-4 text-lg font-semibold">
-                Core Smart Contract Developer @ <span className="text-sky-400">BIFY</span> (Full-Time)
-              </p>
-              <p className="text-neutral-400 mb-4">
-                Specialization: High-severity bug hunting, invariant analysis, and ZK-privacy implementation.
-              </p>
-            </motion.div>
-
-            <motion.div
-              className="bg-black rounded-2xl p-8 border border-neutral-900 shadow-xl hover:border-sky-500/30 transition-all duration-300"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="p-3 bg-amber-600/20 rounded-xl">
-                  <Trophy className="w-8 h-8 text-amber-400" />
-                </div>
-                <h3 className="text-2xl font-bold text-white">Clearance Level</h3>
-              </div>
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <Trophy className="w-5 h-5 text-amber-400" />
-                  <span className="text-neutral-300">
-                    <span className="font-semibold text-white">Top 7 Global Auditor</span> (Multiple high-rank finishes on Cantina)
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Award className="w-5 h-5 text-purple-400" />
-                  <span className="text-neutral-300">
-                    <span className="font-semibold text-white">Top 300 All-Time</span> Ranked (Cantina)
-                  </span>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Active Deployment Section */}
-      <section id="deployment" className="py-20 px-6 bg-neutral-950 relative">
-        <div className="max-w-6xl mx-auto relative z-10">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-5xl font-bold mb-6 text-white">
-              Active <span className="text-sky-400">Deployment</span>
-            </h2>
-            <p className="text-xl text-neutral-400 max-w-3xl mx-auto font-light">
-              Current full-time engagement
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="bg-black rounded-2xl p-8 md:p-12 border border-neutral-900 shadow-xl relative overflow-hidden hover:border-sky-500/30 transition-all duration-300"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl"></div>
-            <div className="relative z-10">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="p-3 bg-green-600/20 rounded-xl">
-                  <CheckCircle className="w-8 h-8 text-green-400" />
-                </div>
-                <div>
-                  <h3 className="text-3xl font-bold text-white mb-2">
-                    BIFY <span className="text-sky-400">(Base Network)</span>
-                  </h3>
-                  <div className="flex items-center gap-2">
-                    <span className="px-3 py-1 bg-green-600/20 text-green-400 rounded-full text-sm font-semibold border border-green-600/30">
-                      LIVE
-                    </span>
-                    <a
-                      href="https://x.com/BIFYOfficial"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sky-400 hover:text-sky-300 transition-colors"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <p className="text-neutral-300 text-lg mb-6 leading-relaxed">
-                I am currently deployed full-time as a core developer for BIFY, architecting an AI-powered marketplace on Base where creators, collectors, and brands converge.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                <div>
-                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
-                    <Code className="w-5 h-5 text-sky-400" />
-                    Engineering
-                  </h4>
-                  <p className="text-neutral-400">
-                    Developing secure smart contracts for NFT minting, marketplace logic, and Real-World Asset (RWA) tokenization.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-purple-400" />
-                    Innovation
-                  </h4>
-                  <p className="text-neutral-400">
-                    Implementing standards for interactive, AI-agent driven NFTs and gated content mechanisms.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Audit Log Section */}
-      <section id="audits" className="py-20 px-6 bg-black relative">
-        <div className="max-w-6xl mx-auto relative z-10">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-5xl font-bold mb-6 text-white">
-              Audit <span className="text-sky-400">Log</span>
-            </h2>
-            <p className="text-xl text-neutral-400 max-w-3xl mx-auto font-light mb-4">
-              High-impact security findings and achievements
-            </p>
-            <p className="text-neutral-500 max-w-3xl mx-auto font-light text-sm">
-              My independent security work focuses on shattering assumptions in live protocols through adversarial review and advanced fuzzing.
-            </p>
-          </motion.div>
-
-          {/* Hall of Fame */}
-          <motion.div
-            className="mb-12 grid grid-cols-1 md:grid-cols-3 gap-6"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            className="fixed inset-0 z-40 bg-[#05050a]/98 backdrop-blur-xl flex flex-col items-center justify-center gap-8 md:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
             {[
-              { rank: "#6", protocol: "Octant V2-Core", platform: "Cantina", severity: "High" },
-              { rank: "#7", protocol: "Pike Finance", platform: "Cantina", severity: "Medium" },
-              { rank: "#43", protocol: "Mellow Vaults", platform: "Sherlock", severity: "Medium" },
-            ].map((achievement, index) => (
-              <motion.div
-                key={index}
-                className="bg-black rounded-xl p-6 border border-neutral-900 hover:border-sky-500 transition-all duration-300"
-                whileHover={{ scale: 1.05, y: -5 }}
+              { href: "https://x.com/developerx_sec", icon: <img src="/X.png" alt="" className="w-6 h-6 object-contain" />, label: "X / Twitter" },
+              { href: "https://github.com/nagatejakachapuram", icon: <img src="/github.webp" alt="" className="w-6 h-6 object-contain" />, label: "GitHub" },
+              { href: "https://audits.sherlock.xyz/watson/DeveloperX", icon: <img src="/sherlock.png" alt="" className="w-6 h-6 object-contain" />, label: "Sherlock" },
+              { href: "https://medium.com/@developerx-security", icon: <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>, label: "Medium" },
+            ].map((item, i) => (
+              <motion.a
+                key={item.label}
+                href={item.href}
+                target={item.href.startsWith("mailto") ? undefined : "_blank"}
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 text-2xl text-neutral-300 hover:text-emerald-400 transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
               >
-                <div className="flex items-center justify-between mb-3">
-                  <Trophy className="w-6 h-6 text-amber-400" />
-                  <span className="text-2xl font-bold text-sky-400">{achievement.rank}</span>
-                </div>
-                <h4 className="text-white font-semibold mb-1">{achievement.protocol}</h4>
-                <p className="text-neutral-400 text-sm">{achievement.platform}</p>
-                <span className="inline-block mt-2 px-2 py-1 bg-red-600/20 text-red-400 rounded text-xs font-semibold border border-red-600/30">
-                  {achievement.severity}
-                </span>
-              </motion.div>
+                {item.icon} {item.label}
+              </motion.a>
             ))}
           </motion.div>
+        )}
+      </AnimatePresence>
 
-          {/* Audit Table */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-12 md:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+          {/* Left Column - Profile */}
           <motion.div
-            className="bg-black rounded-2xl border border-neutral-900 shadow-xl overflow-hidden"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            className="lg:col-span-4 lg:sticky lg:top-16 lg:self-start"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: isLoaded ? 1 : 0, x: isLoaded ? 0 : -50 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-neutral-950 border-b border-neutral-900">
-                  <tr>
-                    <th className="px-6 py-4 text-left text-white font-semibold">Protocol</th>
-                    <th className="px-6 py-4 text-left text-white font-semibold">Type</th>
-                    <th className="px-6 py-4 text-left text-white font-semibold">Platform</th>
-                    <th className="px-6 py-4 text-left text-white font-semibold">Findings</th>
-                    <th className="px-6 py-4 text-left text-white font-semibold">Rank</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {auditFindings.map((audit, index) => (
-                    <motion.tr
-                      key={index}
-                      className="border-b border-neutral-900 hover:bg-neutral-950 transition-colors"
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                    >
-                      <td className="px-6 py-4 text-white font-medium">{audit.protocol}</td>
-                      <td className="px-6 py-4 text-neutral-400">{audit.type}</td>
-                      <td className="px-6 py-4 text-neutral-400">{audit.platform}</td>
-                      <td className="px-6 py-4 text-neutral-300">{audit.findings}</td>
-                      <td className="px-6 py-4">
-                        {audit.link !== "#" ? (
-                          <a
-                            href={audit.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sky-400 hover:text-sky-300 font-semibold flex items-center gap-1"
-                          >
-                            {audit.rank}
-                            <ExternalLink className="w-3 h-3" />
-                          </a>
-                        ) : (
-                          <span className="text-neutral-400">{audit.rank}</span>
-                        )}
-                      </td>
-                    </motion.tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+            <div className="relative">
+              {/* Glow effect behind card */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600/20 via-cyan-600/20 to-emerald-600/20 rounded-[2rem] blur-xl opacity-50" />
+              
+              <div className="relative bg-gradient-to-br from-neutral-900/95 to-neutral-950/95 backdrop-blur-xl rounded-3xl p-8 border border-neutral-800/50 shadow-2xl">
+                {/* Profile Image with glow */}
+                <motion.div
+                  className="relative w-36 h-36 mx-auto mb-8"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                  <div className="absolute -inset-2 bg-gradient-to-br from-emerald-500 via-cyan-500 to-emerald-500 rounded-2xl opacity-30 blur-lg animate-pulse" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-2xl rotate-6 opacity-40" />
+                  <img
+                    src="/IMG_1371.JPG"
+                    alt="DeveloperX"
+                    className="relative w-full h-full object-cover rounded-2xl border-2 border-neutral-700 shadow-2xl"
+                  />
+                  {/* Status badge */}
+                  <motion.div 
+                    className="absolute -bottom-3 -right-3 px-3 py-1.5 bg-emerald-500 rounded-xl flex items-center gap-1.5 shadow-lg shadow-emerald-500/30"
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                    <span className="text-xs font-bold text-black">AVAILABLE</span>
+                  </motion.div>
+                </motion.div>
 
-      {/* Tech Stack Section */}
-      <section id="tech" className="py-20 px-6 bg-black relative">
-        <div className="max-w-6xl mx-auto relative z-10">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-5xl font-bold mb-6 text-white">
-              <span className="text-sky-400">Tech</span> Stack
-            </h2>
-            <p className="text-xl text-neutral-400 max-w-3xl mx-auto font-light">
-              A comprehensive toolkit for building robust blockchain
-              applications and smart contract systems
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="bg-black rounded-2xl border border-neutral-900 shadow-xl overflow-hidden"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            {/* Header */}
-            <div className="grid grid-cols-1 md:grid-cols-2 bg-neutral-950 border-b border-neutral-900">
-              <div className="p-6 border-b md:border-b-0 md:border-r border-neutral-900">
-                <h3 className="text-xl font-bold text-white flex items-center gap-3">
-                  <Code className="w-6 h-6 text-sky-400" />
-                  Category
-                </h3>
-              </div>
-              <div className="p-6 border-b md:border-b-0 border-neutral-900">
-                <h3 className="text-xl font-bold text-white flex items-center gap-3">
-                  <Zap className="w-6 h-6 text-purple-400" />
-                  Tools/Tech
-                </h3>
-              </div>
-            </div>
-
-            {/* Tech Stack Items */}
-            {techStack.map((item, index) => (
-              <motion.div
-                key={index}
-                className="grid grid-cols-1 md:grid-cols-2 hover:bg-neutral-950 transition-all duration-300 group border-b border-neutral-900 last:border-b-0"
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.02 }}
-              >
-                <div className="p-6 border-b md:border-b-0 md:border-r border-neutral-900 flex items-center gap-3">
-                  <span className="text-sky-400 group-hover:text-purple-400 transition-colors">
-                    {item.icon}
-                  </span>
-                  <span className="font-semibold text-white text-lg">
-                    {item.category}
-                  </span>
+                {/* Name & Title */}
+                <div className="text-center mb-8">
+                  <h1 className="text-3xl font-bold text-white mb-3 tracking-tight">
+                    DeveloperX
+                  </h1>
+                  <div className="flex items-center justify-center gap-2">
+                    <Shield className="w-4 h-4 text-emerald-400" />
+                    <p className="text-emerald-400 font-semibold text-sm tracking-wide uppercase">
+                      Security Researcher
+                    </p>
+                  </div>
                 </div>
-                <div className="p-6 border-b md:border-b-0 border-neutral-900">
-                  <span className="text-neutral-300 font-mono text-base">
-                    {item.tools}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
 
-      {/* Projects Section */}
-      <section id="projects" className="py-20 px-6 bg-neutral-950 relative">
-        <div className="max-w-6xl mx-auto relative z-10">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-5xl font-bold mb-6 text-white">
-              R&D <span className="text-sky-400">Labs</span>
-            </h2>
-            <p className="text-xl text-neutral-400 max-w-3xl mx-auto font-light">
-              Independent builds focused on merging AI agents with on-chain DeFi and exploring zero-knowledge cryptography
-            </p>
-          </motion.div>
+                {/* Bio */}
+                <p className="text-neutral-400 text-sm leading-relaxed text-center mb-8">
+                  Smart contract security engineer & Core Developer @ <span className="text-white font-medium">BIFY</span>. 
+                  Top auditor on Cantina. Breaking DeFi assumptions.
+                </p>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {projects.map((project, index) => (
-              <motion.div
-                key={index}
-                className="group relative bg-black rounded-2xl p-8 border border-neutral-900 shadow-xl hover:border-sky-500 transition-all duration-500 overflow-hidden"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.02, y: -5 }}
-              >
-                {/* Subtle Background Glow on Hover */}
-                <div
-                  className={`absolute inset-0 ${project.color.replace(
-                    "text",
-                    "bg"
-                  )}/10 opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-2xl`}
-                />
-
-                <div className="relative z-10">
-                  <div className="flex items-center gap-4 mb-6">
+                {/* Stats with icons */}
+                <div className="grid grid-cols-3 gap-4 mb-8">
+                  {[
+                    { value: "7+", label: "Audits", icon: <Target className="w-4 h-4" /> },
+                    { value: "#6", label: "Best Rank", icon: <Trophy className="w-4 h-4" />, highlight: true },
+                    { value: "300+", label: "All-Time", icon: <Award className="w-4 h-4" /> },
+                  ].map((stat, i) => (
                     <motion.div
-                      className={`p-3 bg-neutral-950 rounded-xl ${project.color} shadow-md border border-neutral-900`}
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.6 }}
+                      key={stat.label}
+                      className={`text-center p-3 rounded-xl ${stat.highlight ? 'bg-emerald-500/10 border border-emerald-500/20' : 'bg-neutral-800/30'}`}
+                      whileHover={{ scale: 1.05, y: -2 }}
                     >
-                      {project.icon}
+                      <div className={`flex justify-center mb-1 ${stat.highlight ? 'text-emerald-400' : 'text-neutral-500'}`}>
+                        {stat.icon}
+                      </div>
+                      <div className={`text-xl font-bold ${stat.highlight ? 'text-emerald-400' : 'text-white'}`}>
+                        {stat.value}
+                      </div>
+                      <div className="text-[10px] text-neutral-500 uppercase tracking-wider">
+                        {stat.label}
+                      </div>
                     </motion.div>
-                    <h3 className="text-2xl font-bold text-white">
-                      {project.title}
-                    </h3>
+                  ))}
+                </div>
+
+                {/* Expertise Tags */}
+                <div className="flex flex-wrap justify-center gap-2 mb-8">
+                  {["DeFi", "Lending", "Vaults", "ZK", "Fuzzing"].map((tag) => (
+                    <motion.span
+                      key={tag}
+                      className="px-3 py-1.5 bg-neutral-800/50 text-neutral-300 rounded-lg text-xs font-medium border border-neutral-700/50 hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all cursor-default"
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      {tag}
+                    </motion.span>
+                  ))}
+                </div>
+
+                {/* Social Links with Custom Icons */}
+                <div className="flex justify-center gap-3">
+                  {/* X / Twitter */}
+                  <motion.a
+                    href="https://x.com/developerx_sec"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-3 bg-neutral-800/50 hover:bg-neutral-700/50 rounded-xl transition-all duration-300 border border-neutral-700/50 hover:border-neutral-600 group"
+                    whileHover={{ y: -3, scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <img 
+                      src="/X.png" 
+                      alt="X" 
+                      className="w-5 h-5 object-contain opacity-70 group-hover:opacity-100 transition-opacity"
+                    />
+                  </motion.a>
+                  
+                  {/* GitHub */}
+                  <motion.a
+                    href="https://github.com/nagatejakachapuram"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-3 bg-neutral-800/50 hover:bg-neutral-700/50 rounded-xl transition-all duration-300 border border-neutral-700/50 hover:border-neutral-600 group"
+                    whileHover={{ y: -3, scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <img 
+                      src="/github.webp" 
+                      alt="GitHub" 
+                      className="w-5 h-5 object-contain opacity-70 group-hover:opacity-100 transition-opacity"
+                    />
+                  </motion.a>
+                  
+                  {/* Discord */}
+                  <motion.div
+                    className="p-3 bg-neutral-800/50 hover:bg-indigo-500/10 rounded-xl transition-all duration-300 border border-neutral-700/50 hover:border-indigo-500/30 group relative cursor-pointer"
+                    whileHover={{ y: -3, scale: 1.05 }}
+                  >
+                    <svg className="w-5 h-5 text-neutral-400 group-hover:text-indigo-400 transition-colors" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
+                    </svg>
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-neutral-800 rounded-lg text-xs text-neutral-300 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-neutral-700">
+                      developerx_sec
+                    </div>
+                  </motion.div>
+                  
+                  {/* Sherlock Profile */}
+                  <motion.a
+                    href="https://audits.sherlock.xyz/watson/DeveloperX"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-3 bg-neutral-800/50 hover:bg-purple-500/10 rounded-xl transition-all duration-300 border border-neutral-700/50 hover:border-purple-500/30 group"
+                    whileHover={{ y: -3, scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <img 
+                      src="/sherlock.png" 
+                      alt="Sherlock" 
+                      className="w-5 h-5 object-contain opacity-70 group-hover:opacity-100 transition-opacity"
+                    />
+                  </motion.a>
+                  
+                  {/* Medium */}
+                  <motion.a
+                    href="https://medium.com/@developerx-security"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-3 bg-neutral-800/50 hover:bg-green-500/10 rounded-xl transition-all duration-300 border border-neutral-700/50 hover:border-green-500/30 group"
+                    whileHover={{ y: -3, scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <svg className="w-5 h-5 text-neutral-400 group-hover:text-green-400 transition-colors" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
+                    </svg>
+                  </motion.a>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right Column - Content */}
+          <motion.div
+            className="lg:col-span-8"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 50 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+          >
+            {/* About Me Section - Always visible */}
+            <motion.div
+              className="mb-8 p-6 rounded-2xl bg-gradient-to-br from-neutral-900/60 to-neutral-950/60 border border-neutral-800/50"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+                <span className="text-xs text-emerald-400 uppercase tracking-wider font-bold">About Me</span>
+              </div>
+              <p className="text-neutral-300 leading-relaxed mb-4">
+                Smart contract security engineer and full-stack Web3 developer. My focus is adversarial testing, 
+                securing DeFi primitives, and architecting infrastructure for AI-driven decentralized applications.
+              </p>
+              <div className="flex flex-wrap gap-3 text-xs">
+                <span className="px-3 py-1.5 bg-neutral-800/50 text-neutral-400 rounded-lg border border-neutral-700/50">
+                  Foundry Fuzz
+                </span>
+                <span className="px-3 py-1.5 bg-neutral-800/50 text-neutral-400 rounded-lg border border-neutral-700/50">
+                  Echidna
+                </span>
+                <span className="px-3 py-1.5 bg-neutral-800/50 text-neutral-400 rounded-lg border border-neutral-700/50">
+                  Slither
+                </span>
+                <span className="px-3 py-1.5 bg-neutral-800/50 text-neutral-400 rounded-lg border border-neutral-700/50">
+                  ZK/Noir
+                </span>
+              </div>
+            </motion.div>
+
+            {/* Medium / Blog Section - Always visible */}
+            <motion.div
+              className="mb-10 p-6 rounded-2xl bg-gradient-to-br from-neutral-900/60 to-neutral-950/60 border border-neutral-800/50"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-green-500 rounded-full" />
+                  <span className="text-xs text-green-400 uppercase tracking-wider font-bold">Latest Article</span>
+                </div>
+                <motion.a
+                  href="https://medium.com/@developerx-security"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-neutral-500 hover:text-neutral-300 transition-colors flex items-center gap-1"
+                  whileHover={{ x: 3 }}
+                >
+                  View all on Medium <ExternalLink className="w-3 h-3" />
+                </motion.a>
+              </div>
+              
+              <motion.a
+                href="https://medium.com/@developerx-security/how-to-hunt-3k-solo-mediums-like-a-professional-ac666bc5a1e1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block group"
+                whileHover={{ scale: 1.01 }}
+              >
+                <div className="p-4 rounded-xl bg-neutral-800/30 border border-neutral-700/30 hover:border-green-500/30 hover:bg-neutral-800/50 transition-all">
+                  <h4 className="text-white font-semibold mb-2 group-hover:text-green-400 transition-colors">
+                    How to Hunt $3K+ Solo Mediums Like a Professional
+                  </h4>
+                  <p className="text-neutral-400 text-sm leading-relaxed mb-3">
+                    A comprehensive guide on finding high-severity bugs in smart contract audits. Learn the methodology and mindset to consistently earn solo medium findings.
+                  </p>
+                  <div className="flex items-center gap-3 text-xs text-neutral-500">
+                    <span className="px-2 py-1 bg-neutral-800 rounded">Security</span>
+                    <span className="px-2 py-1 bg-neutral-800 rounded">Auditing</span>
+                    <span className="px-2 py-1 bg-neutral-800 rounded">DeFi</span>
+                  </div>
+                </div>
+              </motion.a>
+            </motion.div>
+
+            {/* Tab Navigation */}
+            <div className="flex items-center gap-2 mb-8 p-1.5 bg-neutral-900/50 backdrop-blur-sm rounded-2xl border border-neutral-800/50 w-fit">
+              {[
+                { id: "audits", label: "Security Audits", icon: <Shield className="w-4 h-4" /> },
+                { id: "projects", label: "Projects", icon: <Code className="w-4 h-4" /> },
+              ].map((tab) => (
+                <motion.button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as typeof activeTab)}
+                  className={`px-6 py-3 rounded-xl font-medium text-sm transition-all duration-300 flex items-center gap-2 ${
+                    activeTab === tab.id
+                      ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 shadow-lg shadow-emerald-500/10"
+                      : "text-neutral-500 hover:text-neutral-300"
+                  }`}
+                  whileHover={{ scale: activeTab === tab.id ? 1 : 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  {tab.icon}
+                  {tab.label}
+                </motion.button>
+              ))}
+            </div>
+
+            {/* Audits Content */}
+            <AnimatePresence mode="wait">
+              {activeTab === "audits" && (
+                <motion.div
+                  key="audits"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  {/* Section Header with Compact Stats */}
+                  <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+                    <div>
+                      <h2 className="text-4xl font-bold text-white mb-2 tracking-tight">
+                        Security <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Audits</span>
+                      </h2>
+                      <p className="text-neutral-500">
+                        High-impact findings from competitive audit platforms
+                      </p>
+                    </div>
+                    {/* Compact Achievement Stats */}
+                    <div className="flex items-center gap-2">
+                      <motion.div 
+                        className="flex items-center gap-1.5 px-2.5 py-1.5 bg-amber-500/10 rounded-lg border border-amber-500/20"
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <Trophy className="w-3.5 h-3.5 text-amber-400" />
+                        <span className="text-amber-400 font-bold text-xs">#6</span>
+                        <span className="text-neutral-500 text-[10px]">Best</span>
+                      </motion.div>
+                      <motion.div 
+                        className="flex items-center gap-1.5 px-2.5 py-1.5 bg-emerald-500/10 rounded-lg border border-emerald-500/20"
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <Target className="w-3.5 h-3.5 text-emerald-400" />
+                        <span className="text-emerald-400 font-bold text-xs">x2</span>
+                        <span className="text-neutral-500 text-[10px]">Top 10</span>
+                      </motion.div>
+                      <motion.div 
+                        className="flex items-center gap-1.5 px-2.5 py-1.5 bg-cyan-500/10 rounded-lg border border-cyan-500/20"
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <Award className="w-3.5 h-3.5 text-cyan-400" />
+                        <span className="text-cyan-400 font-bold text-xs">300</span>
+                        <span className="text-neutral-500 text-[10px]">All-Time</span>
+                      </motion.div>
+                    </div>
                   </div>
 
-                  <p className="text-neutral-300 mb-6 leading-relaxed font-light">
-                    {project.description}
-                  </p>
+                  {/* Legend */}
+                  <div className="flex flex-wrap items-center gap-4 mb-8 p-4 bg-neutral-900/30 rounded-xl border border-neutral-800/50">
+                    <span className="text-xs text-neutral-500 uppercase tracking-wider">Severity:</span>
+                    <div className="flex items-center gap-1.5">
+                      <Flame className="w-3.5 h-3.5 text-red-400" />
+                      <span className="text-xs text-neutral-400">High</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <AlertTriangle className="w-3.5 h-3.5 text-orange-400" />
+                      <span className="text-xs text-neutral-400">Medium</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <AlertCircle className="w-3.5 h-3.5 text-yellow-400" />
+                      <span className="text-xs text-neutral-400">Low</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <Info className="w-3.5 h-3.5 text-blue-400" />
+                      <span className="text-xs text-neutral-400">Info</span>
+                    </div>
+                  </div>
 
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {project.tags.map((tag, tagIndex) => (
-                      <motion.span
-                        key={tagIndex}
-                        className="px-3.5 py-1.5 bg-neutral-950 text-neutral-300 rounded-full text-sm font-medium border border-neutral-900"
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.4, delay: tagIndex * 0.1 }}
-                        viewport={{ once: true }}
-                        whileHover={{
-                          scale: 1.05,
-                          backgroundColor: "rgb(64 64 64)",
-                        }}
+                  {/* Protocol Cards Grid - 2 Columns */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {protocols.map((protocol, index) => (
+                      <motion.div
+                        key={protocol.name}
+                        className={`group relative overflow-hidden rounded-2xl border transition-all duration-500 ${
+                          hoveredProtocol === protocol.name
+                            ? "bg-neutral-800/60 border-emerald-500/30 shadow-xl shadow-emerald-500/5"
+                            : "bg-neutral-900/40 border-neutral-800/50 hover:bg-neutral-800/50"
+                        }`}
+                        initial={{ opacity: 0, x: -30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                        onMouseEnter={() => setHoveredProtocol(protocol.name)}
+                        onMouseLeave={() => setHoveredProtocol(null)}
+                        whileHover={{ y: -4 }}
                       >
-                        {tag}
-                      </motion.span>
+                        {/* Featured ribbon */}
+                        {protocol.featured && (
+                          <div className="absolute top-4 right-4">
+                            <span className="px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-md text-[10px] font-bold uppercase tracking-wider border border-emerald-500/30">
+                              Featured
+                            </span>
+                          </div>
+                        )}
+
+                        <div className="flex items-center gap-4 p-5">
+                          {/* Protocol Image */}
+                          <motion.div 
+                            className="relative w-16 h-16 flex-shrink-0"
+                            whileHover={{ scale: 1.05, rotate: 2 }}
+                          >
+                            <div className="absolute -inset-1 bg-gradient-to-br from-emerald-500/30 to-cyan-500/30 rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <img
+                              src={protocol.image}
+                              alt={protocol.name}
+                              className="relative w-full h-full object-cover rounded-lg border border-neutral-700 shadow-lg"
+                            />
+                          </motion.div>
+
+                          {/* Protocol Info */}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1.5">
+                              <h3 className="font-bold text-white text-base truncate group-hover:text-emerald-400 transition-colors">
+                                {protocol.name}
+                              </h3>
+                              {/* Only show rank for top 10 finishes */}
+                              {parseInt(protocol.rank.replace('#', '')) <= 10 && (
+                                <motion.span 
+                                  className="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 rounded text-xs font-bold border border-emerald-500/30"
+                                  whileHover={{ scale: 1.1 }}
+                                >
+                                  {protocol.rank}
+                                </motion.span>
+                              )}
+                            </div>
+                            
+                            <div className="flex items-center gap-2 mb-3">
+                              <span className="px-2 py-0.5 bg-neutral-800 text-neutral-400 rounded text-xs font-medium flex items-center gap-1.5">
+                                <img 
+                                  src={platformLogos[protocol.platform]} 
+                                  alt="" 
+                                  className="w-3 h-3 object-contain"
+                                />
+                                {protocol.platform}
+                              </span>
+                              <span className="text-neutral-600">•</span>
+                              <span className="text-xs text-neutral-500">{protocol.type}</span>
+                            </div>
+
+                            <div className="flex items-center justify-between">
+                              {/* Severity Badges */}
+                              <div className="flex items-center gap-1.5 flex-wrap">
+                                {parseFindings(protocol.findings).map((finding, i) => (
+                                  <SeverityBadge key={i} type={finding.type} count={finding.count} />
+                                ))}
+                              </div>
+
+                              {/* Links */}
+                              <div className="flex items-center gap-1.5">
+                                {protocol.twitter && (
+                                  <motion.a
+                                    href={protocol.twitter}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-1.5 hover:bg-neutral-700/50 rounded-lg transition-colors"
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    <img src="/X.png" alt="X" className="w-3.5 h-3.5 object-contain opacity-50 hover:opacity-100 transition-opacity" />
+                                  </motion.a>
+                                )}
+                                <motion.a
+                                  href={protocol.link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex items-center gap-1.5 px-3 py-1.5 bg-neutral-800 hover:bg-emerald-500/20 rounded-lg text-xs font-medium text-neutral-300 hover:text-emerald-400 transition-all border border-neutral-700 hover:border-emerald-500/30"
+                                  whileHover={{ scale: 1.05 }}
+                                  whileTap={{ scale: 0.95 }}
+                                >
+                                  View <ExternalLink className="w-3 h-3" />
+                                </motion.a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
                     ))}
                   </div>
 
-                  <div className="flex gap-4">
-                    <motion.a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 bg-neutral-950 hover:bg-black px-6 py-3 rounded-xl transition-all duration-300 font-medium border border-neutral-900 hover:border-sky-500 text-white shadow-md"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <Github className="w-4 h-4" />
-                      Code
-                    </motion.a>
-                    {project.demo !== "#" ? (
-                      <motion.a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`flex items-center gap-2 bg-sky-600 hover:bg-sky-700 px-6 py-3 rounded-xl transition-all duration-300 font-medium text-white shadow-md`}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                        Live Demo
-                      </motion.a>
-                    ) : null}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-20 px-6 bg-black relative">
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-5xl font-bold mb-6 text-white">
-              Let's <span className="text-sky-400">Connect</span>
-            </h2>
-            <p className="text-xl text-neutral-400 mb-12 max-w-3xl mx-auto font-light">
-              Open to collaborating on innovative blockchain projects, security audits, and DeFi protocols. Let's build the future of decentralized finance together.
-            </p>
-            <p className="text-sm text-neutral-500 mb-8 max-w-3xl mx-auto font-light">
-              ⚠️ <span className="font-semibold">Secure Comms:</span> These are my only official channels. Verify all contacts.
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="flex flex-wrap justify-center gap-6"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            {[
-              {
-                href: "https://x.com/developerx_sec",
-                icon: <Twitter className="w-6 h-6" />,
-                label: "X / Twitter",
-                color: "text-gray-400",
-              },
-              {
-                href: "https://github.com/nagatejakachapuram",
-                icon: <Github className="w-6 h-6" />,
-                label: "GitHub",
-                color: "text-gray-400",
-              },
-              {
-                href: "https://www.linkedin.com/in/nagatejakachapuram/",
-                icon: <Linkedin className="w-6 h-6" />,
-                label: "LinkedIn",
-                color: "text-blue-400",
-              },
-              {
-                href: "mailto:nagateja.devx@gmail.com",
-                icon: <Mail className="w-6 h-6" />,
-                label: "Email",
-                color: "text-red-400",
-              },
-              {
-                href: null,
-                icon: <MessageCircle className="w-6 h-6" />,
-                label: "Discord: developerx_sec",
-                color: "text-indigo-400",
-              },
-            ].map((social, index) =>
-              social.href ? (
-                <motion.a
-                  key={index}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`group flex items-center gap-3 bg-black hover:bg-neutral-950 px-8 py-4 rounded-xl transition-all duration-300 font-medium border border-neutral-900 hover:border-sky-500 text-white shadow-lg`}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <span
-                    className={`${social.color} group-hover:text-white transition-colors`}
+                  {/* More Coming */}
+                  <motion.div
+                    className="mt-8 text-center py-10 border-2 border-dashed border-neutral-800/50 rounded-2xl bg-gradient-to-br from-neutral-900/20 to-transparent"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.8 }}
                   >
-                    {social.icon}
-                  </span>
-                  <span className="text-white">{social.label}</span>
-                </motion.a>
-              ) : (
-                <motion.div
-                  key={index}
-                  className={`group flex items-center gap-3 bg-black px-8 py-4 rounded-xl transition-all duration-300 font-medium border border-neutral-900 text-white shadow-lg cursor-default`}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <span
-                    className={`${social.color} transition-colors`}
-                  >
-                    {social.icon}
-                  </span>
-                  <span className="text-white">{social.label}</span>
+                    <Zap className="w-8 h-8 text-neutral-700 mx-auto mb-3" />
+                    <p className="text-neutral-600 text-sm">More audits in progress...</p>
+                  </motion.div>
                 </motion.div>
-              )
-            )}
+              )}
+
+              {/* Projects Content */}
+              {activeTab === "projects" && (
+                <motion.div
+                  key="projects"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  {/* Section Header */}
+                  <div className="mb-10">
+                    <h2 className="text-4xl font-bold text-white mb-3 tracking-tight">
+                      R&D <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Projects</span>
+                    </h2>
+                    <p className="text-neutral-500 text-lg">
+                      Building at the intersection of AI, DeFi, and security
+                    </p>
+                  </div>
+
+                  {/* Current Deployment */}
+                  <motion.div
+                    className="relative overflow-hidden rounded-2xl mb-8 bg-neutral-900/40 border border-neutral-800/50"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    <div className="relative p-6">
+                      <div className="flex items-start justify-between mb-6">
+                        <div>
+                          <motion.div 
+                            className="flex items-center gap-3 mb-3"
+                            animate={{ opacity: [0.5, 1, 0.5] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                          >
+                            <div className="w-3 h-3 bg-emerald-500 rounded-full shadow-lg shadow-emerald-500/50" />
+                            <span className="text-xs text-emerald-400 uppercase tracking-wider font-bold">
+                              Active Deployment
+                            </span>
+                          </motion.div>
+                          <h3 className="text-2xl font-bold text-white flex items-center gap-3">
+                            BIFY
+                            <span className="text-sm font-normal text-neutral-500">• Base Network</span>
+                          </h3>
+                        </div>
+                        <motion.a
+                          href="https://x.com/BIFYOfficial"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-3 bg-neutral-800/50 hover:bg-neutral-700/50 rounded-xl transition-colors border border-neutral-700/50 hover:border-neutral-600"
+                          whileHover={{ scale: 1.05, y: -2 }}
+                        >
+                          <img src="/X.png" alt="X" className="w-5 h-5 object-contain opacity-70 hover:opacity-100 transition-opacity" />
+                        </motion.a>
+                      </div>
+                      <p className="text-neutral-400 leading-relaxed max-w-2xl">
+                        Core developer architecting an AI-powered NFT marketplace. Building secure smart contracts 
+                        for minting, marketplace logic, and Real-World Asset (RWA) tokenization.
+                      </p>
+                      <div className="flex items-center gap-3 mt-6">
+                        <CheckCircle className="w-4 h-4 text-emerald-400" />
+                        <span className="text-sm text-neutral-500">Full-time engagement</span>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  {/* Projects Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {projects.map((project, index) => (
+                      <motion.div
+                        key={project.title}
+                        className="group relative overflow-hidden rounded-2xl bg-neutral-900/40 border border-neutral-800/50 hover:border-emerald-500/30 hover:bg-neutral-800/50 transition-all duration-500"
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                        whileHover={{ y: -4 }}
+                      >
+                        <div className="p-5">
+                          <div className="flex items-start gap-4 mb-4">
+                            <motion.div 
+                              className="p-3 rounded-xl bg-neutral-800/80 border border-neutral-700/50 text-emerald-400"
+                              whileHover={{ scale: 1.1 }}
+                            >
+                              {project.icon}
+                            </motion.div>
+                            <div className="flex-1">
+                              <h3 className="font-bold text-white text-base mb-1 group-hover:text-emerald-400 transition-colors">
+                                {project.title}
+                              </h3>
+                              <p className="text-neutral-500 text-sm leading-relaxed">
+                                {project.description}
+                              </p>
+                            </div>
+                          </div>
+                          
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {project.tags.map((tag) => (
+                              <span
+                                key={tag}
+                                className="px-2 py-1 bg-neutral-800/50 text-neutral-400 rounded text-xs font-medium border border-neutral-700/30"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <motion.a
+                              href={project.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 px-3 py-2 bg-neutral-800 hover:bg-neutral-700/80 rounded-lg text-xs font-medium text-neutral-300 transition-all border border-neutral-700"
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <img src="/github.webp" alt="" className="w-4 h-4 object-contain opacity-70" />
+                              Code
+                            </motion.a>
+                            <motion.a
+                              href={project.demo}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-neutral-800 hover:bg-emerald-500/20 rounded-lg text-xs font-medium text-neutral-300 hover:text-emerald-400 transition-all border border-neutral-700 hover:border-emerald-500/30"
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                            >
+                              Live Demo
+                              <ExternalLink className="w-3.5 h-3.5" />
+                            </motion.a>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         </div>
-      </section>
+      </div>
 
       {/* Footer */}
-      <footer className="py-8 px-6 border-t border-neutral-900 bg-black relative z-10">
-        <div className="max-w-6xl mx-auto text-center">
-          <motion.p
-            className="text-neutral-400 font-light"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            &copy; 2025 Nagateja Kachapuram. Building the future of DeFi.
-          </motion.p>
+      <footer className="relative z-10 border-t border-neutral-900/50 py-8 mt-20">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <p className="text-neutral-600 text-sm">
+            © 2025 DeveloperX • Building secure DeFi
+          </p>
         </div>
       </footer>
     </div>
