@@ -219,16 +219,16 @@ const parseFindings = (findings: string) => {
 
 // Platform logos mapping
 const platformLogos: Record<string, string> = {
-  Cantina: "/cantina.png",
-  Code4rena: "/c4-logo-icon.svg",
-  Sherlock: "/sherlock.png",
+  Cantina: "/images/cantina.png",
+  Code4rena: "/images/c4-logo-icon.svg",
+  Sherlock: "/images/sherlock.png",
 };
 
 // Protocol data with images - corrected findings
 const protocols = [
   {
     name: "Octant V2-Core",
-    image: "/octant-v2-core.webp",
+    image: "/images/octant-v2-core.webp",
     platform: "Cantina",
     type: "DeFi",
     findings: "1H, 2I",
@@ -239,7 +239,7 @@ const protocols = [
   },
   {
     name: "Pike Finance",
-    image: "/pike.webp",
+    image: "/images/pike.webp",
     platform: "Cantina",
     type: "Lending",
     findings: "1M, 1L",
@@ -250,7 +250,7 @@ const protocols = [
   },
   {
     name: "Megapot",
-    image: "/Megapot.webp",
+    image: "/images/Megapot.webp",
     platform: "Code4rena",
     type: "DeFi",
     findings: "1L",
@@ -261,7 +261,7 @@ const protocols = [
   },
   {
     name: "Kuru",
-    image: "/Kuru.webp",
+    image: "/images/Kuru.webp",
     platform: "Cantina",
     type: "CLOB",
     findings: "1L, 2I",
@@ -272,7 +272,7 @@ const protocols = [
   },
   {
     name: "Panoptic",
-    image: "/Panoptic.webp",
+    image: "/images/Panoptic.webp",
     platform: "Code4rena",
     type: "Options",
     findings: "1M",
@@ -283,7 +283,7 @@ const protocols = [
   },
   {
     name: "Mellow Vaults",
-    image: "/Mellow.webp",
+    image: "/images/Mellow.webp",
     platform: "Sherlock",
     type: "Vaults",
     findings: "1M",
@@ -294,7 +294,7 @@ const protocols = [
   },
   {
     name: "Malda",
-    image: "/Malda.webp",
+    image: "/images/Malda.webp",
     platform: "Sherlock",
     type: "Lending",
     findings: "1M",
@@ -409,9 +409,9 @@ function App() {
             exit={{ opacity: 0 }}
           >
             {[
-              { href: "https://x.com/developerx_sec", icon: <img src="/X.png" alt="" className="w-6 h-6 object-contain" />, label: "X / Twitter" },
-              { href: "https://github.com/nagatejakachapuram", icon: <img src="/github.webp" alt="" className="w-6 h-6 object-contain" />, label: "GitHub" },
-              { href: "https://audits.sherlock.xyz/watson/DeveloperX", icon: <img src="/sherlock.png" alt="" className="w-6 h-6 object-contain" />, label: "Sherlock" },
+              { href: "https://x.com/developerx_sec", icon: <img src="/images/X.png" alt="" className="w-6 h-6 object-contain" />, label: "X / Twitter" },
+              { href: "https://github.com/nagatejakachapuram", icon: <img src="/images/github.webp" alt="" className="w-6 h-6 object-contain" />, label: "GitHub" },
+              { href: "https://audits.sherlock.xyz/watson/DeveloperX", icon: <img src="/images/sherlock.png" alt="" className="w-6 h-6 object-contain" />, label: "Sherlock" },
               { href: "https://medium.com/@developerx-security", icon: <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>, label: "Medium" },
             ].map((item, i) => (
               <motion.a
@@ -456,7 +456,7 @@ function App() {
                   <div className="absolute -inset-2 bg-gradient-to-br from-emerald-500 via-cyan-500 to-emerald-500 rounded-2xl opacity-30 blur-lg animate-pulse" />
                   <div className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-2xl rotate-6 opacity-40" />
                   <img
-                    src="/IMG_1371.JPG"
+                    src="/images/IMG_1371.JPG"
                     alt="DeveloperX"
                     className="relative w-full h-full object-cover rounded-2xl border-2 border-neutral-700 shadow-2xl"
                   />
@@ -540,7 +540,7 @@ function App() {
                     whileTap={{ scale: 0.95 }}
                   >
                     <img 
-                      src="/X.png" 
+                      src="/images/X.png" 
                       alt="X" 
                       className="w-5 h-5 object-contain opacity-70 group-hover:opacity-100 transition-opacity"
                     />
@@ -556,7 +556,7 @@ function App() {
                     whileTap={{ scale: 0.95 }}
                   >
                     <img 
-                      src="/github.webp" 
+                      src="/images/github.webp" 
                       alt="GitHub" 
                       className="w-5 h-5 object-contain opacity-70 group-hover:opacity-100 transition-opacity"
                     />
@@ -585,7 +585,7 @@ function App() {
                     whileTap={{ scale: 0.95 }}
                   >
                     <img 
-                      src="/sherlock.png" 
+                      src="/images/sherlock.png" 
                       alt="Sherlock" 
                       className="w-5 h-5 object-contain opacity-70 group-hover:opacity-100 transition-opacity"
                     />
@@ -875,7 +875,7 @@ function App() {
                                     whileTap={{ scale: 0.95 }}
                                     onClick={(e) => e.stopPropagation()}
                                   >
-                                    <img src="/X.png" alt="X" className="w-3.5 h-3.5 object-contain opacity-50 hover:opacity-100 transition-opacity" />
+                                    <img src="/images/X.png" alt="X" className="w-3.5 h-3.5 object-contain opacity-50 hover:opacity-100 transition-opacity" />
                                   </motion.a>
                                 )}
                                 <motion.a
@@ -959,7 +959,7 @@ function App() {
                           className="p-3 bg-neutral-800/50 hover:bg-neutral-700/50 rounded-xl transition-colors border border-neutral-700/50 hover:border-neutral-600"
                           whileHover={{ scale: 1.05, y: -2 }}
                         >
-                          <img src="/X.png" alt="X" className="w-5 h-5 object-contain opacity-70 hover:opacity-100 transition-opacity" />
+                          <img src="/images/X.png" alt="X" className="w-5 h-5 object-contain opacity-70 hover:opacity-100 transition-opacity" />
                         </motion.a>
                       </div>
                       <p className="text-neutral-400 leading-relaxed max-w-2xl">
@@ -1022,7 +1022,7 @@ function App() {
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
                             >
-                              <img src="/github.webp" alt="" className="w-4 h-4 object-contain opacity-70" />
+                              <img src="/images/github.webp" alt="" className="w-4 h-4 object-contain opacity-70" />
                               Code
                             </motion.a>
                             <motion.a
