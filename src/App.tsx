@@ -499,8 +499,9 @@ function App() {
 
                 {/* Bio */}
                 <p className="text-neutral-400 text-sm leading-relaxed text-center mb-8">
-                  Smart contract security engineer & Core Developer @ <span className="text-white font-medium">BIFY</span>. 
-                  Top auditor on Cantina. Breaking DeFi assumptions.
+                  Smart contract security engineer & Core Developer @ <span className="text-white font-medium">BIFY</span>.{" "}
+                  Security Intern @ <span className="text-white font-medium">Kann Audits</span>.{" "}
+                  Building AI security agents with <span className="text-white font-medium">Claude</span>. Breaking DeFi assumptions.
                 </p>
 
                 {/* Stats with icons */}
@@ -640,8 +641,11 @@ function App() {
                 <span className="text-xs text-emerald-400 uppercase tracking-wider font-bold">About Me</span>
               </div>
               <p className="text-neutral-300 leading-relaxed mb-4">
-                Smart contract security engineer and full-stack Web3 developer. My focus is adversarial testing, 
-                securing DeFi primitives, and architecting infrastructure for AI-driven decentralized applications.
+                Smart contract security engineer and full-stack Web3 developer. Security Intern at{" "}
+                <span className="text-white font-medium">Kann Audits</span>. Building autonomous AI security agents
+                powered by <span className="text-white font-medium">Claude</span> — running full multi-agent audit
+                pipelines end-to-end. My focus is adversarial testing, securing DeFi primitives, and architecting
+                infrastructure for AI-driven decentralized applications.
               </p>
               <div className="flex flex-wrap gap-3 text-xs">
                 <span className="px-3 py-1.5 bg-neutral-800/50 text-neutral-400 rounded-lg border border-neutral-700/50">
@@ -655,6 +659,12 @@ function App() {
                 </span>
                 <span className="px-3 py-1.5 bg-neutral-800/50 text-neutral-400 rounded-lg border border-neutral-700/50">
                   ZK/Noir
+                </span>
+                <span className="px-3 py-1.5 bg-emerald-500/10 text-emerald-400 rounded-lg border border-emerald-500/20">
+                  Claude AI
+                </span>
+                <span className="px-3 py-1.5 bg-emerald-500/10 text-emerald-400 rounded-lg border border-emerald-500/20">
+                  AI Agents
                 </span>
               </div>
             </motion.div>
