@@ -18,7 +18,7 @@ import { BrowserProvider } from "ethers";
 // ── Owner wallet whitelist ────────────────────────────────────────────────────
 // Add your wallet addresses here (lowercase). Only these can run audits.
 const OWNER_WALLETS: string[] = [
-  // "0xYourWalletAddressHere",
+  "0x5c0d24821c5289179ff08d950ef55fc1170d0abc",
 ];
 
 // ── Backend URL ───────────────────────────────────────────────────────────────
