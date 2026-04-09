@@ -305,6 +305,17 @@ const protocols = [
     twitter: "https://x.com/maboratory0",
     featured: false,
   },
+  {
+    name: "Chainlink Payment Abstraction V2",
+    image: "/images/Chainlink.webp",
+    platform: "Code4rena",
+    type: "Infrastructure",
+    findings: "1L",
+    rank: "",
+    link: "https://code4rena.com/audits/2026-03-chainlink-payment-abstraction-v2",
+    twitter: "https://x.com/chainlink",
+    featured: false,
+  },
 ];
 
 const projects = [
