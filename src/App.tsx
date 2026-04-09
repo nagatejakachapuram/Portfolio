@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import SecurityGuyTool from "./SecurityGuyTool";
 import {
   Github,
   ExternalLink,
@@ -19,6 +20,7 @@ import {
   Target,
   Award,
   CheckCircle,
+  Wrench,
 } from "lucide-react";
 
 // Modern Gradient Mesh Background with Aurora Effect
@@ -345,7 +347,7 @@ const projects = [
 ];
 
 function App() {
-  const [activeTab, setActiveTab] = useState<"audits" | "projects">("audits");
+  const [activeTab, setActiveTab] = useState<"audits" | "projects" | "tools">("audits");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [hoveredProtocol, setHoveredProtocol] = useState<string | null>(null);
@@ -697,6 +699,7 @@ function App() {
               {[
                 { id: "audits", label: "Security Audits", icon: <Shield className="w-4 h-4" /> },
                 { id: "projects", label: "Projects", icon: <Code className="w-4 h-4" /> },
+                { id: "tools", label: "Tools", icon: <Wrench className="w-4 h-4" /> },
               ].map((tab) => (
                 <motion.button
                   key={tab.id}
@@ -1041,6 +1044,17 @@ function App() {
                       </motion.div>
                     ))}
                   </div>
+                </motion.div>
+              )}
+              {activeTab === "tools" && (
+                <motion.div
+                  key="tools"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <SecurityGuyTool />
                 </motion.div>
               )}
             </AnimatePresence>
