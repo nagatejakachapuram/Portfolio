@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SecurityGuyTool from "./SecurityGuyTool";
 import {
-  Github,
   ExternalLink,
   Shield,
   Code,
@@ -21,6 +20,9 @@ import {
   Award,
   CheckCircle,
   Wrench,
+  Lock,
+  Bot,
+  Building2,
 } from "lucide-react";
 
 // Modern Gradient Mesh Background with Aurora Effect
@@ -316,6 +318,42 @@ const protocols = [
     twitter: "https://x.com/chainlink",
     featured: false,
   },
+  {
+    name: "Private Audit #1",
+    image: "",
+    platform: "Private",
+    type: "Lending",
+    findings: "1H, 2M, 2L",
+    rank: "",
+    link: "",
+    twitter: "",
+    featured: false,
+    isPrivate: true,
+  },
+  {
+    name: "Private Audit #2",
+    image: "",
+    platform: "Private",
+    type: "DeFi / Vaults",
+    findings: "2M, 3L",
+    rank: "",
+    link: "",
+    twitter: "",
+    featured: false,
+    isPrivate: true,
+  },
+  {
+    name: "Private Audit #3",
+    image: "",
+    platform: "Private",
+    type: "Cross-chain",
+    findings: "1H, 1M",
+    rank: "",
+    link: "",
+    twitter: "",
+    featured: false,
+    isPrivate: true,
+  },
 ];
 
 const projects = [
@@ -354,6 +392,26 @@ const projects = [
     demo: "https://web-ai-x.vercel.app/",
     tags: ["Web3", "AI", "Automation"],
     icon: <Sparkles className="w-5 h-5" />,
+  },
+  {
+    title: "RWA Marketplace",
+    description:
+      "On-chain marketplace for tokenizing and trading Real World Assets using Circle's CCTP and W3S SDK — enabling compliant issuance, transfer, and settlement of RWA tokens across chains.",
+    github: "",
+    demo: "",
+    tags: ["RWA", "Circle SDK", "Tokenization", "Cross-chain"],
+    icon: <Building2 className="w-5 h-5" />,
+    disableLinks: true,
+  },
+  {
+    title: "Trading Agent on Hyperliquid",
+    description:
+      "Autonomous trading agent on Hyperliquid perpetuals powered by Claude AI for decision-making, TradingView webhook signals, and custom on-chain metrics for entry/exit logic.",
+    github: "",
+    demo: "",
+    tags: ["Hyperliquid", "Claude AI", "TradingView", "Automation"],
+    icon: <Bot className="w-5 h-5" />,
+    disableLinks: true,
   },
 ];
 
@@ -510,7 +568,7 @@ function App() {
                     { value: "7+", label: "Audits", icon: <Target className="w-4 h-4" /> },
                     { value: "#6", label: "Best Rank", icon: <Trophy className="w-4 h-4" />, highlight: true },
                     { value: "300+", label: "All-Time", icon: <Award className="w-4 h-4" /> },
-                  ].map((stat, i) => (
+                  ].map((stat) => (
                     <motion.div
                       key={stat.label}
                       className={`text-center p-3 rounded-xl ${stat.highlight ? 'bg-emerald-500/10 border border-emerald-500/20' : 'bg-neutral-800/30'}`}
@@ -836,17 +894,23 @@ function App() {
                         )}
 
                         <div className="flex items-center gap-4 p-5">
-                          {/* Protocol Image */}
-                          <motion.div 
+                          {/* Protocol Image / Private Icon */}
+                          <motion.div
                             className="relative w-16 h-16 flex-shrink-0"
                             whileHover={{ scale: 1.05, rotate: 2 }}
                           >
                             <div className="absolute -inset-1 bg-gradient-to-br from-emerald-500/30 to-cyan-500/30 rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <img
-                              src={protocol.image}
-                              alt={protocol.name}
-                              className="relative w-full h-full object-cover rounded-lg border border-neutral-700 shadow-lg"
-                            />
+                            {(protocol as any).isPrivate ? (
+                              <div className="relative w-full h-full rounded-lg border border-neutral-700 shadow-lg bg-neutral-800/80 flex items-center justify-center">
+                                <Lock className="w-7 h-7 text-neutral-500" />
+                              </div>
+                            ) : (
+                              <img
+                                src={protocol.image}
+                                alt={protocol.name}
+                                className="relative w-full h-full object-cover rounded-lg border border-neutral-700 shadow-lg"
+                              />
+                            )}
                           </motion.div>
 
                           {/* Protocol Info */}
@@ -856,8 +920,8 @@ function App() {
                                 {protocol.name}
                               </h3>
                               {/* Only show rank for top 10 finishes */}
-                              {parseInt(protocol.rank.replace('#', '')) <= 10 && (
-                                <motion.span 
+                              {protocol.rank && parseInt(protocol.rank.replace('#', '')) <= 10 && (
+                                <motion.span
                                   className="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 rounded text-xs font-bold border border-emerald-500/30"
                                   whileHover={{ scale: 1.1 }}
                                 >
@@ -865,16 +929,23 @@ function App() {
                                 </motion.span>
                               )}
                             </div>
-                            
+
                             <div className="flex items-center gap-2 mb-3">
-                              <span className="px-2 py-0.5 bg-neutral-800 text-neutral-400 rounded text-xs font-medium flex items-center gap-1.5">
-                                <img 
-                                  src={platformLogos[protocol.platform]} 
-                                  alt="" 
-                                  className="w-3 h-3 object-contain"
-                                />
-                                {protocol.platform}
-                              </span>
+                              {(protocol as any).isPrivate ? (
+                                <span className="px-2 py-0.5 bg-neutral-800 text-neutral-500 rounded text-xs font-medium flex items-center gap-1.5">
+                                  <Lock className="w-3 h-3" />
+                                  Confidential
+                                </span>
+                              ) : (
+                                <span className="px-2 py-0.5 bg-neutral-800 text-neutral-400 rounded text-xs font-medium flex items-center gap-1.5">
+                                  <img
+                                    src={platformLogos[protocol.platform]}
+                                    alt=""
+                                    className="w-3 h-3 object-contain"
+                                  />
+                                  {protocol.platform}
+                                </span>
+                              )}
                               <span className="text-neutral-600">•</span>
                               <span className="text-xs text-neutral-500">{protocol.type}</span>
                             </div>
@@ -889,7 +960,7 @@ function App() {
 
                               {/* Links */}
                               <div className="flex items-center gap-1.5">
-                                {protocol.twitter && (
+                                {!((protocol as any).isPrivate) && protocol.twitter && (
                                   <motion.a
                                     href={protocol.twitter}
                                     target="_blank"
@@ -902,16 +973,22 @@ function App() {
                                     <img src="/images/X.png" alt="X" className="w-3.5 h-3.5 object-contain opacity-50 hover:opacity-100 transition-opacity" />
                                   </motion.a>
                                 )}
-                                <motion.a
-                                  href={protocol.link}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="flex items-center gap-1.5 px-3 py-1.5 bg-neutral-800 hover:bg-emerald-500/20 rounded-lg text-xs font-medium text-neutral-300 hover:text-emerald-400 transition-all border border-neutral-700 hover:border-emerald-500/30"
-                                  whileHover={{ scale: 1.05 }}
-                                  whileTap={{ scale: 0.95 }}
-                                >
-                                  View <ExternalLink className="w-3 h-3" />
-                                </motion.a>
+                                {(protocol as any).isPrivate ? (
+                                  <span className="flex items-center gap-1.5 px-3 py-1.5 bg-neutral-800/50 rounded-lg text-xs font-medium text-neutral-600 border border-neutral-800 cursor-not-allowed select-none">
+                                    <Lock className="w-3 h-3" /> NDA
+                                  </span>
+                                ) : (
+                                  <motion.a
+                                    href={protocol.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-1.5 px-3 py-1.5 bg-neutral-800 hover:bg-emerald-500/20 rounded-lg text-xs font-medium text-neutral-300 hover:text-emerald-400 transition-all border border-neutral-700 hover:border-emerald-500/30"
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                  >
+                                    View <ExternalLink className="w-3 h-3" />
+                                  </motion.a>
+                                )}
                               </div>
                             </div>
                           </div>
@@ -1037,30 +1114,32 @@ function App() {
                             ))}
                           </div>
 
-                          <div className="flex items-center gap-2">
-                            <motion.a
-                              href={project.github}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-2 px-3 py-2 bg-neutral-800 hover:bg-neutral-700/80 rounded-lg text-xs font-medium text-neutral-300 transition-all border border-neutral-700"
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                            >
-                              <img src="/images/github.webp" alt="" className="w-4 h-4 object-contain opacity-70" />
-                              Code
-                            </motion.a>
-                            <motion.a
-                              href={project.demo}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-neutral-800 hover:bg-emerald-500/20 rounded-lg text-xs font-medium text-neutral-300 hover:text-emerald-400 transition-all border border-neutral-700 hover:border-emerald-500/30"
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                            >
-                              Live Demo
-                              <ExternalLink className="w-3.5 h-3.5" />
-                            </motion.a>
-                          </div>
+                          {!(project as any).disableLinks && (
+                            <div className="flex items-center gap-2">
+                              <motion.a
+                                href={project.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 px-3 py-2 bg-neutral-800 hover:bg-neutral-700/80 rounded-lg text-xs font-medium text-neutral-300 transition-all border border-neutral-700"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                              >
+                                <img src="/images/github.webp" alt="" className="w-4 h-4 object-contain opacity-70" />
+                                Code
+                              </motion.a>
+                              <motion.a
+                                href={project.demo}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-neutral-800 hover:bg-emerald-500/20 rounded-lg text-xs font-medium text-neutral-300 hover:text-emerald-400 transition-all border border-neutral-700 hover:border-emerald-500/30"
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                              >
+                                Live Demo
+                                <ExternalLink className="w-3.5 h-3.5" />
+                              </motion.a>
+                            </div>
+                          )}
                         </div>
                       </motion.div>
                     ))}
