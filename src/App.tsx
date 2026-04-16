@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { Suspense, lazy, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SecurityGuyTool from "./SecurityGuyTool";
 import {
@@ -25,138 +25,7 @@ import {
   Building2,
 } from "lucide-react";
 
-// Modern Gradient Mesh Background with Aurora Effect
-const AestheticBackground = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number>();
-
-  const initCanvas = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    let time = 0;
-
-    // Aurora wave configuration
-    const waves = [
-      { amplitude: 80, frequency: 0.003, speed: 0.008, color: 'rgba(16, 185, 129, 0.15)', yOffset: 0.3 },
-      { amplitude: 100, frequency: 0.002, speed: 0.006, color: 'rgba(6, 182, 212, 0.12)', yOffset: 0.4 },
-      { amplitude: 70, frequency: 0.004, speed: 0.01, color: 'rgba(139, 92, 246, 0.1)', yOffset: 0.5 },
-      { amplitude: 90, frequency: 0.0025, speed: 0.007, color: 'rgba(20, 184, 166, 0.08)', yOffset: 0.6 },
-    ];
-
-    // Floating gradient blobs
-    const blobs = [
-      { x: 0.2, y: 0.25, size: 0.4, speedX: 0.0002, speedY: 0.00015, color1: 'rgba(16, 185, 129, 0.12)', color2: 'transparent' },
-      { x: 0.75, y: 0.65, size: 0.35, speedX: -0.00015, speedY: 0.0002, color1: 'rgba(6, 182, 212, 0.1)', color2: 'transparent' },
-      { x: 0.5, y: 0.8, size: 0.45, speedX: 0.00018, speedY: -0.00012, color1: 'rgba(139, 92, 246, 0.08)', color2: 'transparent' },
-    ];
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      time += 1;
-
-      // Draw animated gradient blobs
-      blobs.forEach(blob => {
-        // Update position with smooth oscillation
-        const offsetX = Math.sin(time * blob.speedX * 100) * 50;
-        const offsetY = Math.cos(time * blob.speedY * 100) * 50;
-        
-        const x = blob.x * canvas.width + offsetX;
-        const y = blob.y * canvas.height + offsetY;
-        const size = blob.size * Math.min(canvas.width, canvas.height);
-
-        const gradient = ctx.createRadialGradient(x, y, 0, x, y, size);
-        gradient.addColorStop(0, blob.color1);
-        gradient.addColorStop(0.5, blob.color1.replace(/[\d.]+\)$/, '0.05)'));
-        gradient.addColorStop(1, blob.color2);
-        
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(x, y, size, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      // Draw aurora waves
-      waves.forEach(wave => {
-        ctx.beginPath();
-        const baseY = canvas.height * wave.yOffset;
-        
-        for (let x = 0; x <= canvas.width; x += 3) {
-          const y = baseY + 
-            Math.sin(x * wave.frequency + time * wave.speed) * wave.amplitude +
-            Math.sin(x * wave.frequency * 1.5 + time * wave.speed * 0.8) * (wave.amplitude * 0.5);
-          
-          if (x === 0) {
-            ctx.moveTo(x, y);
-          } else {
-            ctx.lineTo(x, y);
-          }
-        }
-        
-        // Create gradient fill below the wave
-        ctx.lineTo(canvas.width, canvas.height);
-        ctx.lineTo(0, canvas.height);
-        ctx.closePath();
-        
-        const gradient = ctx.createLinearGradient(0, baseY - wave.amplitude, 0, canvas.height);
-        gradient.addColorStop(0, wave.color);
-        gradient.addColorStop(0.5, wave.color.replace(/[\d.]+\)$/, '0.03)'));
-        gradient.addColorStop(1, 'transparent');
-        
-        ctx.fillStyle = gradient;
-        ctx.fill();
-      });
-
-      // Add subtle noise/grain texture effect
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data = imageData.data;
-      for (let i = 0; i < data.length; i += 4) {
-        const noise = (Math.random() - 0.5) * 8;
-        data[i] = Math.max(0, Math.min(255, data[i] + noise));
-        data[i + 1] = Math.max(0, Math.min(255, data[i + 1] + noise));
-        data[i + 2] = Math.max(0, Math.min(255, data[i + 2] + noise));
-      }
-      ctx.putImageData(imageData, 0, 0);
-
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
-    const cleanup = initCanvas();
-    return cleanup;
-  }, [initCanvas]);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none"
-      style={{ zIndex: 0 }}
-    />
-  );
-};
+const ThreeParticlesBackground = lazy(() => import("./ThreeParticlesBackground"));
 
 // Severity badge component
 const SeverityBadge = ({ type, count }: { type: string; count: number }) => {
@@ -426,37 +295,35 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#05050a] text-white font-sans selection:bg-emerald-500/30 overflow-x-hidden">
-      {/* Aesthetic Animated Background */}
-      <AestheticBackground />
-      
-      {/* Gradient Overlays */}
-      <div className="fixed inset-0 pointer-events-none z-[1]">
-        {/* Gradient orbs */}
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-emerald-500/8 rounded-full blur-[150px] animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-500/8 rounded-full blur-[130px] animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-purple-500/5 rounded-full blur-[180px]" />
-        <div className="absolute top-1/4 right-1/3 w-[300px] h-[300px] bg-amber-500/5 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
-        
-        {/* Scanline effect */}
-        <div 
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `repeating-linear-gradient(
-              0deg,
-              transparent,
-              transparent 2px,
-              rgba(255,255,255,0.03) 2px,
-              rgba(255,255,255,0.03) 4px
-            )`
-          }}
-        />
+    <div className="min-h-screen bg-[#080705] text-white font-sans selection:bg-amber-500/30 overflow-x-hidden">
+      <Suspense fallback={<div className="fixed inset-0 z-0 bg-[#080705]" aria-hidden="true" />}>
+        <ThreeParticlesBackground />
+      </Suspense>
 
-        {/* Vignette effect */}
-        <div 
+      {/* Cinematic compositing over the background so cards stay readable. */}
+      <div className="fixed inset-0 pointer-events-none z-[1]">
+        <div
           className="absolute inset-0"
           style={{
-            background: 'radial-gradient(ellipse at center, transparent 0%, rgba(5,5,10,0.4) 100%)'
+            background:
+              "radial-gradient(circle at 48% 24%, transparent 0%, rgba(8,7,5,0.10) 48%, rgba(8,7,5,0.78) 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-x-0 top-0 h-[34rem]"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(242,184,75,0.045), rgba(94,234,212,0.018) 48%, transparent)",
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-[0.075]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.026) 1px, transparent 1px)",
+            backgroundSize: "112px 112px",
+            maskImage: "linear-gradient(to bottom, black, transparent 62%)",
+            WebkitMaskImage: "linear-gradient(to bottom, black, transparent 62%)",
           }}
         />
       </div>
@@ -474,7 +341,7 @@ function App() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-40 bg-[#05050a]/98 backdrop-blur-xl flex flex-col items-center justify-center gap-8 md:hidden"
+            className="fixed inset-0 z-40 bg-[#080705]/98 backdrop-blur-xl flex flex-col items-center justify-center gap-8 md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -490,7 +357,7 @@ function App() {
                 href={item.href}
                 target={item.href.startsWith("mailto") ? undefined : "_blank"}
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 text-2xl text-neutral-300 hover:text-emerald-400 transition-colors"
+                className="flex items-center gap-4 text-2xl text-neutral-300 hover:text-amber-200 transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -652,7 +519,7 @@ function App() {
                     href="https://audits.sherlock.xyz/watson/DeveloperX"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 bg-neutral-800/50 hover:bg-purple-500/10 rounded-xl transition-all duration-300 border border-neutral-700/50 hover:border-purple-500/30 group"
+                    className="p-3 bg-neutral-800/50 hover:bg-amber-500/10 rounded-xl transition-all duration-300 border border-neutral-700/50 hover:border-amber-500/30 group"
                     whileHover={{ y: -3, scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
