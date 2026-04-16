@@ -901,8 +901,12 @@ function App() {
                           >
                             <div className="absolute -inset-1 bg-gradient-to-br from-emerald-500/30 to-cyan-500/30 rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-opacity" />
                             {(protocol as any).isPrivate ? (
-                              <div className="relative w-full h-full rounded-lg border border-neutral-700 shadow-lg bg-neutral-800/80 flex items-center justify-center">
-                                <Lock className="w-7 h-7 text-neutral-500" />
+                              <div className="relative w-full h-full rounded-lg border border-neutral-700 shadow-lg bg-neutral-900/80 flex items-center justify-center overflow-hidden">
+                                <img
+                                  src="/images/kann.png"
+                                  alt="Kann Audits"
+                                  className="w-full h-full object-cover rounded-lg"
+                                />
                               </div>
                             ) : (
                               <img
@@ -932,9 +936,9 @@ function App() {
 
                             <div className="flex items-center gap-2 mb-3">
                               {(protocol as any).isPrivate ? (
-                                <span className="px-2 py-0.5 bg-neutral-800 text-neutral-500 rounded text-xs font-medium flex items-center gap-1.5">
-                                  <Lock className="w-3 h-3" />
-                                  Confidential
+                                <span className="px-2 py-0.5 bg-neutral-800 text-neutral-400 rounded text-xs font-medium flex items-center gap-1.5">
+                                  <img src="/images/kann.png" alt="Kann Audits" className="w-3 h-3 object-contain rounded-full" />
+                                  Kann Audits
                                 </span>
                               ) : (
                                 <span className="px-2 py-0.5 bg-neutral-800 text-neutral-400 rounded text-xs font-medium flex items-center gap-1.5">
