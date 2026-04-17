@@ -312,7 +312,7 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
       initial={{ opacity: 0, y: 28 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, delay: index * 0.06 }}
-      className={`cyber-border circuit-card tilt-card card-glow rounded-2xl ${protocol.featured ? "cyber-border-active" : ""}`}
+      className={`circuit-card tilt-card card-glow rounded-2xl`}
       ref={tilt.ref}
       onMouseMove={tilt.onMouseMove}
       onMouseLeave={tilt.onMouseLeave}
@@ -478,7 +478,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
       initial={{ opacity: 0, y: 28 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, delay: index * 0.07 }}
-      className="cyber-border circuit-card tilt-card card-glow rounded-2xl"
+      className="circuit-card tilt-card card-glow rounded-2xl"
       ref={tilt.ref}
       onMouseMove={tilt.onMouseMove}
       onMouseLeave={tilt.onMouseLeave}
@@ -696,24 +696,11 @@ function App() {
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                  {/* Spinning conic ring */}
-                  <div
-                    className="absolute -inset-1.5 rounded-2xl avatar-ring"
-                    style={{
-                      background: "conic-gradient(from 0deg, #5eead4, #f2b84b, #ff6b35, #5eead4)",
-                      padding: 1.5,
-                      borderRadius: "1rem",
-                    }}
-                  />
-                  <div
-                    className="absolute inset-0.5 rounded-2xl"
-                    style={{ background: "#080705", inset: 3 }}
-                  />
                   <img
                     src="/images/IMG_1371.JPG"
                     alt="DeveloperX"
-                    className="absolute rounded-2xl object-cover"
-                    style={{ inset: 3, width: "calc(100% - 6px)", height: "calc(100% - 6px)" }}
+                    className="w-full h-full rounded-2xl object-cover"
+                    style={{ border: "1px solid rgba(94,234,212,0.2)" }}
                   />
 
                   {/* Status badge */}
