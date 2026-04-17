@@ -414,7 +414,7 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
             {/* Findings + links */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5 flex-wrap">
-                {parseFindings(protocol.findings).map((f, i) => (
+                {!isPrivate && parseFindings(protocol.findings).map((f, i) => (
                   <SeverityBadge key={i} type={f.type} count={f.count} />
                 ))}
               </div>
