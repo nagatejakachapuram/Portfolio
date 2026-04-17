@@ -33,44 +33,31 @@ const ThreeParticlesBackground = lazy(() => import("./ThreeParticlesBackground")
 const CyberCursor = () => {
   const outerRef = useRef<HTMLDivElement>(null);
   const dotRef   = useRef<HTMLDivElement>(null);
-  const pos    = useRef({ x: -200, y: -200 });
-  const target = useRef({ x: -200, y: -200 });
-  const raf    = useRef<number>();
 
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
-      target.current = { x: e.clientX, y: e.clientY };
+      const x = e.clientX;
+      const y = e.clientY;
       if (dotRef.current) {
-        dotRef.current.style.left = `${e.clientX}px`;
-        dotRef.current.style.top  = `${e.clientY}px`;
+        dotRef.current.style.left = `${x}px`;
+        dotRef.current.style.top  = `${y}px`;
       }
-    };
-    window.addEventListener("mousemove", onMove);
-
-    const tick = () => {
-      pos.current.x += (target.current.x - pos.current.x) * 0.11;
-      pos.current.y += (target.current.y - pos.current.y) * 0.11;
       if (outerRef.current) {
-        outerRef.current.style.left = `${pos.current.x}px`;
-        outerRef.current.style.top  = `${pos.current.y}px`;
+        outerRef.current.style.left = `${x}px`;
+        outerRef.current.style.top  = `${y}px`;
       }
-      raf.current = requestAnimationFrame(tick);
     };
-    tick();
-
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      if (raf.current) cancelAnimationFrame(raf.current);
-    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => window.removeEventListener("mousemove", onMove);
   }, []);
 
   return (
     <>
-      {/* Lagging ring — amber */}
+      {/* Ring — amber, tiny CSS transition for subtle trail */}
       <div
         ref={outerRef}
         className="fixed pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2"
-        style={{ top: -200, left: -200 }}
+        style={{ top: -200, left: -200, transition: "left 60ms linear, top 60ms linear" }}
       >
         <div
           className="w-7 h-7 rounded-full"
@@ -81,7 +68,7 @@ const CyberCursor = () => {
           }}
         />
       </div>
-      {/* Snappy inner dot — teal */}
+      {/* Dot — teal, no lag */}
       <div
         ref={dotRef}
         className="fixed pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2"
