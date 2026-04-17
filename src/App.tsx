@@ -133,7 +133,7 @@ const DataStream = () => {
         y: -Math.random() * window.innerHeight,
         speed: 0.4 + Math.random() * 0.6,
         chars: Array.from({ length: ROWS }, () => CHARS[Math.floor(Math.random() * 16)]),
-        opacity: 0.03 + Math.random() * 0.04,
+        opacity: 0.10 + Math.random() * 0.09,
       }));
     };
 
@@ -331,7 +331,7 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
         {/* Top ambient gradient */}
         <div
           className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{ background: "radial-gradient(ellipse at 50% -10%, rgba(94,234,212,0.07) 0%, transparent 65%)" }}
+          style={{ background: "radial-gradient(ellipse at 50% -10%, rgba(94,234,212,0.18) 0%, transparent 65%)" }}
         />
 
         {/* Featured badge */}
@@ -494,7 +494,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
         <div className="scan-line opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <div
           className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{ background: "radial-gradient(ellipse at 50% -10%, rgba(242,184,75,0.06) 0%, transparent 60%)" }}
+          style={{ background: "radial-gradient(ellipse at 50% -10%, rgba(242,184,75,0.16) 0%, transparent 60%)" }}
         />
 
         <div className="p-5 pb-3">
@@ -608,21 +608,21 @@ function App() {
         {/* Radial vignette — keeps centre readable */}
         <div
           className="absolute inset-0"
-          style={{ background: "radial-gradient(circle at 48% 24%, transparent 0%, rgba(8,7,5,0.08) 48%, rgba(8,7,5,0.82) 100%)" }}
+          style={{ background: "radial-gradient(circle at 48% 24%, transparent 0%, rgba(8,7,5,0.06) 48%, rgba(8,7,5,0.75) 100%)" }}
         />
         {/* Top aurora tint matching Three.js lights */}
         <div
           className="absolute inset-x-0 top-0 h-[34rem]"
-          style={{ background: "linear-gradient(180deg, rgba(242,184,75,0.04), rgba(94,234,212,0.015) 48%, transparent)" }}
+          style={{ background: "linear-gradient(180deg, rgba(242,184,75,0.10), rgba(94,234,212,0.055) 48%, transparent)" }}
         />
         {/* Subtle hex grid */}
         <div
-          className="absolute inset-0 opacity-[0.06]"
+          className="absolute inset-0 opacity-[0.16]"
           style={{
-            backgroundImage: "linear-gradient(rgba(94,234,212,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(94,234,212,0.4) 1px, transparent 1px)",
+            backgroundImage: "linear-gradient(rgba(94,234,212,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(94,234,212,0.5) 1px, transparent 1px)",
             backgroundSize: "120px 120px",
-            maskImage: "linear-gradient(to bottom, black, transparent 55%)",
-            WebkitMaskImage: "linear-gradient(to bottom, black, transparent 55%)",
+            maskImage: "linear-gradient(to bottom, black, transparent 60%)",
+            WebkitMaskImage: "linear-gradient(to bottom, black, transparent 60%)",
           }}
         />
       </div>
@@ -686,8 +686,8 @@ function App() {
               />
 
               <div
-                className="relative cyber-border cyber-border-always circuit-card rounded-3xl p-8 shadow-2xl"
-                style={{ background: "rgba(8,7,5,0.82)", backdropFilter: "blur(24px)", border: "1px solid rgba(255,255,255,0.05)" }}
+                className="relative circuit-card rounded-3xl p-8 shadow-2xl"
+                style={{ background: "rgba(8,7,5,0.82)", backdropFilter: "blur(24px)", border: "1px solid rgba(94,234,212,0.12)" }}
               >
                 {/* ── Avatar ── */}
                 <motion.div
