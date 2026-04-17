@@ -133,7 +133,7 @@ const DataStream = () => {
         y: -Math.random() * window.innerHeight,
         speed: 0.4 + Math.random() * 0.6,
         chars: Array.from({ length: ROWS }, () => CHARS[Math.floor(Math.random() * 16)]),
-        opacity: 0.10 + Math.random() * 0.09,
+        opacity: 0.18 + Math.random() * 0.14,
       }));
     };
 
