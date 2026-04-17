@@ -133,7 +133,7 @@ const DataStream = () => {
         y: -Math.random() * window.innerHeight,
         speed: 0.4 + Math.random() * 0.6,
         chars: Array.from({ length: ROWS }, () => CHARS[Math.floor(Math.random() * 16)]),
-        opacity: 0.18 + Math.random() * 0.14,
+        opacity: 0.28 + Math.random() * 0.18,
       }));
     };
 
@@ -320,8 +320,8 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
       <div
         className="group relative overflow-hidden rounded-2xl h-full"
         style={{
-          background: "rgba(10,9,7,0.78)",
-          border: "1px solid rgba(255,255,255,0.055)",
+          background: "rgba(18,16,12,0.92)",
+          border: "1px solid rgba(255,255,255,0.13)",
           backdropFilter: "blur(20px)",
         }}
       >
@@ -331,7 +331,7 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
         {/* Top ambient gradient */}
         <div
           className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{ background: "radial-gradient(ellipse at 50% -10%, rgba(94,234,212,0.18) 0%, transparent 65%)" }}
+          style={{ background: "radial-gradient(ellipse at 50% -10%, rgba(94,234,212,0.22) 0%, transparent 65%)" }}
         />
 
         {/* Featured badge */}
@@ -486,15 +486,15 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
       <div
         className="group relative overflow-hidden rounded-2xl h-full"
         style={{
-          background: "rgba(10,9,7,0.78)",
-          border: "1px solid rgba(255,255,255,0.055)",
+          background: "rgba(18,16,12,0.92)",
+          border: "1px solid rgba(255,255,255,0.13)",
           backdropFilter: "blur(20px)",
         }}
       >
         <div className="scan-line opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <div
           className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{ background: "radial-gradient(ellipse at 50% -10%, rgba(242,184,75,0.16) 0%, transparent 60%)" }}
+          style={{ background: "radial-gradient(ellipse at 50% -10%, rgba(242,184,75,0.22) 0%, transparent 60%)" }}
         />
 
         <div className="p-5 pb-3">
@@ -608,7 +608,7 @@ function App() {
         {/* Radial vignette — keeps centre readable */}
         <div
           className="absolute inset-0"
-          style={{ background: "radial-gradient(circle at 48% 24%, transparent 0%, rgba(8,7,5,0.06) 48%, rgba(8,7,5,0.75) 100%)" }}
+          style={{ background: "radial-gradient(circle at 48% 24%, transparent 0%, rgba(8,7,5,0.03) 48%, rgba(8,7,5,0.55) 100%)" }}
         />
         {/* Top aurora tint matching Three.js lights */}
         <div
@@ -851,7 +851,7 @@ function App() {
             {/* ── About ── */}
             <motion.div
               className="mb-8 p-6 rounded-2xl circuit-card"
-              style={{ background: "rgba(10,9,7,0.72)", border: "1px solid rgba(255,255,255,0.05)", backdropFilter: "blur(20px)" }}
+              style={{ background: "rgba(18,16,12,0.90)", border: "1px solid rgba(255,255,255,0.12)", backdropFilter: "blur(20px)" }}
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
             >
               <div className="flex items-center gap-3 mb-4">
@@ -887,7 +887,7 @@ function App() {
             {/* ── Blog ── */}
             <motion.div
               className="mb-10 p-6 rounded-2xl circuit-card"
-              style={{ background: "rgba(10,9,7,0.72)", border: "1px solid rgba(255,255,255,0.05)", backdropFilter: "blur(20px)" }}
+              style={{ background: "rgba(18,16,12,0.90)", border: "1px solid rgba(255,255,255,0.12)", backdropFilter: "blur(20px)" }}
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
             >
               <div className="flex items-center justify-between mb-4">
