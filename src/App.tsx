@@ -265,13 +265,13 @@ const platformLogos: Record<string, string> = {
 const protocols = [
   { name: "Octant V2",                   image: "/images/octant-v2-core.webp", platform: "Cantina",   type: "DeFi",           findings: "1H, 2I",       rank: "#6",  link: "https://cantina.xyz/code/917d796b-48d0-41d0-bb40-be137b7d3db5/overview/leaderboard", twitter: "https://x.com/OctantApp",    featured: true  },
   { name: "Pike Finance",                 image: "/images/pike.webp",           platform: "Cantina",   type: "Lending",        findings: "1M, 1L",       rank: "#7",  link: "https://cantina.xyz/code/917d796b-48d0-41d0-bb40-be137b7d3db5/overview/leaderboard", twitter: "https://x.com/PikeFinance",  featured: true  },
-  { name: "Reserve Governor",             image: "/images/reserve-governor.jpeg", platform: "Cantina", type: "DeFi",           findings: "1L",           rank: "",    link: "",                                                                                         twitter: "",                           featured: false },
-  { name: "Revert Finance",               image: "/images/revert-finance.png",  platform: "Cantina",   type: "DeFi",           findings: "2M",           rank: "",    link: "",                                                                                         twitter: "",                           featured: false },
-  { name: "Megapot",                      image: "/images/Megapot.webp",        platform: "Code4rena", type: "DeFi",           findings: "1L",           rank: "#50", link: "https://code4rena.com/audits/2025-11-megapot/dashboard",                            twitter: "",                           featured: false },
-  { name: "Kuru",                         image: "/images/Kuru.webp",           platform: "Cantina",   type: "CLOB",           findings: "1L, 2I",       rank: "#24", link: "https://cantina.xyz/code/cdce21ba-b787-4df4-9c56-b31d085388e7/overview",           twitter: "https://x.com/kaboratory0", featured: false },
+  { name: "Reserve Governor",             image: "/images/reserve-governor.jpeg", platform: "Cantina", type: "DeFi",           findings: "1L",           rank: "",    link: "",                                                                                         twitter: "https://x.com/reserveprotocol", featured: false },
+  { name: "Revert Finance",               image: "/images/revert-finance.png",  platform: "Cantina",   type: "DeFi",           findings: "2M",           rank: "",    link: "",                                                                                         twitter: "https://x.com/revertfinance", featured: false },
+  { name: "Megapot",                      image: "/images/Megapot.webp",        platform: "Code4rena", type: "DeFi",           findings: "1L",           rank: "#50", link: "https://code4rena.com/audits/2025-11-megapot/dashboard",                            twitter: "https://x.com/megapot",     featured: false },
+  { name: "Kuru",                         image: "/images/Kuru.webp",           platform: "Cantina",   type: "CLOB",           findings: "1L, 2I",       rank: "#24", link: "https://cantina.xyz/code/cdce21ba-b787-4df4-9c56-b31d085388e7/overview",           twitter: "https://x.com/KuruExchange", featured: false },
   { name: "Panoptic",                     image: "/images/Panoptic.webp",       platform: "Code4rena", type: "Options",        findings: "1M",           rank: "#42", link: "https://code4rena.com/audits/2024-04-panoptic",                                     twitter: "https://x.com/Panoptic_xyz", featured: false },
-  { name: "Mellow Vaults",                image: "/images/Mellow.webp",         platform: "Sherlock",  type: "Vaults",         findings: "1M",           rank: "#43", link: "https://audits.sherlock.xyz/contests/964/leaderboard",                              twitter: "https://x.com/maboratory0", featured: false },
-  { name: "Malda",                        image: "/images/Malda.webp",          platform: "Sherlock",  type: "Lending",        findings: "1M",           rank: "#46", link: "https://audits.sherlock.xyz/contests/1029/leaderboard",                             twitter: "https://x.com/maboratory0", featured: false },
+  { name: "Mellow Vaults",                image: "/images/Mellow.webp",         platform: "Sherlock",  type: "Vaults",         findings: "1M",           rank: "#43", link: "https://audits.sherlock.xyz/contests/964/leaderboard",                              twitter: "https://x.com/mellowprotocol", featured: false },
+  { name: "Malda",                        image: "/images/Malda.webp",          platform: "Sherlock",  type: "Lending",        findings: "1M",           rank: "#46", link: "https://audits.sherlock.xyz/contests/1029/leaderboard",                             twitter: "https://x.com/malda_xyz",   featured: false },
   { name: "Chainlink Payment Abstraction V2", image: "/images/Chainlink.webp",  platform: "Code4rena", type: "Infrastructure", findings: "1L",           rank: "",    link: "https://code4rena.com/audits/2026-03-chainlink-payment-abstraction-v2",             twitter: "https://x.com/chainlink",   featured: false },
   { name: "Private Audit #1", image: "", platform: "Private", type: "Lending",      findings: "1H, 2M, 2L", rank: "", link: "", twitter: "", featured: false, isPrivate: true },
   { name: "Private Audit #2", image: "", platform: "Private", type: "DeFi / Vaults",findings: "2M, 3L",     rank: "", link: "", twitter: "", featured: false, isPrivate: true },
@@ -295,6 +295,7 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
   const isPrivate = (protocol as any).isPrivate;
   const isTop10   = protocol.rank && parseInt(protocol.rank.replace("#","")) <= 10;
   const hasReport = Boolean(protocol.link);
+  const hasTwitter = Boolean(protocol.twitter);
   const hash      = fakeHash(protocol.name);
 
   return (
@@ -410,13 +411,30 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
               </div>
 
               <div className="flex items-center gap-1.5">
-                {!isPrivate && protocol.twitter && (
-                  <motion.a href={protocol.twitter} target="_blank" rel="noopener noreferrer"
-                    className="p-1.5 rounded-lg transition-colors hover:bg-white/[0.05]"
-                    whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}
-                    onClick={e => e.stopPropagation()}>
-                    <img src="/images/X.png" alt="X" className="w-3.5 h-3.5 object-contain opacity-40 hover:opacity-75 transition-opacity" />
-                  </motion.a>
+                {!isPrivate && (
+                  hasTwitter ? (
+                    <motion.a
+                      href={protocol.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-1.5 rounded-lg transition-colors hover:bg-white/[0.05]"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={e => e.stopPropagation()}
+                    >
+                      <img src="/images/X.png" alt="X" className="w-3.5 h-3.5 object-contain opacity-40 hover:opacity-75 transition-opacity" />
+                    </motion.a>
+                  ) : (
+                    <motion.button
+                      type="button"
+                      className="p-1.5 rounded-lg transition-colors hover:bg-white/[0.05]"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={e => e.stopPropagation()}
+                    >
+                      <img src="/images/X.png" alt="X" className="w-3.5 h-3.5 object-contain opacity-40 hover:opacity-75 transition-opacity" />
+                    </motion.button>
+                  )
                 )}
                 {isPrivate ? (
                   <span
@@ -425,21 +443,30 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
                   >
                     <Lock className="w-2.5 h-2.5" />NDA
                   </span>
-                ) : hasReport ? (
-                  <motion.a href={protocol.link} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[10px] font-medium transition-all"
-                    style={{ background: "rgba(94,234,212,0.06)", border: "1px solid rgba(94,234,212,0.18)", color: "#5eead4" }}
-                    whileHover={{ scale: 1.05, backgroundColor: "rgba(94,234,212,0.12)" }}
-                    whileTap={{ scale: 0.95 }}>
-                    View <ExternalLink className="w-3 h-3" />
-                  </motion.a>
                 ) : (
-                  <span
-                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-mono select-none"
-                    style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", color: "#6b7280" }}
-                  >
-                    Report nil
-                  </span>
+                  hasReport ? (
+                    <motion.a
+                      href={protocol.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[10px] font-medium transition-all"
+                      style={{ background: "rgba(94,234,212,0.06)", border: "1px solid rgba(94,234,212,0.18)", color: "#5eead4" }}
+                      whileHover={{ scale: 1.05, backgroundColor: "rgba(94,234,212,0.12)" }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      View <ExternalLink className="w-3 h-3" />
+                    </motion.a>
+                  ) : (
+                    <motion.button
+                      type="button"
+                      className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[10px] font-medium transition-all"
+                      style={{ background: "rgba(94,234,212,0.06)", border: "1px solid rgba(94,234,212,0.18)", color: "#5eead4" }}
+                      whileHover={{ scale: 1.05, backgroundColor: "rgba(94,234,212,0.12)" }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      View <ExternalLink className="w-3 h-3" />
+                    </motion.button>
+                  )
                 )}
               </div>
             </div>
@@ -740,7 +767,7 @@ function App() {
                 {/* ── Stats ── */}
                 <div className="grid grid-cols-3 gap-3 mb-7">
                   {[
-                    { val: "7+",   label: "Audits",    icon: <Target className="w-3.5 h-3.5" />,  hi: false },
+                    { val: "15+",  label: "Audits",    icon: <Target className="w-3.5 h-3.5" />,  hi: false },
                     { val: "#6",   label: "Best Rank", icon: <Trophy className="w-3.5 h-3.5" />,  hi: true  },
                     { val: "300+", label: "All-Time",  icon: <Award  className="w-3.5 h-3.5" />,  hi: false },
                   ].map(s => (
@@ -800,24 +827,41 @@ function App() {
                   ].map(s => (
                     <motion.a key={s.alt} href={s.href} target="_blank" rel="noopener noreferrer"
                       className="p-3 rounded-xl transition-all group"
-                      style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                      style={{
+                        background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.04), 0 0 14px rgba(94,234,212,0.08)",
+                      }}
                       whileHover={{ y: -3, scale: 1.05, borderColor: "rgba(94,234,212,0.25)" }}
                       whileTap={{ scale: 0.95 }}>
                       <img
                         src={s.img}
                         alt={s.alt}
-                        className={`w-4 h-4 object-contain transition-opacity ${s.alt === "GitHub" ? "opacity-80 group-hover:opacity-100" : "opacity-40 group-hover:opacity-80"}`}
-                        style={s.alt === "GitHub" ? { filter: "drop-shadow(0 0 6px rgba(255,255,255,0.35))" } : undefined}
+                        className={`w-4 h-4 object-contain transition-all ${s.alt === "GitHub" ? "opacity-95 group-hover:opacity-100" : "opacity-75 group-hover:opacity-100"}`}
+                        style={{
+                          filter: s.alt === "GitHub"
+                            ? "drop-shadow(0 0 9px rgba(255,255,255,0.48))"
+                            : "drop-shadow(0 0 7px rgba(94,234,212,0.25))",
+                        }}
                       />
                     </motion.a>
                   ))}
                   {/* Discord */}
                   <motion.div
                     className="p-3 rounded-xl transition-all group relative"
-                    style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.04), 0 0 14px rgba(129,140,248,0.10)",
+                    }}
                     whileHover={{ y: -3, scale: 1.05 }}
                   >
-                    <svg className="w-4 h-4 opacity-40 group-hover:opacity-80 transition-opacity" style={{ color: "#818cf8" }} viewBox="0 0 24 24" fill="currentColor">
+                    <svg
+                      className="w-4 h-4 opacity-80 group-hover:opacity-100 transition-all"
+                      style={{ color: "#818cf8", filter: "drop-shadow(0 0 8px rgba(129,140,248,0.35))" }}
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
                       <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
                     </svg>
                     <div
@@ -830,9 +874,18 @@ function App() {
                   {/* Medium */}
                   <motion.a href="https://medium.com/@developerx-security" target="_blank" rel="noopener noreferrer"
                     className="p-3 rounded-xl transition-all group"
-                    style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.04), 0 0 14px rgba(74,222,128,0.10)",
+                    }}
                     whileHover={{ y: -3, scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <svg className="w-4 h-4 opacity-40 group-hover:opacity-80 transition-opacity" style={{ color: "#4ade80" }} viewBox="0 0 24 24" fill="currentColor">
+                    <svg
+                      className="w-4 h-4 opacity-80 group-hover:opacity-100 transition-all"
+                      style={{ color: "#4ade80", filter: "drop-shadow(0 0 8px rgba(74,222,128,0.35))" }}
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
                       <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
                     </svg>
                   </motion.a>
