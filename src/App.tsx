@@ -265,6 +265,8 @@ const platformLogos: Record<string, string> = {
 const protocols = [
   { name: "Octant V2",                   image: "/images/octant-v2-core.webp", platform: "Cantina",   type: "DeFi",           findings: "1H, 2I",       rank: "#6",  link: "https://cantina.xyz/code/917d796b-48d0-41d0-bb40-be137b7d3db5/overview/leaderboard", twitter: "https://x.com/OctantApp",    featured: true  },
   { name: "Pike Finance",                 image: "/images/pike.webp",           platform: "Cantina",   type: "Lending",        findings: "1M, 1L",       rank: "#7",  link: "https://cantina.xyz/code/917d796b-48d0-41d0-bb40-be137b7d3db5/overview/leaderboard", twitter: "https://x.com/PikeFinance",  featured: true  },
+  { name: "Reserve Governor",             image: "/images/reserve-governor.jpeg", platform: "Cantina", type: "DeFi",           findings: "1L",           rank: "",    link: "",                                                                                         twitter: "",                           featured: false },
+  { name: "Revert Finance",               image: "/images/revert-finance.png",  platform: "Cantina",   type: "DeFi",           findings: "2M",           rank: "",    link: "",                                                                                         twitter: "",                           featured: false },
   { name: "Megapot",                      image: "/images/Megapot.webp",        platform: "Code4rena", type: "DeFi",           findings: "1L",           rank: "#50", link: "https://code4rena.com/audits/2025-11-megapot/dashboard",                            twitter: "",                           featured: false },
   { name: "Kuru",                         image: "/images/Kuru.webp",           platform: "Cantina",   type: "CLOB",           findings: "1L, 2I",       rank: "#24", link: "https://cantina.xyz/code/cdce21ba-b787-4df4-9c56-b31d085388e7/overview",           twitter: "https://x.com/kaboratory0", featured: false },
   { name: "Panoptic",                     image: "/images/Panoptic.webp",       platform: "Code4rena", type: "Options",        findings: "1M",           rank: "#42", link: "https://code4rena.com/audits/2024-04-panoptic",                                     twitter: "https://x.com/Panoptic_xyz", featured: false },
@@ -292,6 +294,7 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
   const tilt = useTilt(5);
   const isPrivate = (protocol as any).isPrivate;
   const isTop10   = protocol.rank && parseInt(protocol.rank.replace("#","")) <= 10;
+  const hasReport = Boolean(protocol.link);
   const hash      = fakeHash(protocol.name);
 
   return (
@@ -422,7 +425,7 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
                   >
                     <Lock className="w-2.5 h-2.5" />NDA
                   </span>
-                ) : (
+                ) : hasReport ? (
                   <motion.a href={protocol.link} target="_blank" rel="noopener noreferrer"
                     className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[10px] font-medium transition-all"
                     style={{ background: "rgba(94,234,212,0.06)", border: "1px solid rgba(94,234,212,0.18)", color: "#5eead4" }}
@@ -430,6 +433,13 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
                     whileTap={{ scale: 0.95 }}>
                     View <ExternalLink className="w-3 h-3" />
                   </motion.a>
+                ) : (
+                  <span
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-mono select-none"
+                    style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", color: "#6b7280" }}
+                  >
+                    Report nil
+                  </span>
                 )}
               </div>
             </div>
@@ -793,7 +803,12 @@ function App() {
                       style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
                       whileHover={{ y: -3, scale: 1.05, borderColor: "rgba(94,234,212,0.25)" }}
                       whileTap={{ scale: 0.95 }}>
-                      <img src={s.img} alt={s.alt} className="w-4 h-4 object-contain opacity-40 group-hover:opacity-80 transition-opacity" />
+                      <img
+                        src={s.img}
+                        alt={s.alt}
+                        className={`w-4 h-4 object-contain transition-opacity ${s.alt === "GitHub" ? "opacity-80 group-hover:opacity-100" : "opacity-40 group-hover:opacity-80"}`}
+                        style={s.alt === "GitHub" ? { filter: "drop-shadow(0 0 6px rgba(255,255,255,0.35))" } : undefined}
+                      />
                     </motion.a>
                   ))}
                   {/* Discord */}
