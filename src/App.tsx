@@ -23,6 +23,7 @@ import {
   Lock,
   Bot,
   Building2,
+  Globe,
 } from "lucide-react";
 
 const ThreeParticlesBackground = lazy(() => import("./ThreeParticlesBackground"));
@@ -276,6 +277,7 @@ const protocols = [
   { name: "Private Audit #1", image: "", platform: "Private", type: "Lending",      findings: "1H, 2M, 2L", rank: "", link: "", twitter: "", featured: false, isPrivate: true },
   { name: "Private Audit #2", image: "", platform: "Private", type: "DeFi / Vaults",findings: "2M, 3L",     rank: "", link: "", twitter: "", featured: false, isPrivate: true },
   { name: "Private Audit #3", image: "", platform: "Private", type: "Cross-chain",  findings: "1H, 1M",     rank: "", link: "", twitter: "", featured: false, isPrivate: true },
+  { name: "BIFY: Security Review Audit", image: "/images/bify.jpg", platform: "Private", type: "Security Review", findings: "2H, 1M, 3L", rank: "", link: "", twitter: "https://x.com/BIFYOfficial", website: "https://bify.io", featured: false, isPrivate: true, clientLabel: "BIFY", clientLogo: "/images/bify.jpg" },
 ];
 
 const projects = [
@@ -296,6 +298,7 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
   const isTop10   = protocol.rank && parseInt(protocol.rank.replace("#","")) <= 10;
   const hasReport = Boolean(protocol.link);
   const hasTwitter = Boolean(protocol.twitter);
+  const hasWebsite = Boolean((protocol as any).website);
   const hash      = fakeHash(protocol.name);
 
   return (
@@ -350,7 +353,7 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
             />
             {isPrivate ? (
               <div className="relative w-full h-full rounded-xl overflow-hidden border border-white/[0.07] shadow-lg">
-                <img src="/images/kann.png" alt="Kann Audits" className="w-full h-full object-cover" />
+                <img src={protocol.image || "/images/kann.png"} alt={protocol.name} className="w-full h-full object-cover" />
               </div>
             ) : (
               <img
@@ -386,8 +389,8 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
                   className="px-2 py-0.5 rounded text-[10px] font-medium flex items-center gap-1.5 font-mono"
                   style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "#9ca3af" }}
                 >
-                  <img src="/images/kann.png" alt="" className="w-3 h-3 object-contain rounded-full" />
-                  Kann Audits
+                  <img src={(protocol as any).clientLogo || "/images/kann.png"} alt="" className="w-3 h-3 object-contain rounded-full" />
+                  {(protocol as any).clientLabel || "Kann Audits"}
                 </span>
               ) : (
                 <span
@@ -405,13 +408,13 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
             {/* Findings + links */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5 flex-wrap">
-                {!isPrivate && parseFindings(protocol.findings).map((f, i) => (
+                {parseFindings(protocol.findings).map((f, i) => (
                   <SeverityBadge key={i} type={f.type} count={f.count} />
                 ))}
               </div>
 
               <div className="flex items-center gap-1.5">
-                {!isPrivate && (
+                {hasTwitter && (
                   hasTwitter ? (
                     <motion.a
                       href={protocol.twitter}
@@ -435,6 +438,19 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
                       <img src="/images/X.png" alt="X" className="w-3.5 h-3.5 object-contain opacity-40 hover:opacity-75 transition-opacity" />
                     </motion.button>
                   )
+                )}
+                {hasWebsite && (
+                  <motion.a
+                    href={(protocol as any).website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 rounded-lg transition-colors hover:bg-white/[0.05]"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={e => e.stopPropagation()}
+                  >
+                    <Globe className="w-3.5 h-3.5 text-sky-300/70 transition-colors hover:text-sky-300" />
+                  </motion.a>
                 )}
                 {isPrivate ? (
                   <span
