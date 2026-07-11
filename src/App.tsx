@@ -260,6 +260,7 @@ const parseFindings = (s: string) =>
 const platformLogos: Record<string, string> = {
   Cantina:   "/images/cantina.png",
   Code4rena: "/images/c4-logo-icon.svg",
+  HackenProof: "/images/hackenproof.svg",
   Sherlock:  "/images/sherlock.png",
 };
 
@@ -273,10 +274,11 @@ const protocols = [
   { name: "Panoptic",                     image: "/images/Panoptic.webp",       platform: "Code4rena", type: "Options",        findings: "1M",           rank: "#42", link: "https://code4rena.com/audits/2024-04-panoptic",                                     twitter: "https://x.com/Panoptic_xyz", featured: false },
   { name: "Mellow Vaults",                image: "/images/Mellow.webp",         platform: "Sherlock",  type: "Vaults",         findings: "1M",           rank: "#43", link: "https://audits.sherlock.xyz/contests/964/leaderboard",                              twitter: "https://x.com/mellowprotocol", featured: false },
   { name: "Malda",                        image: "/images/Malda.webp",          platform: "Sherlock",  type: "Lending",        findings: "1M",           rank: "#46", link: "https://audits.sherlock.xyz/contests/1029/leaderboard",                             twitter: "https://x.com/malda_xyz",   featured: false },
+  { name: "0xmarkets",                    image: "/images/0xmarkets.png",       platform: "HackenProof", type: "DeFi",         findings: "2H, 3M",       rank: "",    link: "",                                                                                         twitter: "",                           featured: false },
   { name: "Chainlink Payment Abstraction V2", image: "/images/Chainlink.webp",  platform: "Code4rena", type: "Infrastructure", findings: "1L",           rank: "",    link: "https://code4rena.com/audits/2026-03-chainlink-payment-abstraction-v2",             twitter: "https://x.com/chainlink",   featured: false },
-  { name: "Private Audit #1", image: "", platform: "Private", type: "Lending",      findings: "1H, 2M, 2L", rank: "", link: "", twitter: "", featured: false, isPrivate: true },
-  { name: "Private Audit #2", image: "", platform: "Private", type: "DeFi / Vaults",findings: "2M, 3L",     rank: "", link: "", twitter: "", featured: false, isPrivate: true },
-  { name: "Private Audit #3", image: "", platform: "Private", type: "Cross-chain",  findings: "1H, 1M",     rank: "", link: "", twitter: "", featured: false, isPrivate: true },
+  { name: "Private Audit #1", image: "", platform: "Private", type: "Lending",      findings: "1H, 3I",           rank: "", link: "", twitter: "", featured: false, isPrivate: true },
+  { name: "Private Audit #2", image: "", platform: "Private", type: "DeFi / Vaults",findings: "1M, 1I",           rank: "", link: "", twitter: "", featured: false, isPrivate: true },
+  { name: "Private Audit #3", image: "", platform: "Private", type: "Move Lang",    findings: "2H, 3M, 17L, 2I",  rank: "", link: "", twitter: "", featured: false, isPrivate: true },
   { name: "BIFY: Security Review Audit", image: "/images/bify.jpg", platform: "Private", type: "Security Review", findings: "2H, 1M, 3L", rank: "", link: "", twitter: "https://x.com/BIFYOfficial", website: "https://bify.io", featured: false, isPrivate: true, clientLabel: "BIFY", clientLogo: "/images/bify.jpg" },
 ];
 
@@ -783,9 +785,9 @@ function App() {
                 {/* ── Stats ── */}
                 <div className="grid grid-cols-3 gap-3 mb-7">
                   {[
-                    { val: "15+",  label: "Audits",    icon: <Target className="w-3.5 h-3.5" />,  hi: false },
-                    { val: "#6",   label: "Best Rank", icon: <Trophy className="w-3.5 h-3.5" />,  hi: true  },
-                    { val: "300+", label: "All-Time",  icon: <Award  className="w-3.5 h-3.5" />,  hi: false },
+                    { val: "20+",  label: "Audits",         icon: <Target className="w-3.5 h-3.5" />,  hi: false },
+                    { val: "20+",  label: "H/M+ Findings",  icon: <Trophy className="w-3.5 h-3.5" />,  hi: true  },
+                    { val: "50+",  label: "Valid Findings", icon: <Award  className="w-3.5 h-3.5" />,  hi: false },
                   ].map(s => (
                     <motion.div
                       key={s.label}
