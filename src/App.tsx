@@ -278,7 +278,7 @@ const protocols = [
   { name: "Chainlink Payment Abstraction V2", image: "/images/Chainlink.webp",  platform: "Code4rena", type: "Infrastructure", findings: "1L",           rank: "",    link: "https://code4rena.com/audits/2026-03-chainlink-payment-abstraction-v2",             twitter: "https://x.com/chainlink",   featured: false },
   { name: "Private Audit #1", image: "", platform: "Private", type: "Lending",      findings: "1H, 3I",           rank: "", link: "", twitter: "", featured: false, isPrivate: true },
   { name: "Private Audit #2", image: "", platform: "Private", type: "DeFi / Vaults",findings: "1M, 1I",           rank: "", link: "", twitter: "", featured: false, isPrivate: true },
-  { name: "Private Audit #3", image: "", platform: "Private", type: "Move Lang",    findings: "2H, 3M, 17L, 2I",  rank: "", link: "", twitter: "", featured: false, isPrivate: true },
+  { name: "Private Audit #3", image: "", platform: "Private", type: "DeFi",         findings: "2H, 3M, 17L, 2I",  rank: "", link: "", twitter: "", featured: false, isPrivate: true },
   { name: "BIFY: Security Review Audit", image: "/images/bify.jpg", platform: "Private", type: "Security Review", findings: "2H, 1M, 3L", rank: "", link: "", twitter: "https://x.com/BIFYOfficial", website: "https://bify.io", featured: false, isPrivate: true, clientLabel: "BIFY", clientLogo: "/images/bify.jpg" },
 ];
 
@@ -782,12 +782,30 @@ function App() {
                   <span style={{ color: "#f2b84b" }} className="font-semibold">Claude</span>. Breaking DeFi assumptions.
                 </p>
 
+                <div className="flex flex-wrap justify-center gap-2 mb-5">
+                  {[
+                    { val: "20+", label: "H/M Findings" },
+                    { val: "50+", label: "Valid Findings" },
+                  ].map(s => (
+                    <div
+                      key={s.label}
+                      className="px-3 py-1.5 rounded-xl flex items-center gap-2"
+                      style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                    >
+                      <span className="text-xs font-black font-mono" style={{ color: "#f2b84b" }}>{s.val}</span>
+                      <span className="text-[10px] font-mono uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.35)" }}>
+                        {s.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
                 {/* ── Stats ── */}
                 <div className="grid grid-cols-3 gap-3 mb-7">
                   {[
-                    { val: "20+",  label: "Audits",         icon: <Target className="w-3.5 h-3.5" />,  hi: false },
-                    { val: "20+",  label: "H/M+ Findings",  icon: <Trophy className="w-3.5 h-3.5" />,  hi: true  },
-                    { val: "50+",  label: "Valid Findings", icon: <Award  className="w-3.5 h-3.5" />,  hi: false },
+                    { val: "20+",      label: "Audits",      icon: <Target className="w-3.5 h-3.5" />,  hi: false },
+                    { val: "#6",       label: "Best Rank",   icon: <Trophy className="w-3.5 h-3.5" />,  hi: true  },
+                    { val: "Top 300+", label: "Cantina",     icon: <Award  className="w-3.5 h-3.5" />,  hi: false },
                   ].map(s => (
                     <motion.div
                       key={s.label}
@@ -817,6 +835,8 @@ function App() {
                     { label: "DeFi",    ai: false },
                     { label: "Lending", ai: false },
                     { label: "Vaults",  ai: false },
+                    { label: "Move",    ai: false },
+                    { label: "Solidity", ai: false },
                     { label: "ZK",      ai: false },
                     { label: "Fuzzing", ai: false },
                     { label: "Claude AI",  ai: true },
