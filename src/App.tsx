@@ -782,30 +782,12 @@ function App() {
                   <span style={{ color: "#f2b84b" }} className="font-semibold">Claude</span>. Breaking DeFi assumptions.
                 </p>
 
-                <div className="flex flex-wrap justify-center gap-2 mb-5">
-                  {[
-                    { val: "20+", label: "H/M Findings" },
-                    { val: "50+", label: "Valid Findings" },
-                  ].map(s => (
-                    <div
-                      key={s.label}
-                      className="px-3 py-1.5 rounded-xl flex items-center gap-2"
-                      style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
-                    >
-                      <span className="text-xs font-black font-mono" style={{ color: "#f2b84b" }}>{s.val}</span>
-                      <span className="text-[10px] font-mono uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.35)" }}>
-                        {s.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
                 {/* ── Stats ── */}
-                <div className="grid grid-cols-3 gap-3 mb-7">
+                <div className="grid grid-cols-3 gap-3 mb-4">
                   {[
-                    { val: "20+",      label: "Audits",      icon: <Target className="w-3.5 h-3.5" />,  hi: false },
-                    { val: "#6",       label: "Best Rank",   icon: <Trophy className="w-3.5 h-3.5" />,  hi: true  },
-                    { val: "Top 300+", label: "Cantina",     icon: <Award  className="w-3.5 h-3.5" />,  hi: false },
+                    { val: "20+",  label: "Audits",      icon: <Target className="w-3.5 h-3.5" />,  hi: false },
+                    { val: "#6",   label: "Best Rank",   icon: <Trophy className="w-3.5 h-3.5" />,  hi: true  },
+                    { val: "300+", label: "Cantina Top", icon: <Award  className="w-3.5 h-3.5" />,  hi: false },
                   ].map(s => (
                     <motion.div
                       key={s.label}
@@ -827,6 +809,17 @@ function App() {
                       </div>
                     </motion.div>
                   ))}
+                </div>
+
+                <div
+                  className="mb-7 px-3 py-2 rounded-xl flex items-center justify-center gap-3 text-center"
+                  style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.06)" }}
+                >
+                  <span className="text-[11px] font-black font-mono" style={{ color: "#f2b84b" }}>20+ H/M</span>
+                  <span className="text-[10px] font-mono uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.22)" }}>•</span>
+                  <span className="text-[10px] font-mono uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.35)" }}>High-Signal Findings</span>
+                  <span className="text-[10px] font-mono uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.22)" }}>•</span>
+                  <span className="text-[11px] font-black font-mono" style={{ color: "#f2b84b" }}>50+ Valid</span>
                 </div>
 
                 {/* ── Expertise tags ── */}
@@ -1067,8 +1060,7 @@ function App() {
                     <div className="flex items-center gap-2">
                       {[
                         { icon: <Trophy className="w-3 h-3" />, val: "#6",  sub: "Best",   c: "rgba(242,184,75" },
-                        { icon: <Target className="w-3 h-3" />, val: "×2",  sub: "Top 10", c: "rgba(94,234,212" },
-                        { icon: <Award  className="w-3 h-3" />, val: "300", sub: "Points", c: "rgba(94,234,212" },
+                        { icon: <Target className="w-3 h-3" />, val: "×3",  sub: "Top 10", c: "rgba(94,234,212" },
                       ].map(s => (
                         <motion.div key={s.sub}
                           className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg font-mono"
