@@ -783,15 +783,15 @@ function App() {
                 </p>
 
                 {/* ── Stats ── */}
-                <div className="grid grid-cols-3 gap-3 mb-4">
+                <div className="grid grid-cols-3 gap-3 mb-5">
                   {[
-                    { val: "20+",  label: "Audits",      icon: <Target className="w-3.5 h-3.5" />,  hi: false },
-                    { val: "#6",   label: "Best Rank",   icon: <Trophy className="w-3.5 h-3.5" />,  hi: true  },
-                    { val: "300+", label: "Cantina Top", icon: <Award  className="w-3.5 h-3.5" />,  hi: false },
+                    { val: "20+",     label: "Audits",    icon: <Target className="w-3.5 h-3.5" />, hi: false, compact: false },
+                    { val: "#6",      label: "Best Rank", icon: <Trophy className="w-3.5 h-3.5" />, hi: true,  compact: false },
+                    { val: "Top 300", label: "Cantina",   icon: <Award className="w-3.5 h-3.5" />,  hi: false, compact: true },
                   ].map(s => (
                     <motion.div
                       key={s.label}
-                      className="text-center p-3 rounded-xl transition-all duration-300"
+                      className="text-center px-3 py-3 rounded-xl transition-all duration-300"
                       style={s.hi
                         ? { background: "rgba(94,234,212,0.07)", border: "1px solid rgba(94,234,212,0.2)", boxShadow: "0 0 16px rgba(94,234,212,0.08)" }
                         : { background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }
@@ -801,7 +801,10 @@ function App() {
                       <div className="flex justify-center mb-1" style={{ color: s.hi ? "#5eead4" : "rgba(255,255,255,0.25)" }}>
                         {s.icon}
                       </div>
-                      <div className="text-xl font-black font-mono" style={{ color: s.hi ? "#5eead4" : "#fff" }}>
+                      <div
+                        className={`${s.compact ? "text-base leading-tight mt-0.5" : "text-xl"} font-black font-mono`}
+                        style={{ color: s.hi ? "#5eead4" : "#fff" }}
+                      >
                         {s.val}
                       </div>
                       <div className="text-[9px] uppercase tracking-widest mt-0.5 font-mono" style={{ color: "rgba(255,255,255,0.25)" }}>
@@ -811,15 +814,22 @@ function App() {
                   ))}
                 </div>
 
-                <div
-                  className="mb-7 px-3 py-2 rounded-xl flex items-center justify-center gap-3 text-center"
-                  style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.06)" }}
-                >
-                  <span className="text-[11px] font-black font-mono" style={{ color: "#f2b84b" }}>20+ H/M</span>
-                  <span className="text-[10px] font-mono uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.22)" }}>•</span>
-                  <span className="text-[10px] font-mono uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.35)" }}>High-Signal Findings</span>
-                  <span className="text-[10px] font-mono uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.22)" }}>•</span>
-                  <span className="text-[11px] font-black font-mono" style={{ color: "#f2b84b" }}>50+ Valid</span>
+                <div className="grid grid-cols-2 gap-2 mb-7">
+                  {[
+                    { val: "20+ H/M", label: "High-Signal" },
+                    { val: "50+ Valid", label: "Findings" },
+                  ].map(s => (
+                    <div
+                      key={s.label}
+                      className="px-3 py-2 rounded-xl text-center"
+                      style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.06)" }}
+                    >
+                      <div className="text-sm font-black font-mono" style={{ color: "#f2b84b" }}>{s.val}</div>
+                      <div className="text-[9px] uppercase tracking-widest font-mono mt-1" style={{ color: "rgba(255,255,255,0.3)" }}>
+                        {s.label}
+                      </div>
+                    </div>
+                  ))}
                 </div>
 
                 {/* ── Expertise tags ── */}
