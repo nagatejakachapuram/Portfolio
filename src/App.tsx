@@ -27,6 +27,9 @@ import {
 } from "lucide-react";
 
 const ThreeParticlesBackground = lazy(() => import("./ThreeParticlesBackground"));
+const HACKENPROOF_PROFILE = "https://hackenproof.com/hackers/DeveloperX";
+const HACKENPROOF_LOGO =
+  "https://2686245090-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Faou7mxABOvrk0uZ81vUx%2Fuploads%2FdUHXrWotM1CfqGwg3OH0%2FColor.svg?alt=media&token=b6c11b5f-515c-4cb5-80c8-aaee22e48645";
 
 // ═══════════════════════════════════════════════════════════
 // CUSTOM CYBER CURSOR
@@ -691,6 +694,7 @@ function App() {
               { href: "https://x.com/developerx_sec",            icon: <img src="/images/X.png"       alt="" className="w-6 h-6 object-contain" />, label: "X / Twitter" },
               { href: "https://github.com/nagatejakachapuram",    icon: <img src="/images/github.webp" alt="" className="w-6 h-6 object-contain" />, label: "GitHub" },
               { href: "https://audits.sherlock.xyz/watson/DeveloperX", icon: <img src="/images/sherlock.png" alt="" className="w-6 h-6 object-contain" />, label: "Sherlock" },
+              { href: HACKENPROOF_PROFILE, icon: <img src={HACKENPROOF_LOGO} alt="" className="w-6 h-6 object-contain rounded-md bg-white p-0.5" />, label: "HackenProof" },
               { href: "https://medium.com/@developerx-security", icon: <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>, label: "Medium" },
             ].map((item, i) => (
               <motion.a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer"
@@ -776,18 +780,19 @@ function App() {
                 <p className="text-xs leading-relaxed text-center mb-7" style={{ color: "rgba(255,255,255,0.45)" }}>
                   Smart contract security engineer & Core Developer @{" "}
                   <span className="text-white font-semibold">BIFY</span>.{" "}
-                  Security Intern @{" "}
+                  Founder @{" "}
+                  <span className="text-white font-semibold">SecantPay</span>.{" "}
+                  Prev Security Intern @{" "}
                   <span className="text-white font-semibold">Kann Audits</span>.{" "}
                   Building AI security agents with{" "}
                   <span style={{ color: "#f2b84b" }} className="font-semibold">Claude</span>. Breaking DeFi assumptions.
                 </p>
 
                 {/* ── Stats ── */}
-                <div className="grid grid-cols-3 gap-3 mb-5">
+                <div className="grid grid-cols-2 gap-3 mb-4">
                   {[
                     { val: "20+",     label: "Audits",    icon: <Target className="w-3.5 h-3.5" />, hi: false, compact: false },
                     { val: "#6",      label: "Best Rank", icon: <Trophy className="w-3.5 h-3.5" />, hi: true,  compact: false },
-                    { val: "Top 300", label: "Cantina",   icon: <Award className="w-3.5 h-3.5" />,  hi: false, compact: true },
                   ].map(s => (
                     <motion.div
                       key={s.label}
@@ -814,20 +819,24 @@ function App() {
                   ))}
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 mb-7">
+                <div
+                  className="mb-7 px-3 py-2.5 rounded-xl flex flex-wrap items-center justify-center gap-2 text-center"
+                  style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.06)" }}
+                >
                   {[
                     { val: "20+ H/M", label: "High-Signal" },
                     { val: "50+ Valid", label: "Findings" },
+                    { val: "Top 300 Cantina", label: "" },
+                    { val: "Top 350 HackenProof", label: "" },
                   ].map(s => (
-                    <div
-                      key={s.label}
-                      className="px-3 py-2 rounded-xl text-center"
-                      style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.06)" }}
-                    >
-                      <div className="text-sm font-black font-mono" style={{ color: "#f2b84b" }}>{s.val}</div>
-                      <div className="text-[9px] uppercase tracking-widest font-mono mt-1" style={{ color: "rgba(255,255,255,0.3)" }}>
-                        {s.label}
-                      </div>
+                    <div key={s.val} className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#f2b84b", boxShadow: "0 0 6px rgba(242,184,75,0.35)" }} />
+                      <span className="text-[11px] font-black font-mono" style={{ color: "#f2b84b" }}>{s.val}</span>
+                      {s.label ? (
+                        <span className="text-[9px] uppercase tracking-widest font-mono" style={{ color: "rgba(255,255,255,0.3)" }}>
+                          {s.label}
+                        </span>
+                      ) : null}
                     </div>
                   ))}
                 </div>
@@ -865,6 +874,7 @@ function App() {
                     { href: "https://x.com/developerx_sec",         img: "/images/X.png",       alt: "X" },
                     { href: "https://github.com/nagatejakachapuram", img: "/images/github.webp", alt: "GitHub" },
                     { href: "https://audits.sherlock.xyz/watson/DeveloperX", img: "/images/sherlock.png", alt: "Sherlock" },
+                    { href: HACKENPROOF_PROFILE, img: HACKENPROOF_LOGO, alt: "HackenProof" },
                   ].map(s => (
                     <motion.a key={s.alt} href={s.href} target="_blank" rel="noopener noreferrer"
                       className="p-3 rounded-xl transition-all group"
@@ -878,10 +888,18 @@ function App() {
                       <img
                         src={s.img}
                         alt={s.alt}
-                        className={`w-4 h-4 object-contain transition-all ${s.alt === "GitHub" ? "opacity-95 group-hover:opacity-100" : "opacity-75 group-hover:opacity-100"}`}
+                        className={`object-contain transition-all ${
+                          s.alt === "GitHub"
+                            ? "w-4 h-4 opacity-95 group-hover:opacity-100"
+                            : s.alt === "HackenProof"
+                              ? "w-5 h-5 -m-0.5 rounded-md bg-white p-0.5 opacity-90 group-hover:opacity-100"
+                              : "w-4 h-4 opacity-75 group-hover:opacity-100"
+                        }`}
                         style={{
                           filter: s.alt === "GitHub"
                             ? "drop-shadow(0 0 9px rgba(255,255,255,0.48))"
+                            : s.alt === "HackenProof"
+                              ? "drop-shadow(0 0 8px rgba(255,255,255,0.2))"
                             : "drop-shadow(0 0 7px rgba(94,234,212,0.25))",
                         }}
                       />
