@@ -27,6 +27,8 @@ import {
 } from "lucide-react";
 
 const ThreeParticlesBackground = lazy(() => import("./ThreeParticlesBackground"));
+const CODEHAWKS_PROFILE = "https://profiles.cyfrin.io/u/developerx_sec";
+const CODEHAWKS_LOGO = "https://codehawks.cyfrin.io/favicon.ico";
 const HACKENPROOF_PROFILE = "https://hackenproof.com/hackers/DeveloperX";
 const HACKENPROOF_LOGO =
   "https://2686245090-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Faou7mxABOvrk0uZ81vUx%2Fuploads%2FdUHXrWotM1CfqGwg3OH0%2FColor.svg?alt=media&token=b6c11b5f-515c-4cb5-80c8-aaee22e48645";
@@ -262,6 +264,7 @@ const parseFindings = (s: string) =>
 // ═══════════════════════════════════════════════════════════
 const platformLogos: Record<string, string> = {
   Cantina:   "/images/cantina.png",
+  CodeHawks: CODEHAWKS_LOGO,
   Code4rena: "/images/c4-logo-icon.svg",
   HackenProof: "/images/hackenproof.svg",
   Sherlock:  "/images/sherlock.png",
@@ -278,6 +281,7 @@ const protocols = [
   { name: "Mellow Vaults",                image: "/images/Mellow.webp",         platform: "Sherlock",  type: "Vaults",         findings: "1M",           rank: "#43", link: "https://audits.sherlock.xyz/contests/964/leaderboard",                              twitter: "https://x.com/mellowprotocol", featured: false },
   { name: "Malda",                        image: "/images/Malda.webp",          platform: "Sherlock",  type: "Lending",        findings: "1M",           rank: "#46", link: "https://audits.sherlock.xyz/contests/1029/leaderboard",                             twitter: "https://x.com/malda_xyz",   featured: false },
   { name: "0xmarkets",                    image: "/images/0xmarkets.png",       platform: "HackenProof", type: "DeFi",         findings: "2H, 3M, 1L",   rank: "",    link: "",                                                                                         twitter: "",                           featured: false },
+  { name: "BattleChain",                  image: "https://res.cloudinary.com/droqoz7lg/image/upload/q_90/dpr_2.0/c_fill,g_auto,h_320,w_320/f_auto/v1/company/eproz7rugsccsiosltpu?_a=DATAiZAAZAA0", platform: "CodeHawks", type: "DeFi", findings: "1L", rank: "", link: "", twitter: "", featured: false },
   { name: "Chainlink Payment Abstraction V2", image: "/images/Chainlink.webp",  platform: "Code4rena", type: "Infrastructure", findings: "1L",           rank: "",    link: "https://code4rena.com/audits/2026-03-chainlink-payment-abstraction-v2",             twitter: "https://x.com/chainlink",   featured: false },
   { name: "Private Audit #1", image: "", platform: "Private", type: "Lending",      findings: "1H, 3I",           rank: "", link: "", twitter: "", featured: false, isPrivate: true },
   { name: "Private Audit #2", image: "", platform: "Private", type: "DeFi / Vaults",findings: "1M, 1I",           rank: "", link: "", twitter: "", featured: false, isPrivate: true },
@@ -694,6 +698,7 @@ function App() {
               { href: "https://x.com/developerx_sec",            icon: <img src="/images/X.png"       alt="" className="w-6 h-6 object-contain" />, label: "X / Twitter" },
               { href: "https://github.com/nagatejakachapuram",    icon: <img src="/images/github.webp" alt="" className="w-6 h-6 object-contain" />, label: "GitHub" },
               { href: "https://audits.sherlock.xyz/watson/DeveloperX", icon: <img src="/images/sherlock.png" alt="" className="w-6 h-6 object-contain" />, label: "Sherlock" },
+              { href: CODEHAWKS_PROFILE, icon: <img src={CODEHAWKS_LOGO} alt="" className="w-6 h-6 object-contain rounded-md" />, label: "CodeHawks" },
               { href: HACKENPROOF_PROFILE, icon: <img src={HACKENPROOF_LOGO} alt="" className="w-6 h-6 object-contain rounded-md bg-white p-0.5" />, label: "HackenProof" },
               { href: "https://medium.com/@developerx-security", icon: <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>, label: "Medium" },
             ].map((item, i) => (
@@ -874,6 +879,7 @@ function App() {
                     { href: "https://x.com/developerx_sec",         img: "/images/X.png",       alt: "X" },
                     { href: "https://github.com/nagatejakachapuram", img: "/images/github.webp", alt: "GitHub" },
                     { href: "https://audits.sherlock.xyz/watson/DeveloperX", img: "/images/sherlock.png", alt: "Sherlock" },
+                    { href: CODEHAWKS_PROFILE, img: CODEHAWKS_LOGO, alt: "CodeHawks" },
                     { href: HACKENPROOF_PROFILE, img: HACKENPROOF_LOGO, alt: "HackenProof" },
                   ].map(s => (
                     <motion.a key={s.alt} href={s.href} target="_blank" rel="noopener noreferrer"
@@ -891,6 +897,8 @@ function App() {
                         className={`object-contain transition-all ${
                           s.alt === "GitHub"
                             ? "w-4 h-4 opacity-95 group-hover:opacity-100"
+                            : s.alt === "CodeHawks"
+                              ? "w-4 h-4 opacity-90 group-hover:opacity-100"
                             : s.alt === "HackenProof"
                               ? "w-5 h-5 -m-0.5 rounded-md bg-white p-0.5 opacity-90 group-hover:opacity-100"
                               : "w-4 h-4 opacity-75 group-hover:opacity-100"
@@ -898,6 +906,8 @@ function App() {
                         style={{
                           filter: s.alt === "GitHub"
                             ? "drop-shadow(0 0 9px rgba(255,255,255,0.48))"
+                            : s.alt === "CodeHawks"
+                              ? "drop-shadow(0 0 8px rgba(94,234,212,0.2))"
                             : s.alt === "HackenProof"
                               ? "drop-shadow(0 0 8px rgba(255,255,255,0.2))"
                             : "drop-shadow(0 0 7px rgba(94,234,212,0.25))",

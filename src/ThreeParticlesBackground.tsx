@@ -88,11 +88,18 @@ const ThreeParticlesBackground = () => {
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 30);
     camera.position.set(0, 0, 10);
 
-    const renderer = new THREE.WebGLRenderer({
-      alpha: true,
-      antialias: true,
-      powerPreference: "high-performance",
-    });
+     let renderer: THREE.WebGLRenderer;
+
+try {
+  renderer = new THREE.WebGLRenderer({
+    alpha: true,
+    antialias: true,
+    powerPreference: "high-performance",
+  });
+} catch (error) {
+  console.warn("WebGL unavailable, disabling Three.js background.", error);
+  return;
+}
     renderer.setClearColor(0x000000, 0);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.setSize(window.innerWidth, window.innerHeight);
