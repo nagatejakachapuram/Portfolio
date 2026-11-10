@@ -8,3 +8,9 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </StrictMode>
 );
+
+const url = new URL(window.location.href);
+if (url.searchParams.has('_reload')) {
+  url.searchParams.delete('_reload');
+  window.history.replaceState(window.history.state, '', url.href);
+}

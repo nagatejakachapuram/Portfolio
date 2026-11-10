@@ -9,9 +9,49 @@
     <meta name="theme-color" content="#0a0a0b" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script>
+      (() => {
+        const retry = () => {
+          const url = new URL(window.location.href);
+          url.searchParams.set("_reload", Date.now().toString());
+          window.location.replace(url.href);
+        };
+
+        // This must run before the app bundle, which may fail to download.
+        window.addEventListener("error", (event) => {
+          const script = event.target;
+          if (!(script instanceof HTMLScriptElement) || script.type !== "module") return;
+          if (new URL(script.src, window.location.href).origin !== window.location.origin) return;
+
+          if (!new URL(window.location.href).searchParams.has("_reload")) {
+            retry();
+            return;
+          }
+
+          const showError = () => document.getElementById("load-error")?.removeAttribute("hidden");
+          if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", showError, { once: true });
+          } else {
+            showError();
+          }
+        }, true);
+
+        document.addEventListener("click", (event) => {
+          if (event.target instanceof Element && event.target.closest("#retry-load")) retry();
+        });
+      })();
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <section id="load-error" hidden role="alert">
+        <div style="min-height:100vh;display:grid;place-content:center;gap:16px;padding:24px;box-sizing:border-box;background:#080705;color:#fff;font-family:monospace;text-align:center">
+          <h1 style="margin:0;font-size:24px">Unable to load the portfolio</h1>
+          <p style="margin:0;color:#a3a3a3">Please check your connection and try again.</p>
+          <button id="retry-load" type="button" style="justify-self:center;padding:12px 24px;border:1px solid #5eead4;border-radius:8px;background:transparent;color:#5eead4;font:inherit;cursor:pointer">Try again</button>
+        </div>
+      </section>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
