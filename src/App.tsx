@@ -275,6 +275,7 @@ const protocols = [
   { name: "Pike Finance",                 image: "/images/pike.webp",           platform: "Cantina",   type: "Lending",        findings: "1M, 1L",       rank: "#7",  link: "https://cantina.xyz/code/917d796b-48d0-41d0-bb40-be137b7d3db5/overview/leaderboard", twitter: "https://x.com/PikeFinance",  featured: true  },
   { name: "Reserve Governor",             image: "/images/reserve-governor.jpeg", platform: "Cantina", type: "DeFi",           findings: "1M, 3L",       rank: "#7",  link: "https://cantina.xyz/code/980a5976-9a7d-4014-b2e1-c248b4c6fa44/overview/leaderboard",        twitter: "https://x.com/reserveprotocol", featured: false },
   { name: "Revert Finance",               image: "/images/revert-finance.png",  platform: "Cantina",   type: "DeFi",           findings: "1H, 1M",       rank: "",    link: "",                                                                                         twitter: "https://x.com/revertfinance", featured: false },
+  { name: "Revert v4lend Competition",    image: "/images/revert-finance.png",  platform: "Cantina",   type: "DeFi",           findings: "1H, 8M, 5L, 2I", rank: "",    link: "",                                                                                         twitter: "https://x.com/revertfinance", featured: false },
   { name: "Megapot",                      image: "/images/Megapot.webp",        platform: "Code4rena", type: "DeFi",           findings: "1L",           rank: "#50", link: "https://code4rena.com/audits/2025-11-megapot/dashboard",                            twitter: "https://x.com/megapot",     featured: false },
   { name: "Kuru",                         image: "/images/Kuru.webp",           platform: "Cantina",   type: "CLOB",           findings: "1L, 2I",       rank: "#24", link: "https://cantina.xyz/code/cdce21ba-b787-4df4-9c56-b31d085388e7/overview",           twitter: "https://x.com/KuruExchange", featured: false },
   { name: "Panoptic",                     image: "/images/Panoptic.webp",       platform: "Code4rena", type: "Options",        findings: "1M",           rank: "#42", link: "https://code4rena.com/audits/2024-04-panoptic",                                     twitter: "https://x.com/Panoptic_xyz", featured: false },
@@ -829,8 +830,8 @@ function App() {
                   style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.06)" }}
                 >
                   {[
-                    { val: "20+ H/M", label: "High-Signal" },
-                    { val: "50+ Valid", label: "Findings" },
+                    { val: "30+ H/M", label: "High-Signal" },
+                    { val: "75+ Valid", label: "Findings" },
                     { val: "Top 300 Cantina", label: "" },
                     { val: "Top 350 HackenProof", label: "" },
                   ].map(s => (
