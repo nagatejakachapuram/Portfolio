@@ -1,18 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Shield,
-  Lock,
-  Wallet,
-  Play,
-  AlertCircle,
-  CheckCircle,
-  Loader2,
-  Terminal,
-  Bot,
-  Zap,
-  ChevronDown,
-} from "lucide-react";
+  ShieldCheckIcon as Shield,
+  LockKeyIcon as Lock,
+  WalletIcon as Wallet,
+  PlayIcon as Play,
+  WarningCircleIcon as AlertCircle,
+  CheckCircleIcon as CheckCircle,
+  SpinnerGapIcon as Loader2,
+  TerminalWindowIcon as Terminal,
+  RobotIcon as Bot,
+  LightningIcon as Zap,
+  CaretDownIcon as ChevronDown,
+} from "@phosphor-icons/react";
 import { BrowserProvider } from "ethers";
 
 // ── Owner wallet whitelist ────────────────────────────────────────────────────

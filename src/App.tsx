@@ -2,29 +2,32 @@ import { Suspense, lazy, useState, useEffect, useRef, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion";
 import SecurityGuyTool from "./SecurityGuyTool";
 import {
-  ExternalLink,
-  Shield,
-  Code,
-  Zap,
-  Brain,
-  TrendingUp,
-  Sparkles,
-  Menu,
-  X,
-  Trophy,
-  AlertTriangle,
-  AlertCircle,
-  Info,
-  Flame,
-  Target,
-  Award,
-  CheckCircle,
-  Wrench,
-  Lock,
-  Bot,
-  Building2,
-  Globe,
-} from "lucide-react";
+  ArrowSquareOutIcon as ExternalLink,
+  ShieldCheckIcon as Shield,
+  CodeIcon as Code,
+  LightningIcon as Zap,
+  BrainIcon as Brain,
+  TrendUpIcon as TrendingUp,
+  SparkleIcon as Sparkles,
+  ListIcon as Menu,
+  XIcon as X,
+  TrophyIcon as Trophy,
+  WarningIcon as AlertTriangle,
+  WarningCircleIcon as AlertCircle,
+  InfoIcon as Info,
+  FireIcon as Flame,
+  TargetIcon as Target,
+  CheckCircleIcon as CheckCircle,
+  WrenchIcon as Wrench,
+  LockKeyIcon as Lock,
+  RobotIcon as Bot,
+  BuildingsIcon as Building2,
+  GlobeHemisphereWestIcon as Globe,
+  GithubLogoIcon,
+  XLogoIcon,
+  DiscordLogoIcon,
+  MediumLogoIcon,
+} from "@phosphor-icons/react";
 
 const ThreeParticlesBackground = lazy(() => import("./ThreeParticlesBackground"));
 const CODEHAWKS_PROFILE = "https://profiles.cyfrin.io/u/developerx_sec";
@@ -435,7 +438,7 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
                       whileTap={{ scale: 0.95 }}
                       onClick={e => e.stopPropagation()}
                     >
-                      <img src="/images/X.png" alt="X" className="w-3.5 h-3.5 object-contain opacity-40 hover:opacity-75 transition-opacity" />
+                      <XLogoIcon weight="fill" aria-label="X" className="w-3.5 h-3.5 text-white/60 hover:text-white transition-colors" />
                     </motion.a>
                   ) : (
                     <motion.button
@@ -445,7 +448,7 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
                       whileTap={{ scale: 0.95 }}
                       onClick={e => e.stopPropagation()}
                     >
-                      <img src="/images/X.png" alt="X" className="w-3.5 h-3.5 object-contain opacity-40 hover:opacity-75 transition-opacity" />
+                      <XLogoIcon weight="fill" aria-label="X" className="w-3.5 h-3.5 text-white/60 hover:text-white transition-colors" />
                     </motion.button>
                   )
                 )}
@@ -600,7 +603,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
                 className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-all"
                 style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.6)" }}
                 whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <img src="/images/github.webp" alt="" className="w-3.5 h-3.5 object-contain opacity-70" />Code
+                <GithubLogoIcon weight="fill" aria-hidden="true" className="w-3.5 h-3.5" />Code
               </motion.a>
               <motion.a href={project.demo} target="_blank" rel="noopener noreferrer"
                 className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-all"
@@ -696,12 +699,12 @@ function App() {
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
           >
             {[
-              { href: "https://x.com/developerx_sec",            icon: <img src="/images/X.png"       alt="" className="w-6 h-6 object-contain" />, label: "X / Twitter" },
-              { href: "https://github.com/nagatejakachapuram",    icon: <img src="/images/github.webp" alt="" className="w-6 h-6 object-contain" />, label: "GitHub" },
+              { href: "https://x.com/developerx_sec",            icon: <XLogoIcon weight="fill" aria-hidden="true" className="w-6 h-6" />, label: "X / Twitter" },
+              { href: "https://github.com/nagatejakachapuram",    icon: <GithubLogoIcon weight="fill" aria-hidden="true" className="w-6 h-6" />, label: "GitHub" },
               { href: "https://audits.sherlock.xyz/watson/DeveloperX", icon: <img src="/images/sherlock.png" alt="" className="w-6 h-6 object-contain" />, label: "Sherlock" },
               { href: CODEHAWKS_PROFILE, icon: <img src={CODEHAWKS_LOGO} alt="" className="w-6 h-6 object-contain rounded-md" />, label: "CodeHawks" },
               { href: HACKENPROOF_PROFILE, icon: <img src={HACKENPROOF_LOGO} alt="" className="w-6 h-6 object-contain rounded-md bg-white p-0.5" />, label: "HackenProof" },
-              { href: "https://medium.com/@developerx-security", icon: <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>, label: "Medium" },
+              { href: "https://medium.com/@developerx-security", icon: <MediumLogoIcon weight="fill" aria-hidden="true" className="w-6 h-6" />, label: "Medium" },
             ].map((item, i) => (
               <motion.a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-4 text-xl"
@@ -774,7 +777,7 @@ function App() {
                 <div className="text-center mb-7">
                   <h1 className="text-3xl font-black text-white mb-2 tracking-tight">DeveloperX</h1>
                   <div className="flex items-center justify-center gap-2">
-                    <Shield className="w-3.5 h-3.5" style={{ color: "#5eead4" }} />
+                    <Shield className="w-4 h-4" style={{ color: "#5eead4" }} />
                     <p className="font-mono text-xs font-bold tracking-widest uppercase" style={{ color: "#5eead4" }}>
                       Security Researcher
                     </p>
@@ -797,8 +800,8 @@ function App() {
                 {/* ── Stats ── */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   {[
-                    { val: "75+", label: "Valid Findings", icon: <CheckCircle className="w-3.5 h-3.5" />, hi: false, compact: false },
-                    { val: "30+", label: "High / Medium", icon: <Shield className="w-3.5 h-3.5" />, hi: true, compact: false },
+                    { val: "75+", label: "Valid Findings", icon: <CheckCircle className="w-5 h-5" />, hi: false, compact: false },
+                    { val: "30+", label: "High / Medium", icon: <Shield className="w-5 h-5" />, hi: true, compact: false },
                   ].map(s => (
                     <motion.div
                       key={s.label}
@@ -875,16 +878,17 @@ function App() {
                 </div>
 
                 {/* ── Social links ── */}
-                <div className="flex justify-center gap-2">
+                <div className="flex flex-wrap justify-center gap-2 max-w-[200px] mx-auto">
                   {[
-                    { href: "https://x.com/developerx_sec",         img: "/images/X.png",       alt: "X" },
-                    { href: "https://github.com/nagatejakachapuram", img: "/images/github.webp", alt: "GitHub" },
-                    { href: "https://audits.sherlock.xyz/watson/DeveloperX", img: "/images/sherlock.png", alt: "Sherlock" },
-                    { href: CODEHAWKS_PROFILE, img: CODEHAWKS_LOGO, alt: "CodeHawks" },
-                    { href: HACKENPROOF_PROFILE, img: HACKENPROOF_LOGO, alt: "HackenProof" },
+                    { href: "https://x.com/developerx_sec", img: "", alt: "X", icon: <XLogoIcon weight="fill" aria-hidden="true" className="w-5 h-5 text-white/90" /> },
+                    { href: "https://github.com/nagatejakachapuram", img: "", alt: "GitHub", icon: <GithubLogoIcon weight="fill" aria-hidden="true" className="w-5 h-5 text-white/90" /> },
+                    { href: "https://audits.sherlock.xyz/watson/DeveloperX", img: "/images/sherlock.png", alt: "Sherlock", icon: null },
+                    { href: CODEHAWKS_PROFILE, img: CODEHAWKS_LOGO, alt: "CodeHawks", icon: null },
+                    { href: HACKENPROOF_PROFILE, img: HACKENPROOF_LOGO, alt: "HackenProof", icon: null },
                   ].map(s => (
                     <motion.a key={s.alt} href={s.href} target="_blank" rel="noopener noreferrer"
-                      className="p-3 rounded-xl transition-all group"
+                      aria-label={s.alt} title={s.alt}
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-all group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-300"
                       style={{
                         background: "rgba(255,255,255,0.04)",
                         border: "1px solid rgba(255,255,255,0.08)",
@@ -892,33 +896,20 @@ function App() {
                       }}
                       whileHover={{ y: -3, scale: 1.05, borderColor: "rgba(94,234,212,0.25)" }}
                       whileTap={{ scale: 0.95 }}>
-                      <img
+                      {s.icon || <img
                         src={s.img}
                         alt={s.alt}
-                        className={`object-contain transition-all ${
-                          s.alt === "GitHub"
-                            ? "w-4 h-4 opacity-95 group-hover:opacity-100"
-                            : s.alt === "CodeHawks"
-                              ? "w-4 h-4 opacity-90 group-hover:opacity-100"
-                            : s.alt === "HackenProof"
-                              ? "w-5 h-5 -m-0.5 rounded-md bg-white p-0.5 opacity-90 group-hover:opacity-100"
-                              : "w-4 h-4 opacity-75 group-hover:opacity-100"
-                        }`}
+                        className={`w-5 h-5 object-contain opacity-90 group-hover:opacity-100 transition-all ${s.alt === "HackenProof" ? "rounded-md bg-white p-0.5" : ""}`}
                         style={{
-                          filter: s.alt === "GitHub"
-                            ? "drop-shadow(0 0 9px rgba(255,255,255,0.48))"
-                            : s.alt === "CodeHawks"
-                              ? "drop-shadow(0 0 8px rgba(94,234,212,0.2))"
-                            : s.alt === "HackenProof"
-                              ? "drop-shadow(0 0 8px rgba(255,255,255,0.2))"
-                            : "drop-shadow(0 0 7px rgba(94,234,212,0.25))",
+                          filter: "drop-shadow(0 0 7px rgba(94,234,212,0.25))",
                         }}
-                      />
+                      />}
                     </motion.a>
                   ))}
                   {/* Discord */}
                   <motion.div
-                    className="p-3 rounded-xl transition-all group relative"
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-all group relative"
+                    role="img" aria-label="Discord: developerx_sec" title="Discord: developerx_sec"
                     style={{
                       background: "rgba(255,255,255,0.04)",
                       border: "1px solid rgba(255,255,255,0.08)",
@@ -926,14 +917,11 @@ function App() {
                     }}
                     whileHover={{ y: -3, scale: 1.05 }}
                   >
-                    <svg
-                      className="w-4 h-4 opacity-80 group-hover:opacity-100 transition-all"
+                    <DiscordLogoIcon
+                      weight="fill" aria-hidden="true"
+                      className="w-5 h-5 opacity-90 group-hover:opacity-100 transition-all"
                       style={{ color: "#818cf8", filter: "drop-shadow(0 0 8px rgba(129,140,248,0.35))" }}
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
-                      <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
-                    </svg>
+                    />
                     <div
                       className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 rounded text-[9px] font-mono opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap"
                       style={{ background: "rgba(8,7,5,0.95)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.6)" }}
@@ -943,21 +931,19 @@ function App() {
                   </motion.div>
                   {/* Medium */}
                   <motion.a href="https://medium.com/@developerx-security" target="_blank" rel="noopener noreferrer"
-                    className="p-3 rounded-xl transition-all group"
+                    aria-label="Medium" title="Medium"
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-all group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-300"
                     style={{
                       background: "rgba(255,255,255,0.04)",
                       border: "1px solid rgba(255,255,255,0.08)",
                       boxShadow: "inset 0 1px 0 rgba(255,255,255,0.04), 0 0 14px rgba(74,222,128,0.10)",
                     }}
                     whileHover={{ y: -3, scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <svg
-                      className="w-4 h-4 opacity-80 group-hover:opacity-100 transition-all"
+                    <MediumLogoIcon
+                      weight="fill" aria-hidden="true"
+                      className="w-5 h-5 opacity-90 group-hover:opacity-100 transition-all"
                       style={{ color: "#4ade80", filter: "drop-shadow(0 0 8px rgba(74,222,128,0.35))" }}
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
-                      <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
-                    </svg>
+                    />
                   </motion.a>
                 </div>
               </div>
@@ -1056,9 +1042,9 @@ function App() {
               style={{ background: "rgba(8,7,5,0.8)", border: "1px solid rgba(255,255,255,0.06)", backdropFilter: "blur(20px)" }}
             >
               {[
-                { id: "audits",   label: "Security Audits", icon: <Shield className="w-3.5 h-3.5" /> },
-                { id: "projects", label: "Projects",        icon: <Code   className="w-3.5 h-3.5" /> },
-                { id: "tools",    label: "Tools",           icon: <Wrench className="w-3.5 h-3.5" /> },
+                { id: "audits",   label: "Security Audits", icon: <Shield className="w-4 h-4" /> },
+                { id: "projects", label: "Projects",        icon: <Code   className="w-4 h-4" /> },
+                { id: "tools",    label: "Tools",           icon: <Wrench className="w-4 h-4" /> },
               ].map(tab => (
                 <motion.button
                   key={tab.id}
@@ -1194,7 +1180,7 @@ function App() {
                           className="p-2.5 rounded-xl transition-all group"
                           style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
                           whileHover={{ scale: 1.05, y: -2 }}>
-                          <img src="/images/X.png" alt="X" className="w-4 h-4 object-contain opacity-40 group-hover:opacity-70 transition-opacity" />
+                          <XLogoIcon weight="fill" aria-label="X" className="w-4 h-4 text-white/60 group-hover:text-white transition-colors" />
                         </motion.a>
                       </div>
                       <p className="text-sm leading-relaxed max-w-2xl" style={{ color: "rgba(255,255,255,0.45)" }}>
