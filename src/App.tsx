@@ -403,7 +403,7 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
               {isPrivate ? (
                 <span
                   className="px-2 py-0.5 rounded text-[10px] font-medium flex items-center gap-1.5 font-mono"
-                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "#9ca3af" }}
+                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "var(--text-body)" }}
                 >
                   <img src={(protocol as any).clientLogo || "/images/kann.png"} alt="" className="w-3 h-3 object-contain rounded-full" />
                   {(protocol as any).clientLabel || "Kann Audits"}
@@ -411,14 +411,14 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
               ) : (
                 <span
                   className="px-2 py-0.5 rounded text-[10px] font-medium flex items-center gap-1.5 font-mono"
-                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "#9ca3af" }}
+                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "var(--text-body)" }}
                 >
                   <img src={platformLogos[protocol.platform]} alt="" className="w-3 h-3 object-contain" />
                   {protocol.platform}
                 </span>
               )}
-              <span style={{ color: "rgba(255,255,255,0.15)" }}>·</span>
-              <span className="text-[11px] font-mono" style={{ color: "rgba(255,255,255,0.35)" }}>{protocol.type}</span>
+              <span style={{ color: "var(--text-subtle)" }}>·</span>
+              <span className="text-[11px] font-mono" style={{ color: "var(--text-muted)" }}>{protocol.type}</span>
             </div>
 
             {/* Findings + links */}
@@ -471,7 +471,7 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
                 {isPrivate ? (
                   <span
                     className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-mono select-none"
-                    style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", color: "#4b5563" }}
+                    style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", color: "var(--text-muted)" }}
                   >
                     <Lock className="w-2.5 h-2.5" />NDA
                   </span>
@@ -510,10 +510,10 @@ const ProtocolCard = ({ protocol, index }: { protocol: typeof protocols[number];
           className="flex items-center justify-between px-5 py-2 mt-1"
           style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
         >
-          <span className="font-mono text-[9px]" style={{ color: "rgba(94,234,212,0.25)" }}>
+          <span className="font-mono text-[9px]" style={{ color: "var(--text-subtle)" }}>
             0x{hash}…
           </span>
-          <span className="font-mono text-[9px]" style={{ color: "rgba(255,255,255,0.12)" }}>
+          <span className="font-mono text-[9px]" style={{ color: "var(--text-muted)" }}>
             {isPrivate ? "ENCRYPTED" : "VERIFIED"}
           </span>
         </div>
@@ -580,7 +580,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
               <h3 className="font-bold text-white text-sm mb-1 group-hover:text-teal-300 transition-colors duration-300">
                 {project.title}
               </h3>
-              <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.4)" }}>
+              <p className="text-xs leading-relaxed" style={{ color: "var(--text-body)" }}>
                 {project.desc}
               </p>
             </div>
@@ -592,7 +592,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
               <span
                 key={tag}
                 className="px-2 py-0.5 rounded text-[10px] font-medium font-mono"
-                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.35)" }}
+                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", color: "var(--text-muted)" }}
               >
                 {tag}
               </span>
@@ -604,7 +604,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
             <div className="flex items-center gap-2">
               <motion.a href={project.github} target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-all"
-                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.6)" }}
+                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "var(--text-primary)" }}
                 whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <GithubLogoIcon weight="fill" aria-hidden="true" className="w-3.5 h-3.5" />Code
               </motion.a>
@@ -623,10 +623,10 @@ const ProjectCard = ({ project, index }: { project: typeof projects[number]; ind
           className="flex items-center justify-between px-5 py-2"
           style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
         >
-          <span className="font-mono text-[9px]" style={{ color: "rgba(242,184,75,0.25)" }}>
+          <span className="font-mono text-[9px]" style={{ color: "var(--text-subtle)" }}>
             tx·0x{hash}
           </span>
-          <span className="font-mono text-[9px]" style={{ color: "rgba(255,255,255,0.12)" }}>
+          <span className="font-mono text-[9px]" style={{ color: "var(--text-muted)" }}>
             {(project as any).disableLinks ? "PRIVATE" : "DEPLOYED"}
           </span>
         </div>
@@ -712,7 +712,7 @@ function App() {
             ].map((item, i) => (
               <motion.a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-4 text-xl"
-                style={{ color: "rgba(255,255,255,0.7)" }}
+                style={{ color: "var(--text-primary)" }}
                 onClick={() => setMobileMenuOpen(false)}
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
@@ -790,7 +790,7 @@ function App() {
                 </div>
 
                 {/* ── Bio ── */}
-                <p className="text-xs leading-relaxed text-center mb-7" style={{ color: "rgba(255,255,255,0.45)" }}>
+                <p className="text-xs leading-relaxed text-center mb-7" style={{ color: "var(--text-body)" }}>
                   Smart contract security engineer & Core Developer @{" "}
                   <span className="text-white font-semibold">BIFY</span>.{" "}
                   Founder @{" "}
@@ -851,7 +851,7 @@ function App() {
                       <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#f2b84b", boxShadow: "0 0 6px rgba(242,184,75,0.35)" }} />
                       <span className="text-[11px] font-black font-mono" style={{ color: "#f2b84b" }}>{s.val}</span>
                       {s.label ? (
-                        <span className="text-[9px] uppercase tracking-widest font-mono" style={{ color: "rgba(255,255,255,0.3)" }}>
+                        <span className="text-[9px] uppercase tracking-widest font-mono" style={{ color: "var(--text-muted)" }}>
                           {s.label}
                         </span>
                       ) : null}
@@ -877,7 +877,7 @@ function App() {
                       className="px-2.5 py-1 rounded-lg text-[10px] font-medium font-mono transition-all"
                       style={t.ai
                         ? { background: "rgba(242,184,75,0.07)", border: "1px solid rgba(242,184,75,0.2)", color: "#f2b84b" }
-                        : { background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.4)" }
+                        : { background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", color: "var(--text-body)" }
                       }
                       whileHover={{ scale: 1.05 }}
                     >
@@ -934,7 +934,7 @@ function App() {
                     />
                     <div
                       className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 rounded text-[9px] font-mono opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap"
-                      style={{ background: "rgba(8,7,5,0.95)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.6)" }}
+                      style={{ background: "rgba(8,7,5,0.95)", border: "1px solid rgba(255,255,255,0.08)", color: "var(--text-primary)" }}
                     >
                       developerx_sec
                     </div>
@@ -981,7 +981,7 @@ function App() {
                   About Me
                 </span>
               </div>
-              <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.5)" }}>
+              <p className="text-sm leading-relaxed mb-5" style={{ color: "var(--text-body)" }}>
                 Smart contract security engineer and full-stack Web3 developer. Security Intern at{" "}
                 <span className="text-white font-semibold">Kann Audits</span>. Building autonomous AI security agents
                 powered by <span style={{ color: "#f2b84b" }} className="font-semibold">Claude</span> — running full
@@ -997,7 +997,7 @@ function App() {
                   <span key={t.l} className="px-2.5 py-1 rounded-lg text-[10px] font-mono font-medium"
                     style={t.ai
                       ? { background: "rgba(242,184,75,0.07)", border: "1px solid rgba(242,184,75,0.2)", color: "#f2b84b" }
-                      : { background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.4)" }
+                      : { background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", color: "var(--text-body)" }
                     }>
                     {t.l}
                   </span>
@@ -1017,8 +1017,8 @@ function App() {
                   <span className="text-[10px] font-mono font-bold uppercase tracking-widest" style={{ color: "#4ade80" }}>Latest Article</span>
                 </div>
                 <motion.a href="https://medium.com/@developerx-security" target="_blank" rel="noopener noreferrer"
-                  className="text-[10px] font-mono flex items-center gap-1 transition-colors" style={{ color: "rgba(255,255,255,0.3)" }}
-                  whileHover={{ x: 3, color: "rgba(255,255,255,0.6)" }}>
+                  className="text-[10px] font-mono flex items-center gap-1 transition-colors" style={{ color: "var(--text-body)" }}
+                  whileHover={{ x: 3, color: "#ffffff" }}>
                   View all <ExternalLink className="w-2.5 h-2.5" />
                 </motion.a>
               </div>
@@ -1031,13 +1031,13 @@ function App() {
                   <h4 className="text-white text-sm font-semibold mb-2 group-hover:text-green-400 transition-colors">
                     How to Hunt $3K+ Solo Mediums Like a Professional
                   </h4>
-                  <p className="text-xs leading-relaxed mb-3" style={{ color: "rgba(255,255,255,0.4)" }}>
+                  <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--text-body)" }}>
                     A comprehensive guide on finding high-severity bugs in smart contract audits. The methodology and mindset to consistently earn solo medium findings.
                   </p>
                   <div className="flex items-center gap-2">
                     {["Security","Auditing","DeFi"].map(t => (
                       <span key={t} className="px-2 py-0.5 rounded text-[9px] font-mono"
-                        style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.3)" }}>
+                        style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", color: "var(--text-muted)" }}>
                         {t}
                       </span>
                     ))}
@@ -1062,7 +1062,7 @@ function App() {
                   className="px-5 py-2.5 rounded-xl font-semibold text-xs transition-all duration-300 flex items-center gap-2 font-mono"
                   style={activeTab === tab.id
                     ? { background: "rgba(94,234,212,0.1)", color: "#5eead4", border: "1px solid rgba(94,234,212,0.25)" }
-                    : { color: "rgba(255,255,255,0.35)", border: "1px solid transparent" }
+                    : { color: "var(--text-primary)", border: "1px solid transparent" }
                   }
                   whileHover={{ scale: activeTab === tab.id ? 1 : 1.03 }}
                   whileTap={{ scale: 0.97 }}
@@ -1088,7 +1088,7 @@ function App() {
                         Security{" "}
                         <span className="glitch gradient-text" data-text="Audits">Audits</span>
                       </h2>
-                      <p className="text-xs font-mono" style={{ color: "rgba(255,255,255,0.3)" }}>
+                      <p className="text-xs font-mono" style={{ color: "var(--text-body)" }}>
                         High-impact findings from competitive audit platforms
                       </p>
                     </div>
@@ -1103,7 +1103,7 @@ function App() {
                           whileHover={{ scale: 1.05 }}>
                           {s.icon}
                           <span className="font-black text-xs text-white">{s.val}</span>
-                          <span className="text-[9px]" style={{ color: "rgba(255,255,255,0.3)" }}>{s.sub}</span>
+                          <span className="text-[9px]" style={{ color: "var(--text-body)" }}>{s.sub}</span>
                         </motion.div>
                       ))}
                     </div>
@@ -1114,7 +1114,7 @@ function App() {
                     className="flex flex-wrap items-center gap-4 mb-8 px-4 py-3 rounded-xl font-mono"
                     style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}
                   >
-                    <span className="text-[9px] uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.25)" }}>Severity:</span>
+                    <span className="text-[9px] uppercase tracking-widest" style={{ color: "var(--text-muted)" }}>Severity:</span>
                     {[
                       { icon: <Flame className="w-3 h-3 text-red-400" />,         label: "High" },
                       { icon: <AlertTriangle className="w-3 h-3 text-orange-400" />, label: "Medium" },
@@ -1123,7 +1123,7 @@ function App() {
                     ].map(l => (
                       <div key={l.label} className="flex items-center gap-1.5">
                         {l.icon}
-                        <span className="text-[10px]" style={{ color: "rgba(255,255,255,0.4)" }}>{l.label}</span>
+                        <span className="text-[10px]" style={{ color: "var(--text-body)" }}>{l.label}</span>
                       </div>
                     ))}
                   </div>
@@ -1140,7 +1140,7 @@ function App() {
                     initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
                   >
                     <Zap className="w-7 h-7 mx-auto mb-3" style={{ color: "rgba(255,255,255,0.1)" }} />
-                    <p className="text-xs font-mono" style={{ color: "rgba(255,255,255,0.2)" }}>
+                    <p className="text-xs font-mono" style={{ color: "var(--text-muted)" }}>
                       // more audits in progress…
                     </p>
                   </motion.div>
@@ -1158,7 +1158,7 @@ function App() {
                       R&D{" "}
                       <span className="glitch gradient-text" data-text="Projects">Projects</span>
                     </h2>
-                    <p className="text-xs font-mono" style={{ color: "rgba(255,255,255,0.3)" }}>
+                    <p className="text-xs font-mono" style={{ color: "var(--text-body)" }}>
                       Building at the intersection of AI, DeFi, and security
                     </p>
                   </div>
@@ -1183,7 +1183,7 @@ function App() {
                           </motion.div>
                           <h3 className="text-2xl font-black text-white flex items-center gap-3">
                             BIFY
-                            <span className="text-xs font-mono font-normal" style={{ color: "rgba(255,255,255,0.3)" }}>· Base Network</span>
+                            <span className="text-xs font-mono font-normal" style={{ color: "var(--text-muted)" }}>· Base Network</span>
                           </h3>
                         </div>
                         <motion.a href="https://x.com/BIFYOfficial" target="_blank" rel="noopener noreferrer"
@@ -1193,13 +1193,13 @@ function App() {
                           <XLogoIcon weight="fill" aria-label="X" className="w-4 h-4 text-white/60 group-hover:text-white transition-colors" />
                         </motion.a>
                       </div>
-                      <p className="text-sm leading-relaxed max-w-2xl" style={{ color: "rgba(255,255,255,0.45)" }}>
+                      <p className="text-sm leading-relaxed max-w-2xl" style={{ color: "var(--text-body)" }}>
                         Core developer architecting an AI-powered NFT marketplace. Building secure smart contracts
                         for minting, marketplace logic, and Real-World Asset (RWA) tokenization.
                       </p>
                       <div className="flex items-center gap-2 mt-5">
                         <CheckCircle className="w-3.5 h-3.5" style={{ color: "#5eead4" }} />
-                        <span className="text-xs font-mono" style={{ color: "rgba(255,255,255,0.35)" }}>Full-time engagement</span>
+                        <span className="text-xs font-mono" style={{ color: "var(--text-body)" }}>Full-time engagement</span>
                       </div>
                     </div>
                   </motion.div>
@@ -1228,7 +1228,7 @@ function App() {
       {/* Footer */}
       <footer className="relative z-10 py-8 mt-20" style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}>
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <p className="text-[10px] font-mono" style={{ color: "rgba(255,255,255,0.18)" }}>
+          <p className="text-[10px] font-mono" style={{ color: "var(--text-subtle)" }}>
             © 2025 DeveloperX · Building secure DeFi
           </p>
         </div>

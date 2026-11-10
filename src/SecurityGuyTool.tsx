@@ -205,14 +205,14 @@ export default function SecurityGuyTool() {
 
   function eventColor(type: SSEEvent["type"]) {
     switch (type) {
-      case "status": return "text-neutral-400";
+      case "status": return "text-zinc-300";
       case "text": return "text-emerald-300";
       case "thinking": return "text-purple-400";
       case "tool": return "text-blue-400";
       case "tool_result": return "text-cyan-400";
       case "subagent": return "text-yellow-400";
       case "error": return "text-red-400";
-      default: return "text-neutral-300";
+      default: return "text-zinc-300";
     }
   }
 
@@ -256,7 +256,7 @@ export default function SecurityGuyTool() {
                 AI Agent
               </span>
             </div>
-            <p className="text-neutral-400 text-sm leading-relaxed max-w-2xl">
+            <p className="text-zinc-300 text-sm leading-relaxed max-w-2xl">
               Full autonomous Web3 security audit pipeline. Runs 15–80 parallel AI sub-agents
               — breadth analysis, depth review, chain analysis, PoC verification, and report
               generation — identical to a professional smart contract audit.
@@ -280,7 +280,7 @@ export default function SecurityGuyTool() {
                 <span className="text-xs font-semibold uppercase tracking-wider">{m.label}</span>
               </div>
               <div className="text-white font-bold text-sm">{m.value}</div>
-              <div className="text-neutral-500 text-xs">{m.sub}</div>
+              <div className="text-zinc-400 text-xs">{m.sub}</div>
             </div>
           ))}
         </div>
@@ -297,11 +297,11 @@ export default function SecurityGuyTool() {
           /* Not connected */
           <div className="flex flex-col items-center text-center py-6 gap-4">
             <div className="w-14 h-14 rounded-2xl bg-neutral-800/60 border border-neutral-700/50 flex items-center justify-center">
-              <Wallet className="w-7 h-7 text-neutral-400" />
+              <Wallet className="w-7 h-7 text-zinc-300" />
             </div>
             <div>
               <p className="text-white font-semibold mb-1">Connect your wallet to continue</p>
-              <p className="text-neutral-500 text-sm">Access is restricted to verified owner wallets.</p>
+              <p className="text-zinc-300 text-sm">Access is restricted to verified owner wallets.</p>
             </div>
             {walletError && (
               <p className="text-red-400 text-sm flex items-center gap-2">
@@ -329,9 +329,9 @@ export default function SecurityGuyTool() {
             </div>
             <div>
               <p className="text-white font-semibold mb-1">Access Restricted</p>
-              <p className="text-neutral-500 text-sm">
+              <p className="text-zinc-300 text-sm">
                 Connected as{" "}
-                <span className="font-mono text-neutral-300 text-xs">
+                <span className="font-mono text-white text-xs">
                   {walletAddress.slice(0, 6)}…{walletAddress.slice(-4)}
                 </span>
                 , but this wallet is not authorised to run audits.
@@ -339,7 +339,7 @@ export default function SecurityGuyTool() {
             </div>
             <button
               onClick={disconnectWallet}
-              className="px-4 py-2 rounded-xl border border-neutral-700 text-neutral-400 hover:text-neutral-200 text-sm transition-colors"
+              className="px-4 py-2 rounded-xl border border-neutral-700 text-white text-sm transition-colors"
             >
               Disconnect
             </button>
@@ -352,14 +352,14 @@ export default function SecurityGuyTool() {
               <div className="flex items-center gap-2 text-sm">
                 <CheckCircle className="w-4 h-4 text-emerald-400" />
                 <span className="text-emerald-400 font-medium">Owner access granted</span>
-                <span className="text-neutral-600">·</span>
-                <span className="font-mono text-neutral-400 text-xs">
+                <span className="text-zinc-400">·</span>
+                <span className="font-mono text-zinc-400 text-xs">
                   {walletAddress!.slice(0, 6)}…{walletAddress!.slice(-4)}
                 </span>
               </div>
               <button
                 onClick={disconnectWallet}
-                className="text-xs text-neutral-600 hover:text-neutral-400 transition-colors"
+                className="text-xs text-zinc-300 hover:text-white transition-colors"
               >
                 Disconnect
               </button>
@@ -369,7 +369,7 @@ export default function SecurityGuyTool() {
             {!jobId ? (
               <form onSubmit={startAudit} className="space-y-4">
                 <div>
-                  <label className="block text-xs text-neutral-400 mb-1.5 font-medium">
+                  <label className="block text-xs text-white mb-1.5 font-medium">
                     GitHub Repository URL *
                   </label>
                   <input
@@ -378,13 +378,13 @@ export default function SecurityGuyTool() {
                     value={githubUrl}
                     onChange={(e) => setGithubUrl(e.target.value)}
                     placeholder="https://github.com/owner/repo"
-                    className="w-full px-4 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 text-white placeholder-neutral-600 text-sm focus:outline-none focus:border-emerald-500/50 transition-colors"
+                    className="w-full px-4 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 text-white placeholder-zinc-400 text-sm focus:outline-none focus:border-emerald-500/50 transition-colors"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs text-neutral-400 mb-1.5 font-medium">
+                    <label className="block text-xs text-white mb-1.5 font-medium">
                       Branch (optional)
                     </label>
                     <input
@@ -392,11 +392,11 @@ export default function SecurityGuyTool() {
                       value={branch}
                       onChange={(e) => setBranch(e.target.value)}
                       placeholder="main"
-                      className="w-full px-4 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 text-white placeholder-neutral-600 text-sm focus:outline-none focus:border-emerald-500/50 transition-colors"
+                      className="w-full px-4 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 text-white placeholder-zinc-400 text-sm focus:outline-none focus:border-emerald-500/50 transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs text-neutral-400 mb-1.5 font-medium">
+                    <label className="block text-xs text-white mb-1.5 font-medium">
                       Network (optional)
                     </label>
                     <input
@@ -404,13 +404,13 @@ export default function SecurityGuyTool() {
                       value={network}
                       onChange={(e) => setNetwork(e.target.value)}
                       placeholder="ethereum"
-                      className="w-full px-4 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 text-white placeholder-neutral-600 text-sm focus:outline-none focus:border-emerald-500/50 transition-colors"
+                      className="w-full px-4 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 text-white placeholder-zinc-400 text-sm focus:outline-none focus:border-emerald-500/50 transition-colors"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs text-neutral-400 mb-1.5 font-medium">
+                  <label className="block text-xs text-white mb-1.5 font-medium">
                     Audit Mode
                   </label>
                   <div className="relative">
@@ -423,12 +423,12 @@ export default function SecurityGuyTool() {
                       <option value="core">Core — ~35 agents, $3–10, 20–50 min</option>
                       <option value="thorough">Thorough — ~80 agents, $15–40, 60–120 min</option>
                     </select>
-                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500 pointer-events-none" />
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-300 pointer-events-none" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs text-neutral-400 mb-1.5 font-medium">
+                  <label className="block text-xs text-white mb-1.5 font-medium">
                     Notes (optional)
                   </label>
                   <textarea
@@ -436,7 +436,7 @@ export default function SecurityGuyTool() {
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="Focus areas, known issues, special instructions…"
                     rows={2}
-                    className="w-full px-4 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 text-white placeholder-neutral-600 text-sm focus:outline-none focus:border-emerald-500/50 transition-colors resize-none"
+                    className="w-full px-4 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 text-white placeholder-zinc-400 text-sm focus:outline-none focus:border-emerald-500/50 transition-colors resize-none"
                   />
                 </div>
 
@@ -463,7 +463,7 @@ export default function SecurityGuyTool() {
               /* Live stream view */
               <div className="space-y-4">
                 <div className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-2 text-neutral-400">
+                  <div className="flex items-center gap-2 text-zinc-400">
                     <Terminal className="w-4 h-4" />
                     <span className="font-mono text-xs">Job {jobId}</span>
                   </div>
@@ -497,7 +497,7 @@ export default function SecurityGuyTool() {
                     ))}
                   </AnimatePresence>
                   {streamEvents.length === 0 && !done && (
-                    <p className="text-neutral-700 italic">Waiting for pipeline to start…</p>
+                    <p className="text-zinc-400 italic">Waiting for pipeline to start…</p>
                   )}
                 </div>
 
@@ -513,7 +513,7 @@ export default function SecurityGuyTool() {
                         key={s.label}
                         className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-3 text-center"
                       >
-                        <div className="text-neutral-500 text-xs mb-0.5">{s.label}</div>
+                        <div className="text-zinc-400 text-xs mb-0.5">{s.label}</div>
                         <div className="text-white font-semibold text-sm">{s.value}</div>
                       </div>
                     ))}
@@ -542,7 +542,7 @@ export default function SecurityGuyTool() {
                         Download .md
                       </button>
                     </div>
-                    <pre className="h-96 overflow-y-auto rounded-xl bg-neutral-950 border border-neutral-800 p-4 text-xs text-neutral-300 whitespace-pre-wrap font-mono leading-relaxed">
+                    <pre className="h-96 overflow-y-auto rounded-xl bg-neutral-950 border border-neutral-800 p-4 text-xs text-zinc-300 whitespace-pre-wrap font-mono leading-relaxed">
                       {report}
                     </pre>
                   </div>
@@ -558,7 +558,7 @@ export default function SecurityGuyTool() {
                       setDone(false);
                       setCostInfo(null);
                     }}
-                    className="w-full py-2.5 rounded-xl border border-neutral-700 text-neutral-400 hover:text-neutral-200 text-sm transition-colors"
+                    className="w-full py-2.5 rounded-xl border border-neutral-700 text-white text-sm transition-colors"
                   >
                     Run Another Audit
                   </button>

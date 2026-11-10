@@ -16,6 +16,10 @@
   --amber: #f2b84b;
   --orange: #ff6b35;
   --accent: #10b981;
+  --text-primary: #ffffff;
+  --text-body: #d4d4d8;
+  --text-muted: #a1a1aa;
+  --text-subtle: #8b8b95;
 }
 
 /* ── Hide default cursor everywhere ── */
@@ -26,7 +30,7 @@
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--background);
-  color: #fff;
+  color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
