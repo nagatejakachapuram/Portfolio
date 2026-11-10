@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  ShieldCheckIcon as Shield,
+  FingerprintIcon as Shield,
   LockKeyIcon as Lock,
   WalletIcon as Wallet,
   PlayIcon as Play,
   WarningCircleIcon as AlertCircle,
-  CheckCircleIcon as CheckCircle,
+  SealCheckIcon as CheckCircle,
   SpinnerGapIcon as Loader2,
   TerminalWindowIcon as Terminal,
   RobotIcon as Bot,

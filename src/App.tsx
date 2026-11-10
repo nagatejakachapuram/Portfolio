@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import SecurityGuyTool from "./SecurityGuyTool";
 import {
   ArrowSquareOutIcon as ExternalLink,
-  ShieldCheckIcon as Shield,
+  FingerprintIcon as Shield,
   CodeIcon as Code,
   LightningIcon as Zap,
   BrainIcon as Brain,
@@ -17,7 +17,9 @@ import {
   InfoIcon as Info,
   FireIcon as Flame,
   TargetIcon as Target,
-  CheckCircleIcon as CheckCircle,
+  SealCheckIcon as CheckCircle,
+  StackIcon,
+  BugBeetleIcon,
   WrenchIcon as Wrench,
   LockKeyIcon as Lock,
   RobotIcon as Bot,
@@ -30,6 +32,7 @@ import {
 } from "@phosphor-icons/react";
 
 const ThreeParticlesBackground = lazy(() => import("./ThreeParticlesBackground"));
+const CANTINA_PROFILE = "https://cantina.xyz/u/DeveloperX";
 const CODEHAWKS_PROFILE = "https://profiles.cyfrin.io/u/developerx_sec";
 const CODEHAWKS_LOGO = "https://codehawks.cyfrin.io/favicon.ico";
 const HACKENPROOF_PROFILE = "https://hackenproof.com/hackers/DeveloperX";
@@ -701,6 +704,7 @@ function App() {
             {[
               { href: "https://x.com/developerx_sec",            icon: <XLogoIcon weight="fill" aria-hidden="true" className="w-6 h-6" />, label: "X / Twitter" },
               { href: "https://github.com/nagatejakachapuram",    icon: <GithubLogoIcon weight="fill" aria-hidden="true" className="w-6 h-6" />, label: "GitHub" },
+              { href: CANTINA_PROFILE, icon: <img src={platformLogos.Cantina} alt="" className="w-6 h-6 object-contain rounded-md" />, label: "Cantina" },
               { href: "https://audits.sherlock.xyz/watson/DeveloperX", icon: <img src="/images/sherlock.png" alt="" className="w-6 h-6 object-contain" />, label: "Sherlock" },
               { href: CODEHAWKS_PROFILE, icon: <img src={CODEHAWKS_LOGO} alt="" className="w-6 h-6 object-contain rounded-md" />, label: "CodeHawks" },
               { href: HACKENPROOF_PROFILE, icon: <img src={HACKENPROOF_LOGO} alt="" className="w-6 h-6 object-contain rounded-md bg-white p-0.5" />, label: "HackenProof" },
@@ -800,28 +804,27 @@ function App() {
                 {/* ── Stats ── */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   {[
-                    { val: "75+", label: "Valid Findings", icon: <CheckCircle className="w-5 h-5" />, hi: false, compact: false },
-                    { val: "30+", label: "High / Medium", icon: <Shield className="w-5 h-5" />, hi: true, compact: false },
+                    { val: "75+", label: "Valid Findings", icon: <StackIcon aria-hidden="true" className="w-6 h-6" />, hi: false },
+                    { val: "30+", label: "High / Medium", icon: <BugBeetleIcon aria-hidden="true" className="w-6 h-6" />, hi: true },
                   ].map(s => (
                     <motion.div
                       key={s.label}
                       className="text-center px-3 py-3 rounded-xl transition-all duration-300"
                       style={s.hi
                         ? { background: "rgba(94,234,212,0.07)", border: "1px solid rgba(94,234,212,0.2)", boxShadow: "0 0 16px rgba(94,234,212,0.08)" }
-                        : { background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }
+                        : { background: "rgba(242,184,75,0.05)", border: "1px solid rgba(242,184,75,0.18)" }
                       }
                       whileHover={{ scale: 1.05, y: -2 }}
                     >
-                      <div className="flex justify-center mb-1" style={{ color: s.hi ? "#5eead4" : "rgba(255,255,255,0.25)" }}>
+                      <div className="flex justify-center mb-2" style={{ color: s.hi ? "#5eead4" : "#f2b84b" }}>
                         {s.icon}
                       </div>
                       <div
-                        className={`${s.compact ? "text-base leading-tight mt-0.5" : "text-xl"} font-black font-mono`}
-                        style={{ color: s.hi ? "#5eead4" : "#fff" }}
+                        className="text-3xl leading-none font-black font-mono text-white"
                       >
                         {s.val}
                       </div>
-                      <div className="text-[9px] uppercase tracking-widest mt-0.5 font-mono" style={{ color: "rgba(255,255,255,0.25)" }}>
+                      <div className="text-[11px] leading-snug mt-2 font-semibold text-zinc-200">
                         {s.label}
                       </div>
                     </motion.div>
@@ -882,6 +885,7 @@ function App() {
                   {[
                     { href: "https://x.com/developerx_sec", img: "", alt: "X", icon: <XLogoIcon weight="fill" aria-hidden="true" className="w-5 h-5 text-white/90" /> },
                     { href: "https://github.com/nagatejakachapuram", img: "", alt: "GitHub", icon: <GithubLogoIcon weight="fill" aria-hidden="true" className="w-5 h-5 text-white/90" /> },
+                    { href: CANTINA_PROFILE, img: platformLogos.Cantina, alt: "Cantina", icon: null },
                     { href: "https://audits.sherlock.xyz/watson/DeveloperX", img: "/images/sherlock.png", alt: "Sherlock", icon: null },
                     { href: CODEHAWKS_PROFILE, img: CODEHAWKS_LOGO, alt: "CodeHawks", icon: null },
                     { href: HACKENPROOF_PROFILE, img: HACKENPROOF_LOGO, alt: "HackenProof", icon: null },
@@ -1085,7 +1089,7 @@ function App() {
                     <div className="flex items-center gap-2">
                       {[
                         { icon: <Trophy className="w-3 h-3" />, val: "#6",  sub: "Best",   c: "rgba(242,184,75" },
-                        { icon: <Target className="w-3 h-3" />, val: "×3",  sub: "Top 10", c: "rgba(94,234,212" },
+                        { icon: <Target className="w-3 h-3" />, val: "×3",  sub: "Top 7", c: "rgba(94,234,212" },
                       ].map(s => (
                         <motion.div key={s.sub}
                           className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg font-mono"
