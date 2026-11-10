@@ -18,7 +18,7 @@ import {
   FireIcon as Flame,
   TargetIcon as Target,
   SealCheckIcon as CheckCircle,
-  StackIcon,
+  FileMagnifyingGlassIcon,
   BugBeetleIcon,
   WrenchIcon as Wrench,
   LockKeyIcon as Lock,
@@ -804,7 +804,7 @@ function App() {
                 {/* ── Stats ── */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   {[
-                    { val: "75+", label: "Valid Findings", icon: <StackIcon aria-hidden="true" className="w-6 h-6" />, hi: false },
+                    { val: "75+", label: "Valid Findings", icon: <FileMagnifyingGlassIcon aria-hidden="true" className="w-6 h-6" />, hi: false },
                     { val: "30+", label: "High / Medium", icon: <BugBeetleIcon aria-hidden="true" className="w-6 h-6" />, hi: true },
                   ].map(s => (
                     <motion.div
@@ -825,7 +825,13 @@ function App() {
                         {s.val}
                       </div>
                       <div className="text-[11px] leading-snug mt-2 font-semibold text-zinc-200">
-                        {s.label}
+                        {s.hi ? (
+                          <>
+                            <span className="text-red-400">High</span>
+                            <span className="text-zinc-400"> / </span>
+                            <span className="text-yellow-300">Medium</span>
+                          </>
+                        ) : s.label}
                       </div>
                     </motion.div>
                   ))}
