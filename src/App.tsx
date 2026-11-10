@@ -797,8 +797,8 @@ function App() {
                 {/* ── Stats ── */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   {[
-                    { val: "20+",     label: "Audits",    icon: <Target className="w-3.5 h-3.5" />, hi: false, compact: false },
-                    { val: "#6",      label: "Best Rank", icon: <Trophy className="w-3.5 h-3.5" />, hi: true,  compact: false },
+                    { val: "75+", label: "Valid Findings", icon: <CheckCircle className="w-3.5 h-3.5" />, hi: false, compact: false },
+                    { val: "30+", label: "High / Medium", icon: <Shield className="w-3.5 h-3.5" />, hi: true, compact: false },
                   ].map(s => (
                     <motion.div
                       key={s.label}
@@ -830,12 +830,12 @@ function App() {
                   style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.06)" }}
                 >
                   {[
-                    { val: "30+ H/M", label: "High-Signal" },
-                    { val: "75+ Valid", label: "Findings" },
+                    { val: "20+", label: "Audits" },
+                    { val: "#6", label: "Best Rank" },
                     { val: "Top 300 Cantina", label: "" },
                     { val: "Top 350 HackenProof", label: "" },
                   ].map(s => (
-                    <div key={s.val} className="flex items-center gap-2">
+                    <div key={s.val} className="flex items-center gap-2 whitespace-nowrap">
                       <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#f2b84b", boxShadow: "0 0 6px rgba(242,184,75,0.35)" }} />
                       <span className="text-[11px] font-black font-mono" style={{ color: "#f2b84b" }}>{s.val}</span>
                       {s.label ? (
