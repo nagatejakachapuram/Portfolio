@@ -296,6 +296,16 @@ const protocols = [
   { name: "BIFY: Security Review Audit", image: "/images/bify.jpg", platform: "Private", type: "Security Review", findings: "2H, 1M, 3L", rank: "", link: "", twitter: "https://x.com/BIFYOfficial", website: "https://bify.io", featured: false, isPrivate: true, clientLabel: "BIFY", clientLogo: "/images/bify.jpg" },
 ];
 
+const findingsTotals = protocols.reduce((totals, protocol) => {
+  for (const finding of parseFindings(protocol.findings)) {
+    totals.valid += finding.count;
+    if (finding.type === "H" || finding.type === "M") {
+      totals.highMedium += finding.count;
+    }
+  }
+  return totals;
+}, { valid: 0, highMedium: 0 });
+
 const projects = [
   { title: "AI-Powered Yield Optimizer",   desc: "Yearn-style vaults with AI agents via Chainlink Automation for strategy rotation.",                                                                                               github: "https://github.com/nagatejakachapuram/yield-optimizer-prod", demo: "https://cipher-ai.vercel.app/",        tags: ["DeFi","AI Agents","Chainlink"],           icon: <Brain      className="w-5 h-5" />, network: "Ethereum"  },
   { title: "Flare-AMM DEX",                desc: "Custom modular DEX supporting unique pricing curves and prediction markets on Flare.",                                                                                             github: "https://github.com/nagatejakachapuram/Flare-Dex-Prediction", demo: "https://dex-predication.vercel.app", tags: ["DEX","Prediction Markets","AMM"],          icon: <TrendingUp className="w-5 h-5" />, network: "Flare"     },
@@ -804,8 +814,8 @@ function App() {
                 {/* ── Stats ── */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   {[
-                    { val: "75+", label: "Valid Findings", icon: <FileMagnifyingGlassIcon aria-hidden="true" className="w-6 h-6" />, hi: false },
-                    { val: "30+", label: "High / Medium", icon: <BugBeetleIcon aria-hidden="true" className="w-6 h-6" />, hi: true },
+                    { val: findingsTotals.valid, label: "Valid Findings", icon: <FileMagnifyingGlassIcon aria-hidden="true" className="w-6 h-6" />, hi: false },
+                    { val: findingsTotals.highMedium, label: "High / Medium", icon: <BugBeetleIcon aria-hidden="true" className="w-6 h-6" />, hi: true },
                   ].map(s => (
                     <motion.div
                       key={s.label}
